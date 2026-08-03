@@ -39,16 +39,32 @@ const PRESTATION_LABELS: Record<string, string> = {
   autre: 'Autre / à préciser',
 };
 
-const COLOR_DARK = '#163a5f';
-const COLOR_DARKER = '#10273f';
-const COLOR_RED = '#e4141b';
-const COLOR_LIGHT = '#f5f7fa';
-const COLOR_TEXT = '#14202e';
-const COLOR_MUTED = '#4a5568';
-const COLOR_BORDER = '#e2e8f0';
+// Palette identique au site — valeurs reprises des variables CSS de
+// src/styles/global.css (--bleu, --bleu-nuit, --rouge…). Toute modification
+// de la charte doit être répercutée ici : les emails ne peuvent pas lire les
+// custom properties CSS.
+const COLOR_DARK = '#2c3e50'; // --bleu
+const COLOR_DARKER = '#161f28'; // --bleu-nuit (bandeaux sombres)
+const COLOR_HEADING = '#202d3a'; // --bleu-fonce (titres)
+const COLOR_RED = '#ff6b35'; // --rouge
+const COLOR_LIGHT = '#f4f6f8'; // --gris-clair
+const COLOR_TEXT = '#333333'; // --ink
+const COLOR_MUTED = '#5c5c5c'; // --gris
+const COLOR_BORDER = '#e3e7ea'; // --bordure
+
+// Pile de polices : Montserrat (celle du site) chargée par les clients mail
+// qui l'acceptent, sinon repli système. Pas de @font-face : Gmail le supprime.
+const FONT_STACK = `'Montserrat',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif`;
 
 const SITE_URL = site.domain;
+// Logo réel : 458 × 337 px. Il faut respecter ce ratio (1,36) dans les
+// attributs width/height, sinon Outlook et Gmail l'écrasent en carré.
+const LOGO_W = 458;
+const LOGO_H = 337;
+const logoBox = (w: number) => ({ w, h: Math.round((w * LOGO_H) / LOGO_W) });
 const LOGO_URL = `${SITE_URL}/logo-richard-toitures.png`;
+// Variante blanche, pour les bandeaux sombres (même usage que le menu mobile).
+const LOGO_URL_BLANC = `${SITE_URL}/logo-richard-toitures-blanc.png`;
 const TEL = site.phone;
 const TEL_HREF = `tel:${site.phoneHref}`;
 const ENTREPRISE = site.brand;
@@ -133,18 +149,19 @@ function notifTemplate(d: DevisData) {
   const telClean = (d.tel || '').replace(/[^0-9+]/g, '');
   const subject = `Nouvelle demande ${site.address.department} — ${presta} à ${d.ville}`;
   const prenom = (d.nom || '').split(' ')[0] || 'le client';
+  const logo = logoBox(124);
 
   const html = `<!DOCTYPE html>
 <html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${escapeHtml(subject)}</title></head>
-<body style="margin:0;padding:0;background:${COLOR_LIGHT};font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:${COLOR_TEXT};">
+<body style="margin:0;padding:0;background:${COLOR_LIGHT};font-family:${FONT_STACK};color:${COLOR_TEXT};">
   <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:${COLOR_LIGHT};padding:24px 12px;">
     <tr><td align="center">
       <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="max-width:600px;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.06);">
-        <tr><td style="background:${COLOR_DARKER};padding:24px 32px;color:#fff;">
+        <tr><td bgcolor="${COLOR_DARKER}" style="background:${COLOR_DARKER};padding:24px 32px;color:#fff;">
           <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
             <tr>
-              <td valign="middle" width="64" style="padding-right:16px;">
-                <img src="${LOGO_URL}" width="56" height="56" alt="${ENTREPRISE}" style="display:block;border-radius:12px;background:#fff;padding:6px;box-sizing:border-box;">
+              <td valign="middle" width="${logo.w + 20}" style="padding-right:20px;">
+                <img src="${LOGO_URL_BLANC}" width="${logo.w}" height="${logo.h}" alt="${ENTREPRISE}" style="display:block;width:${logo.w}px;height:${logo.h}px;border:0;outline:none;text-decoration:none;">
               </td>
               <td valign="middle">
                 <div style="font-size:12px;text-transform:uppercase;letter-spacing:.1em;opacity:.7;font-weight:700;">Nouvelle demande de devis · ${escapeHtml(site.address.region)}</div>
@@ -156,7 +173,7 @@ function notifTemplate(d: DevisData) {
         </td></tr>
         <tr><td style="padding:24px 32px 8px;">
           <div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:${COLOR_MUTED};font-weight:700;margin-bottom:8px;">Client</div>
-          <div style="font-size:18px;font-weight:700;color:${COLOR_DARKER};">${escapeHtml(d.nom)}</div>
+          <div style="font-size:18px;font-weight:700;color:${COLOR_HEADING};">${escapeHtml(d.nom)}</div>
         </td></tr>
         <tr><td style="padding:8px 32px;">
           <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
@@ -212,20 +229,21 @@ function ackTemplate(d: DevisData) {
   const presta = PRESTATION_LABELS[d.prestation] || d.prestation || 'votre demande';
   const subject = `Nous avons bien reçu votre demande — ${ENTREPRISE}`;
   const prenom = (d.nom || '').split(' ')[0];
+  const logo = logoBox(168);
 
   const html = `<!DOCTYPE html>
 <html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${escapeHtml(subject)}</title></head>
-<body style="margin:0;padding:0;background:${COLOR_LIGHT};font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:${COLOR_TEXT};">
+<body style="margin:0;padding:0;background:${COLOR_LIGHT};font-family:${FONT_STACK};color:${COLOR_TEXT};">
   <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:${COLOR_LIGHT};padding:24px 12px;">
     <tr><td align="center">
       <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="max-width:600px;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.06);">
-        <tr><td style="background:${COLOR_DARKER};padding:32px 32px 28px;color:#fff;text-align:center;">
-          <img src="${LOGO_URL}" width="72" height="72" alt="${ENTREPRISE}" style="display:block;margin:0 auto 14px;border-radius:14px;background:#fff;padding:8px;box-sizing:border-box;">
+        <tr><td bgcolor="${COLOR_DARKER}" style="background:${COLOR_DARKER};padding:32px 32px 28px;color:#fff;text-align:center;">
+          <img src="${LOGO_URL_BLANC}" width="${logo.w}" height="${logo.h}" alt="${ENTREPRISE}" style="display:block;margin:0 auto 16px;width:${logo.w}px;height:${logo.h}px;border:0;outline:none;text-decoration:none;">
           <div style="font-size:20px;font-weight:800;">${ENTREPRISE}</div>
           <div style="font-size:13px;opacity:.85;margin-top:2px;">Artisan couvreur en ${escapeHtml(site.address.region)} (${escapeHtml(site.address.department)})</div>
         </td></tr>
         <tr><td style="padding:32px 32px 12px;">
-          <h1 style="margin:0 0 16px;font-size:22px;font-weight:800;color:${COLOR_DARKER};line-height:1.3;">Bonjour ${escapeHtml(prenom)},</h1>
+          <h1 style="margin:0 0 16px;font-size:22px;font-weight:800;color:${COLOR_HEADING};line-height:1.3;">Bonjour ${escapeHtml(prenom)},</h1>
           <p style="margin:0 0 16px;font-size:15px;line-height:1.65;color:${COLOR_TEXT};">
             J'ai bien reçu votre demande de devis pour <strong>${escapeHtml(presta.toLowerCase())}</strong> à <strong>${escapeHtml(d.ville)}</strong>. Merci de votre confiance.
           </p>
@@ -255,11 +273,11 @@ function ackTemplate(d: DevisData) {
         <tr><td style="padding:0 32px 28px;">
           <p style="margin:0;font-size:15px;line-height:1.5;color:${COLOR_TEXT};">
             À très vite,<br>
-            <strong style="color:${COLOR_DARKER};">${escapeHtml(site.founder)}</strong><br>
+            <strong style="color:${COLOR_HEADING};">${escapeHtml(site.founder)}</strong><br>
             <span style="color:${COLOR_MUTED};font-size:13px;">Artisan couvreur — ${escapeHtml(site.address.region)} (${escapeHtml(site.address.department)})</span>
           </p>
         </td></tr>
-        <tr><td style="background:${COLOR_DARKER};padding:20px 32px;color:#fff;text-align:center;font-size:12px;line-height:1.6;">
+        <tr><td bgcolor="${COLOR_DARKER}" style="background:${COLOR_DARKER};padding:20px 32px;color:#fff;text-align:center;font-size:12px;line-height:1.6;">
           <strong style="font-size:14px;">${ENTREPRISE}</strong><br>
           ${ADRESSE}<br>
           <a href="${SITE_URL}" style="color:#fff;text-decoration:underline;opacity:.85;">${SITE_URL.replace('https://', '')}</a> &nbsp;·&nbsp; <a href="${TEL_HREF}" style="color:#fff;text-decoration:underline;opacity:.85;">${TEL}</a>
