@@ -6,6 +6,11 @@ import { villes } from '../data/villes.js';
 // Astro sert automatiquement cette page pour toute route inconnue, avec un
 // vrai code HTTP 404 (adaptateur Node en mode standalone). Elle reste en
 // noindex : une page d'erreur n'a rien à faire dans l'index de Google.
+// Rendue à la demande (et non prégénérée) : c'est indispensable pour que le
+// middleware de src/middleware.ts s'applique et neutralise la compression
+// fautive du proxy — voir le commentaire détaillé dans ce fichier.
+export const prerender = false;
+
 const path = '/404/';
 const title = `Page introuvable — ${site.brand}`;
 const description = `Cette page n’existe pas ou a été déplacée. Retrouvez les prestations de couverture, la demande de devis et les coordonnées de ${site.brand}.`;
