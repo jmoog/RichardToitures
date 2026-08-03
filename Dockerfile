@@ -9,7 +9,7 @@
 FROM node:22-slim AS builder
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN --mount=type=cache,target=/root/.npm npm ci
+RUN --mount=type=cache,target=/root/.npm,sharing=locked npm ci
 COPY . .
 # Variable de BUILD : clé publique Turnstile, gravée dans le HTML statique.
 # Coolify la passe en --build-arg quand elle est cochée « Build Variable ».
@@ -26,7 +26,10 @@ ENV NODE_ENV=production
 ENV HOST=0.0.0.0
 ENV PORT=4321
 COPY package.json package-lock.json ./
-RUN --mount=type=cache,target=/root/.npm npm ci --omit=dev && npm cache clean --force
+# Pas de « npm cache clean » ici : /root/.npm est un cache BuildKit monté
+# (partagé avec le stage builder qui tourne en parallèle) — le vider provoque
+# un ENOTEMPTY, et il ne fait de toute façon pas partie de l'image finale.
+RUN --mount=type=cache,target=/root/.npm,sharing=locked npm ci --omit=dev
 COPY --from=builder /app/dist ./dist
 RUN chown -R node:node /app
 USER node
