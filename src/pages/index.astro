@@ -1,0 +1,145 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TrustBand from '../components/TrustBand.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import { site } from '../data/site.js';
+import { pageSchema } from '../data/schema.js';
+
+const title = `Couvreur ${site.address.department} : ${site.brand}`;
+const description = `Couvreur ${site.address.department} : Lorem ipsum dolor sit amet, ${site.brand} est à votre service pour vos travaux de couverture, d'isolation et de ravalement en ${site.address.region}. [Description à remplacer]`;
+---
+<Layout title={title} description={description} path="/" jsonLd={pageSchema('/', 'Accueil')}>
+  <section class="page-hero">
+    <div class="container">
+      <h1>Couvreur {site.address.department} : artisan couvreur en {site.address.region}</h1>
+      <p class="page-hero__artisan">{site.brand}</p>
+      <div class="page-hero__grid">
+        <div class="page-hero__text">
+          <p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</strong> Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+          <p>Devis et déplacement gratuits dans tout le département — lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+          <div class="actions">
+            <a class="btn btn--rouge btn--tel" href={`tel:${site.phoneHref}`} aria-label={`Appeler le ${site.phone}`} title={`Appeler le ${site.phone}`}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.6" y="2" width="9.8" height="20" rx="2.9"></rect><line x1="8" y1="18.7" x2="11" y2="18.7"></line><path d="M17.9 8.9a4.6 4.6 0 0 1 0 6.2"></path><path d="M20.6 6.2a8.6 8.6 0 0 1 0 11.6"></path></svg>{site.phone}</a>
+            <a class="btn btn--ghost" href="/devis-gratuit/" style="color:#fff;border-color:#fff">Demander un devis<span class="btn-menu__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg></span></a>
+          </div>
+        </div>
+        <div class="page-hero__media">
+          <img src="/photo-hero-placeholder.svg" width="891" height="706" alt="Photo placeholder — chantier de toiture, à remplacer" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <TrustBand />
+
+  <section class="section promo-section">
+    <div class="section-head section-head--txt-left">
+      <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit</h2>
+      <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, ut enim ad minim veniam, quis nostrud exercitation.</p>
+    </div>
+    <div class="promo-grid">
+      <a class="promo-card promo-card--accent promo-card--feature" href="/travaux-de-couverture/">
+        <h3>Travaux de couverture</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+        <img class="promo-card__photo" src="/photo-wide-placeholder.svg" width="1063" height="709" alt="Photo placeholder — travaux de couverture" />
+        <span class="promo-card__brand">
+          <span class="promo-card__more" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h11.5M12 6.5l5.5 5.5-5.5 5.5"></path></svg></span>
+        </span>
+      </a>
+      <a class="promo-card" href="/renovation-toiture/">
+        <h3>Rénovation de toiture</h3>
+        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+        <img class="promo-card__photo" src="/photo-wide-placeholder.svg" width="1063" height="709" alt="Photo placeholder — rénovation de toiture" />
+        <span class="promo-card__brand"><span class="promo-card__more" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h11.5M12 6.5l5.5 5.5-5.5 5.5"></path></svg></span></span>
+      </a>
+      <a class="promo-card" href="/isolation-des-combles/">
+        <h3>Isolation des combles</h3>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        <img class="promo-card__photo" src="/photo-wide-placeholder.svg" width="1063" height="709" alt="Photo placeholder — isolation des combles" />
+        <span class="promo-card__brand"><span class="promo-card__more" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h11.5M12 6.5l5.5 5.5-5.5 5.5"></path></svg></span></span>
+      </a>
+      <a class="promo-card" href="/nettoyage-demoussage-toiture/">
+        <h3>Nettoyage &amp; démoussage</h3>
+        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est.</p>
+        <img class="promo-card__photo" src="/photo-wide-placeholder.svg" width="1063" height="709" alt="Photo placeholder — nettoyage et démoussage de toiture" />
+        <span class="promo-card__brand"><span class="promo-card__more" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h11.5M12 6.5l5.5 5.5-5.5 5.5"></path></svg></span></span>
+      </a>
+    </div>
+  </section>
+
+  <section class="split-feature">
+    <div class="split-feature__inner">
+      <div class="split-feature__left">
+        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit</h2>
+        <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip. Confiez votre <a href="/renovation-toiture/">rénovation de toiture</a> à {site.founder}.</p>
+        <ul class="split-feature__list">
+          <li class="is-active">Devis gratuit</li>
+          <li>[Délai d'intervention à préciser]</li>
+          <li>[Garanties à préciser]</li>
+        </ul>
+      </div>
+      <div class="split-feature__right">
+        <img class="split-feature__photo" src="/photo-portrait-placeholder.svg" width="450" height="337" alt={`Photo placeholder — ${site.founder}`} />
+        <div class="split-feature__card">
+          <span class="split-feature__badge">[Badge / certification]</span>
+          <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur, excepteur sint occaecat cupidatat.</p>
+          <p><strong>[Liste de matériaux à préciser]</strong> : non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-banner-section">
+    <div class="cta-banner">
+      <div class="cta-banner__media">
+        <img src="/photo-cta-placeholder.svg" width="1920" height="845" alt={`Photo placeholder — ${site.brand}`} />
+      </div>
+      <div class="cta-banner__panel">
+        <h2>Votre devis toiture gratuit dans le {site.address.department}</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. {site.founder} se déplace, constate et chiffre. Devis sans engagement, déplacement gratuit dans tout le {site.address.region}.</p>
+        <a class="btn cta-banner__btn" href="/devis-gratuit/">Demander un devis gratuit</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container media-split">
+      <div class="media-split__text">
+        <h2>Nettoyage et démoussage de toiture en {site.address.region}</h2>
+        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Un <a href="/nettoyage-demoussage-toiture/">nettoyage et démoussage de toiture</a> régulier prolonge la vie de votre couverture.</p>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur, excepteur sint occaecat cupidatat non proident.</p>
+      </div>
+      <div class="media-split__media">
+        <img src="/photo-medium-placeholder.svg" width="900" height="672" alt="Photo placeholder — nettoyage et démoussage de toiture" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section media-section--dark">
+    <div class="container media-split media-split--reverse">
+      <div class="media-split__text">
+        <h2>Gouttières, noues et chéneaux en {site.address.region}</h2>
+        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore.</p>
+        <p>Veritatis et quasi architecto beatae vitae dicta sunt explicabo, nemo enim ipsam voluptatem : ces ouvrages font partie de nos <a href="/travaux-de-couverture/">travaux de couverture</a>.</p>
+        <a class="btn btn--rouge media-split__cta" href="/devis-gratuit/">Demander un devis<span class="btn-menu__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg></span></a>
+      </div>
+      <div class="media-split__media">
+        <img src="/photo-square-placeholder.svg" width="400" height="400" alt="Photo placeholder — gouttières, noues et chéneaux" />
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container">
+      <h2>Confiez votre toiture à un artisan de confiance</h2>
+      <p>Devis clair et gratuit, sans engagement. {site.founder} vous rappelle et se déplace chez vous dans tout le {site.address.region}.</p>
+      <ul class="cta-band__trust">
+        <li>Artisan de confiance, basé à {site.address.city}</li>
+        <li>Devis &amp; déplacement gratuits</li>
+      </ul>
+      <div class="cta-band__actions">
+        <a class="btn btn--rouge btn--lg" href={`tel:${site.phoneHref}`}>Appeler le {site.phone}</a>
+        <a class="btn btn--lg cta-band__ghost" href="/devis-gratuit/">Demander un devis<span class="btn-menu__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg></span></a>
+      </div>
+    </div>
+  </section>
+</Layout>

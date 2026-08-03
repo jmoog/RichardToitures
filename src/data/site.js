@@ -1,0 +1,73 @@
+// Données centrales de l'entreprise. Coordonnées et informations légales
+// réelles (Richard Seatle, EI, Indre-et-Loire) ; ce qui reste inconnu reste
+// en placeholder entre crochets (hébergeur, avis Google...) — à compléter
+// avant mise en ligne. Pas de certification RGE : M. Seatle n'est pas RGE.
+export const site = {
+  brand: 'Richard Toitures',
+  founder: 'Richard Seatle',
+  domain: 'https://richard-toitures.fr',
+  phone: '06 06 41 49 02',
+  phoneHref: '0606414902',
+  phoneIntl: '+33606414902',
+  whatsapp: 'https://wa.me/33606414902',
+  email: 'seatlerichard37@gmail.com',
+  address: {
+    street: 'Lieu-dit Glatinet',
+    postalCode: '37300',
+    city: 'Joué-lès-Tours',
+    region: 'Indre-et-Loire',
+    department: '37',
+    country: 'FR',
+  },
+  // Coordonnées approximatives de Joué-lès-Tours, utilisées pour centrer la
+  // carte de la zone d'intervention sur /devis-gratuit/. À affiner si vous
+  // voulez que le marqueur tombe exactement sur l'adresse d'intervention.
+  geo: { lat: 47.3672, lng: 0.6698 },
+  foundingDate: '2021',
+  siret: '894 762 053 00011',
+  siren: '894 762 053',
+  tva: 'FR30 894 762 053',
+  rcs: 'RCS Tours 894 762 053',
+  // Activité déclarée sur l'extrait officiel actuel : "Nettoyage courant des
+  // bâtiments (8121Z)". L'artisan passe à une activité de couverture : le
+  // code APE ci-dessous est celui d'une entreprise de couverture (même
+  // format que le site de référence "eric-couvreur-94") — pensez à faire
+  // mettre à jour le code APE réel auprès de l'INSEE/du guichet unique pour
+  // qu'il corresponde avant la mise en ligne définitive.
+  ape: '43.91B — Travaux de couverture par éléments',
+  legalForm: 'Entrepreneur individuel (EI)',
+  legalName: 'Richard Seatle',
+  registeredOffice: 'Lieu-dit Glatinet, 37300 Joué-lès-Tours',
+  // Pas encore de fiche Google / avis clients à ce stade : ne rien afficher
+  // tant qu'il n'y a ni note ni avis réels. À ajouter ici (googleProfileLink,
+  // googleRating...) une fois la fiche établissement créée et les premiers
+  // avis obtenus — et à réutiliser dans TrustBand.astro / Layout.astro /
+  // index.astro / devis-gratuit.astro à ce moment-là.
+  hosting: {
+    name: '[Nom de l’hébergeur]',
+    address: '[Adresse de l’hébergeur]',
+    phone: '[Téléphone de l’hébergeur]',
+    email: '[E-mail de l’hébergeur]',
+    site: '[Site web de l’hébergeur]',
+  },
+};
+
+// Menu principal du header (structure identique au site de référence
+// "eric-couvreur-94" — à adapter si les prestations changent)
+export const mainNav = [
+  { href: '/travaux-de-couverture/', label: 'Couverture' },
+  { href: '/isolation-des-combles/', label: 'Isolation' },
+  { href: '/nettoyage-demoussage-toiture/', label: 'Démoussage' },
+  { href: '/a-propos/', label: 'À propos' },
+];
+
+// Toutes les prestations, pour le footer et les blocs "voir aussi"
+export const services = [
+  { href: '/travaux-de-couverture/', label: 'Travaux de couverture' },
+  { href: '/renovation-toiture/', label: 'Rénovation de toiture' },
+  { href: '/reparation-toiture-fuite/', label: 'Réparation & recherche de fuite' },
+  { href: '/nettoyage-demoussage-toiture/', label: 'Nettoyage & démoussage' },
+  { href: '/isolation-des-combles/', label: 'Isolation des combles' },
+  { href: '/ravalement-de-facade/', label: 'Ravalement de façade' },
+  { href: '/ramonage/', label: 'Ramonage' },
+];

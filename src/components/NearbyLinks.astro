@@ -1,0 +1,14 @@
+---
+const { title, text, links, gris = false } = Astro.props;
+---
+<section class={`section${gris ? ' section--gris' : ''}`}>
+  <div class="container">
+    <div class="section-head section-head--left">
+      <h2>{title}</h2>
+      {text && <p>{text}</p>}
+    </div>
+    <div class="liens-proches">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,15 @@
+---
+const { title, text, image = '/photo-portrait-placeholder.svg', imageAlt = 'Photo placeholder', ctaHref = '/devis-gratuit/', ctaLabel = 'Demander une intervention' } = Astro.props;
+---
+<section class="cta-banner-section">
+  <div class="cta-banner">
+    <div class="cta-banner__media">
+      <img src={image} width="450" height="337" alt={imageAlt} />
+    </div>
+    <div class="cta-banner__panel">
+      <h2>{title}</h2>
+      <p>{text}</p>
+      <a class="btn cta-banner__btn" href={ctaHref}>{ctaLabel}<span class="btn-menu__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg></span></a>
+    </div>
+  </div>
+</section>

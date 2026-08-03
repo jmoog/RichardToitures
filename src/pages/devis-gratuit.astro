@@ -1,0 +1,194 @@
+---
+// Page entièrement statique : l'envoi passe par un appel fetch vers
+// /api/devis/ (seule route dynamique du site). Même technique que le site
+// de référence "eric-couvreur-94" : colonne de gauche éditoriale, formulaire
+// en carte collante à droite, puis carte de la zone d'intervention.
+export const prerender = true;
+
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { site } from '../data/site.js';
+import { pageSchema } from '../data/schema.js';
+
+const path = '/devis-gratuit/';
+const title = `Devis gratuit — ${site.brand}, artisan couvreur en ${site.address.region}`;
+const description = `Demandez votre devis gratuit à ${site.brand}, artisan couvreur dans le ${site.address.region} (${site.address.department}). [Description à remplacer]`;
+
+// Carte OpenStreetMap (sans cookie). Coordonnées de démonstration
+// (centre de Tours) : à remplacer par les coordonnées réelles de
+// l'entreprise dans src/data/site.js.
+const { lat, lng } = site.geo;
+const d = 0.03;
+const mapSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${lng - d}%2C${lat - d}%2C${lng + d}%2C${lat + d}&layer=mapnik&marker=${lat}%2C${lng}`;
+
+// Clé publique Turnstile (variable de BUILD). Si vide, le formulaire marche
+// quand même (le honeypot + le time-trap restent actifs).
+const turnstileKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+
+// value = clé attendue par /api/devis (PRESTATION_LABELS) ; label = affichage
+const prestationsOptions = [
+  { v: 'couverture', l: 'Travaux de couverture' },
+  { v: 'renovation', l: 'Rénovation de toiture' },
+  { v: 'reparation', l: 'Réparation & recherche de fuites' },
+  { v: 'nettoyage-demoussage', l: 'Nettoyage & démoussage' },
+  { v: 'isolation-combles', l: 'Isolation des combles' },
+  { v: 'ravalement', l: 'Ravalement de façade' },
+  { v: 'ramonage', l: 'Ramonage' },
+  { v: 'autre', l: 'Autre / à préciser' },
+];
+---
+<Layout title={title} description={description} path={path} jsonLd={pageSchema(path, 'Devis gratuit')}>
+  <Breadcrumb label="Devis gratuit" />
+
+  <section class="section devis-top">
+    <div class="container devis-grid">
+      <div class="devis-intro">
+        <h1>Devis gratuit pour vos travaux de toiture en {site.address.region}</h1>
+        <p class="devis-lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Décrivez votre projet en deux minutes : {site.founder} vous rappelle rapidement avec un premier retour, sans engagement.</p>
+
+        <div class="devis-texte">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vous décrivez vos travaux, {site.founder} se déplace chez vous, constate et chiffre. Le déplacement est gratuit dans tout le département, et le devis aussi.</p>
+          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Pour une urgence, appelez directement le {site.phone}.</p>
+        </div>
+
+        <img class="devis-photo" src="/photo-hero-placeholder.svg" width="891" height="706" alt="Photo placeholder — chantier de toiture" />
+      </div>
+
+      <aside class="devis-form-card">
+        <h2>Votre devis gratuit</h2>
+        <p class="devis-form-card__lead">Quelques informations pour vous rappeler avec un premier retour, sans engagement.</p>
+        <form id="devis-form" class="devis-form" method="post" action="/api/devis/">
+          <!-- Anti-spam : ne pas remplir -->
+          <p class="hp" aria-hidden="true">
+            <label>Ne pas remplir <input name="website" tabindex="-1" autocomplete="off" /></label>
+          </p>
+
+          <div class="field">
+            <label for="nom">Nom et prénom *</label>
+            <input type="text" id="nom" name="nom" autocomplete="name" required />
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="tel">Téléphone *</label>
+              <input type="tel" id="tel" name="tel" autocomplete="tel" required />
+            </div>
+            <div class="field">
+              <label for="email">Email *</label>
+              <input type="email" id="email" name="email" autocomplete="email" required />
+            </div>
+          </div>
+          <div class="field">
+            <label for="ville">Ville du chantier *</label>
+            <input type="text" id="ville" name="ville" autocomplete="address-level2" required />
+          </div>
+          <div class="field">
+            <label for="prestation">Type de travaux</label>
+            <select id="prestation" name="prestation">
+              <option value="">— Sélectionnez —</option>
+              {prestationsOptions.map((p) => <option value={p.v}>{p.l}</option>)}
+            </select>
+          </div>
+          <div class="field">
+            <label for="message">Votre projet *</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
+          </div>
+
+          {turnstileKey && (
+            <div class="cf-turnstile" data-sitekey={turnstileKey} data-theme="light" style="margin-bottom:1rem;"></div>
+          )}
+
+          <button type="submit" class="btn btn--rouge devis-form__submit" id="devis-submit">Envoyer ma demande</button>
+          <p id="devis-status" role="status" aria-live="polite" class="devis-form__status"></p>
+          <p class="devis-form__note">* Champs obligatoires. Vos données servent uniquement à traiter votre demande.</p>
+        </form>
+      </aside>
+    </div>
+  </section>
+
+  {turnstileKey && (
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>
+  )}
+  <script is:inline>
+    (function () {
+      var loadedAt = Date.now();
+      var form = document.getElementById('devis-form');
+      if (!form) return;
+      var status = document.getElementById('devis-status');
+      var submit = document.getElementById('devis-submit');
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        submit.disabled = true;
+        status.style.color = '';
+        status.textContent = 'Envoi en cours…';
+        try {
+          var fd = new FormData(form);
+          var payload = {};
+          fd.forEach(function (v, k) { payload[k] = v; });
+          payload.ts = String(loadedAt);
+          // La barre finale est obligatoire : le site est en trailingSlash
+          // "always", sans elle le POST devient une redirection 301 (donc un
+          // GET) et les données sont perdues.
+          var res = await fetch('/api/devis/', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json', accept: 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          var data = await res.json().catch(function () { return {}; });
+          if (res.ok && data.ok) {
+            window.location.href = '/merci/';
+            return;
+          }
+          status.style.color = '#e4141b';
+          status.textContent =
+            data.error || "Une erreur est survenue. Merci de réessayer ou de m'appeler.";
+          submit.disabled = false;
+          if (window.turnstile) window.turnstile.reset();
+        } catch (err) {
+          status.style.color = '#e4141b';
+          status.textContent = "Erreur réseau. Merci de réessayer ou de m'appeler.";
+          submit.disabled = false;
+          if (window.turnstile) window.turnstile.reset();
+        }
+      });
+    })();
+  </script>
+
+  <section class="section section--gris">
+    <div class="container">
+      <div class="section-head">
+        <h2>Notre zone d'intervention en {site.address.region}</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Installé à {site.address.city}, {site.founder} se déplace gratuitement dans tout le département. [Zone d'intervention à préciser]</p>
+      </div>
+      <div class="devis-map">
+        <iframe
+          src={mapSrc}
+          title={`Carte de la zone d'intervention (placeholder) d'${site.brand}`}
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+      <p class="devis-map__adresse">{site.address.street} — {site.address.postalCode} {site.address.city}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container media-split media-split--reverse media-split--plain">
+      <div class="media-split__text">
+        <h2>Vous préférez en parler de vive voix ?</h2>
+        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium. Appelez {site.founder} directement : vous parlez à l'artisan qui viendra sur votre toit.</p>
+        <p>[Horaires de disponibilité à préciser]</p>
+        <a class="btn btn--rouge media-split__cta" href={`tel:${site.phoneHref}`}>Appeler le {site.phone}</a>
+      </div>
+      <div class="media-split__media">
+        <img src="/photo-portrait-placeholder.svg" width="450" height="337" alt={`Photo placeholder — ${site.founder}`} />
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .devis-top { padding-block: 32px 56px; }
+  @media (max-width: 900px) {
+    .devis-top { padding-block: 20px 40px; }
+  }
+</style>

@@ -1,0 +1,32 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { site, services } from '../data/site.js';
+import { villes } from '../data/villes.js';
+
+const path = '/plan-du-site/';
+const title = `Plan du site — ${site.brand}`;
+const description = `Retrouvez toutes les pages du site ${site.domain.replace('https://', '')}.`;
+---
+<Layout title={title} description={description} path={path}>
+  <Breadcrumb label="Plan du site" />
+  <section class="section legal-page">
+    <div class="container legal-page__container">
+      <h1>Plan du site</h1>
+      <h2>Pages principales</h2>
+      <ul>
+        <li><a href="/">Accueil</a></li>
+        <li><a href="/devis-gratuit/">Devis gratuit</a></li>
+        <li><a href="/mentions-legales/">Mentions légales</a></li>
+      </ul>
+      <h2>Prestations</h2>
+      <ul>
+        {services.map((s) => <li><a href={s.href}>{s.label}</a></li>)}
+      </ul>
+      <h2>Zones d'intervention</h2>
+      <ul>
+        {villes.map((v) => <li><a href={`/${v.slug}/`}>Couvreur à {v.name}</a></li>)}
+      </ul>
+    </div>
+  </section>
+</Layout>

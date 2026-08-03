@@ -1,0 +1,228 @@
+---
+import '../styles/global.css';
+import { site, mainNav, services } from '../data/site.js';
+import { villes } from '../data/villes.js';
+
+const {
+  title,
+  description,
+  path = '/',
+  ogImage = '/logo-richard-toitures.png',
+  jsonLd = null,
+  // Pages de service (ex. /merci/) : à exclure de l'index Google.
+  noindex = false,
+} = Astro.props;
+
+const canonical = new URL(path, site.domain).toString();
+---
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Police Montserrat auto-hébergée (public/fonts/) : conformité RGPD —
+       aucune requête vers Google Fonts, donc aucune adresse IP visiteur
+       transmise à Google avant tout consentement. -->
+  <link rel="preload" href="/fonts/montserrat-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'} />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:site_name" content={`${site.brand} — Couvreur ${site.address.department}`} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={new URL(ogImage, site.domain).toString()} />
+  {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+  <div class="topbar">
+    <div class="container">
+      <span class="topbar__left">Devis &amp; déplacement gratuits</span>
+      <span class="topbar__right">Artisan couvreur dans le {site.address.region} ({site.address.department})</span>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="logo" href="/" aria-label={`Accueil — ${site.brand}`}>
+        <img src="/logo-richard-toitures.png" alt={`${site.brand}, artisan couvreur en ${site.address.region}`} width="115" height="84" />
+      </a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden />
+      <label for="nav-toggle" class="nav-burger" aria-label="Ouvrir le menu"><span></span></label>
+      <label for="nav-toggle" class="nav-overlay" aria-hidden="true"></label>
+      <div class="nav-panel">
+        <label for="nav-toggle" class="nav-close" aria-label="Fermer le menu"></label>
+        <img class="nav-panel__logo" src="/logo-richard-toitures-blanc.png" width="106" height="78" alt={`${site.brand}, artisan couvreur en ${site.address.region}`} />
+        <nav class="site-nav" aria-label="Navigation principale">
+          {mainNav.map((item) => <a href={item.href}>{item.label}</a>)}
+        </nav>
+        <div class="header-right">
+          <a class="btn-menu btn-menu--rouge" href="/devis-gratuit/">
+            Devis gratuit
+            <span class="btn-menu__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg></span>
+          </a>
+          <a class="btn-menu btn-menu--wa" href={site.whatsapp} target="_blank" rel="noopener" aria-label="Contacter sur WhatsApp">
+            <svg viewBox="0 0 32 32" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M16 .5C7.4.5.5 7.4.5 16c0 2.8.7 5.4 2 7.7L.5 31.5l8-2.1c2.2 1.2 4.8 1.9 7.5 1.9 8.6 0 15.5-6.9 15.5-15.5S24.6.5 16 .5zm0 28.3c-2.5 0-4.8-.7-6.8-1.9l-.5-.3-4.7 1.2 1.3-4.6-.3-.5c-1.3-2.1-2-4.5-2-7 0-7.2 5.9-13.1 13.1-13.1S29.1 8.8 29.1 16 23.2 28.8 16 28.8zm7.2-9.8c-.4-.2-2.3-1.1-2.7-1.3-.4-.1-.6-.2-.9.2s-1 1.3-1.3 1.5c-.2.2-.5.3-.9.1-.4-.2-1.7-.6-3.2-2-1.2-1.1-2-2.4-2.2-2.8-.2-.4 0-.6.2-.8.2-.2.4-.5.6-.7.1-.3.1-.5 0-.7-.1-.2-.9-2.1-1.2-2.9-.3-.7-.6-.6-.9-.7h-.8c-.3 0-.7.1-1.1.5-.4.4-1.4 1.4-1.4 3.4s1.5 3.9 1.7 4.2c.2.3 2.9 4.5 7.1 6.3 1 .4 1.8.7 2.4.9 1 .3 1.9.3 2.6.2.8-.1 2.3-.9 2.7-1.9.3-1 .3-1.8.2-1.9-.1-.2-.3-.3-.7-.5z"></path></svg>
+            WhatsApp
+          </a>
+          <a class="btn-menu btn-menu--phone" href={`tel:${site.phoneHref}`}>
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.6" y="2" width="9.8" height="20" rx="2.9"></rect><line x1="8" y1="18.7" x2="11" y2="18.7"></line><path d="M17.9 8.9a4.6 4.6 0 0 1 0 6.2"></path><path d="M20.6 6.2a8.6 8.6 0 0 1 0 11.6"></path></svg>
+            {site.phone}
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-cta-bar">
+    <a class="btn-menu btn-menu--rouge" href="/devis-gratuit/">
+      Devis gratuit
+      <span class="btn-menu__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg></span>
+    </a>
+    <a class="btn-menu btn-menu--bleu" href={`tel:${site.phoneHref}`}>
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.6" y="2" width="9.8" height="20" rx="2.9"></rect><line x1="8" y1="18.7" x2="11" y2="18.7"></line><path d="M17.9 8.9a4.6 4.6 0 0 1 0 6.2"></path><path d="M20.6 6.2a8.6 8.6 0 0 1 0 11.6"></path></svg>
+      {site.phone}
+    </a>
+  </div>
+
+  <script type="module">
+    const o = () => document.body.classList.toggle("scrolled-past", window.scrollY > 1000);
+    window.addEventListener("scroll", o, { passive: true });
+    o();
+  </script>
+
+  <main id="contenu">
+    <slot />
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-cols">
+        <div class="footer-brand">
+          <span class="footer-logo-badge"><img src="/logo-richard-toitures.png" width="84" height="62" alt={`${site.brand}, artisan couvreur en ${site.address.region}`} /></span>
+          <p class="footer-brand__name">{site.brand}</p>
+          <p>Artisan couvreur dans le {site.address.region} ({site.address.department})</p>
+          <p>{site.address.street}<br />{site.address.postalCode} {site.address.city}</p>
+          <div class="footer-actions">
+            <a class="btn-menu btn-menu--rouge footer-cta__btn" href={`tel:${site.phoneHref}`}>
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.6" y="2" width="9.8" height="20" rx="2.9"></rect><line x1="8" y1="18.7" x2="11" y2="18.7"></line><path d="M17.9 8.9a4.6 4.6 0 0 1 0 6.2"></path><path d="M20.6 6.2a8.6 8.6 0 0 1 0 11.6"></path></svg>
+              {site.phone}
+            </a>
+            <a class="btn-menu footer-cta__quote footer-cta__btn" href="/devis-gratuit/">
+              Devis gratuit
+              <span class="btn-menu__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg></span>
+            </a>
+          </div>
+        </div>
+        <div>
+          <h4>Nos prestations</h4>
+          <ul>
+            {services.map((s) => <li><a href={s.href}>{s.label}</a></li>)}
+          </ul>
+        </div>
+        <div>
+          <h4>{site.address.region} &amp; alentours</h4>
+          <ul class="footer-villes">
+            {villes.map((v) => <li><a href={`/${v.slug}/`}>{v.name}</a></li>)}
+          </ul>
+        </div>
+        <div>
+          <h4>Informations</h4>
+          <ul>
+            <li><a href="/a-propos/">À propos</a></li>
+            <li><a href="/devis-gratuit/">Devis gratuit</a></li>
+            <li><a href="/mentions-legales/">Mentions légales</a></li>
+            <li><a href="/plan-du-site/">Plan du site</a></li>
+            <li><a href="#" data-cookie-settings="true">Gérer les cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">{site.brand} — Artisan couvreur dans le {site.address.region} ({site.address.department}). Devis gratuit et déplacement offert.</div>
+    </div>
+  </footer>
+
+  <div id="cookie-banner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Gestion des cookies" hidden>
+    <div class="cookie-banner__card">
+      <p class="cookie-banner__text">
+        🍪 Nous utilisons des cookies de mesure d'audience (Google Analytics) pour améliorer votre expérience sur ce site. Vous pouvez accepter ou refuser leur dépôt.
+        <a href="/mentions-legales/#cookies">En savoir plus</a>
+      </p>
+      <div class="cookie-banner__actions">
+        <button type="button" class="btn cookie-banner__decline" id="cookie-decline">Refuser</button>
+        <button type="button" class="btn btn--rouge cookie-banner__accept" id="cookie-accept">Tout accepter</button>
+      </div>
+    </div>
+  </div>
+
+  <script define:vars={{ GA_ID: 'G-XXXXXXXXXX' }}>
+    (function () {
+      const CONSENT_KEY = 'rt-cookie-consent';
+      const banner = document.getElementById('cookie-banner');
+
+      function loadGA() {
+        if (window.__gaLoaded) return;
+        window.__gaLoaded = true;
+        const s = document.createElement('script');
+        s.async = true;
+        s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { window.dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', GA_ID);
+      }
+
+      function showBanner() {
+        banner.hidden = false;
+        requestAnimationFrame(() => banner.classList.add('is-visible'));
+      }
+
+      function hideBanner() {
+        banner.classList.remove('is-visible');
+        setTimeout(() => { banner.hidden = true; }, 450);
+      }
+
+      function initConsent() {
+        const consent = localStorage.getItem(CONSENT_KEY);
+        if (consent === 'accepted') { loadGA(); return; }
+        if (consent === 'declined') { return; }
+        const onScroll = () => {
+          if (window.scrollY > 100) {
+            showBanner();
+            window.removeEventListener('scroll', onScroll);
+          }
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      }
+
+      document.getElementById('cookie-accept').addEventListener('click', () => {
+        localStorage.setItem(CONSENT_KEY, 'accepted');
+        loadGA();
+        hideBanner();
+      });
+
+      document.getElementById('cookie-decline').addEventListener('click', () => {
+        localStorage.setItem(CONSENT_KEY, 'declined');
+        hideBanner();
+      });
+
+      document.addEventListener('click', (e) => {
+        const trigger = e.target.closest('[data-cookie-settings]');
+        if (!trigger) return;
+        e.preventDefault();
+        showBanner();
+      });
+
+      initConsent();
+    })();
+  </script>
+</body>
+</html>

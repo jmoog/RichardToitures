@@ -1,0 +1,126 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import TrustBand from '../components/TrustBand.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import NearbyLinks from '../components/NearbyLinks.astro';
+import Faq from '../components/Faq.astro';
+import { site } from '../data/site.js';
+import { pageSchema } from '../data/schema.js';
+
+const path = '/travaux-de-couverture/';
+const title = `Travaux de couverture en ${site.address.region} — ${site.brand} (${site.address.department})`;
+const description = `${site.founder}, artisan couvreur en ${site.address.region} : pose et réfection de toiture, tuiles, ardoises, zinguerie et gouttières. [Description à remplacer]`;
+---
+<Layout title={title} description={description} path={path} jsonLd={pageSchema(path, 'Travaux de couverture')}>
+  <Breadcrumb label="Travaux de couverture" />
+
+  <section class="page-hero">
+    <div class="container">
+      <h1>Couvreur {site.address.department} : tous vos travaux de couverture</h1>
+      <p class="page-hero__artisan">{site.brand}</p>
+      <div class="page-hero__grid">
+        <div class="page-hero__text">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, ut enim ad minim veniam quis nostrud exercitation ullamco laboris.</p>
+          <p>{site.founder} exerce comme <strong>couvreur dans le {site.address.department}</strong>, à partir de {site.address.city}. Pose neuve, réfection, entretien, zinguerie : [description des prestations à préciser]. Devis et déplacement gratuits.</p>
+          <div class="actions">
+            <a class="btn btn--rouge btn--tel" href={`tel:${site.phoneHref}`}>{site.phone}</a>
+            <a class="btn btn--ghost" href="/devis-gratuit/" style="color:#fff;border-color:#fff">Demander un devis<span class="btn-menu__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg></span></a>
+          </div>
+        </div>
+        <div class="page-hero__media">
+          <img src="/photo-hero-placeholder.svg" width="891" height="706" alt="Photo placeholder — travaux de couverture" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <TrustBand />
+
+  <section class="section">
+    <div class="container media-split media-split--plain">
+      <div class="media-split__text">
+        <h2>Pose et réfection de couverture : tuiles, ardoises, zinc</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <strong>Sed do eiusmod tempor incididunt</strong> ut labore et dolore magna aliqua, ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum — voir notre page <a href="/renovation-toiture/">rénovation de toiture</a> pour un projet plus complet, ou notre <a href="/couvreur-tours/">page couvreur à Tours</a> pour la zone de {site.address.city}.</p>
+        <a class="btn btn--rouge media-split__cta" href="/devis-gratuit/">Demander un devis<span class="btn-menu__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg></span></a>
+      </div>
+      <div class="media-split__media">
+        <img src="/photo-medium-placeholder.svg" width="900" height="675" alt="Photo placeholder — pose de tuiles" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--gris">
+    <div class="container media-split media-split--reverse">
+      <div class="media-split__text">
+        <h2>Zinguerie : gouttières, noues et chéneaux</h2>
+        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <strong>[Détail des prestations de zinguerie à préciser]</strong>.</p>
+        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium — au premier signe, une <a href="/reparation-toiture-fuite/">réparation de toiture avec recherche de fuite</a> cible le problème.</p>
+        <a class="btn btn--rouge btn--tel media-split__cta" href={`tel:${site.phoneHref}`}>{site.phone}</a>
+      </div>
+      <div class="media-split__media">
+        <img src="/photo-square-placeholder.svg" width="400" height="400" alt="Photo placeholder — gouttières et chéneaux en zinc" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Quelle couverture pour votre maison ?</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit — le choix dépend du bâti existant, de la pente du toit et des règles d'urbanisme de votre commune.</p>
+      </div>
+      <table class="tableau">
+        <thead><tr><th>Matériau</th><th>Points forts</th><th>À savoir</th></tr></thead>
+        <tbody>
+          <tr><td>Tuile mécanique</td><td>Lorem ipsum dolor sit amet.</td><td>[Info à préciser]</td></tr>
+          <tr><td>Tuile plate</td><td>Consectetur adipiscing elit.</td><td>[Info à préciser]</td></tr>
+          <tr><td>Ardoise naturelle</td><td>Sed do eiusmod tempor incididunt.</td><td>[Info à préciser]</td></tr>
+          <tr><td>Zinc (joint debout)</td><td>Ut labore et dolore magna aliqua.</td><td>[Info à préciser]</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section section--gris">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Comment se déroulent vos travaux de couverture ?</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+      </div>
+      <ol class="prose-etapes">
+        <li><strong>Visite et devis gratuits</strong> : lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+        <li><strong>Préparation</strong> : sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
+        <li><strong>Dépose et contrôle</strong> : ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</li>
+        <li><strong>Pose</strong> : duis aute irure dolor in reprehenderit in voluptate velit esse cillum.</li>
+        <li><strong>Réception</strong> : excepteur sint occaecat cupidatat non proident, sunt in culpa.</li>
+      </ol>
+    </div>
+  </section>
+
+  <CtaBanner
+    title={`Un couvreur du ${site.address.department}, pas une plateforme`}
+    text={`Lorem ipsum dolor sit amet, consectetur adipiscing elit. ${site.founder} se déplace, examine votre couverture et vous remet un devis clair.`}
+    image="/photo-portrait-placeholder.svg"
+    imageAlt={`Photo placeholder — ${site.founder}`}
+  />
+
+  <NearbyLinks
+    title={`Votre couvreur près de chez vous, dans tout le ${site.address.department}`}
+    text={`Basé à ${site.address.city}, ${site.founder} couvre l'ensemble du département — devis et déplacement gratuits.`}
+    links={[
+      { href: '/couvreur-tours/', label: 'Tours' },
+    ]}
+  />
+
+  <Faq
+    title={`Prix, délais, garanties : vos questions à un couvreur du ${site.address.department}`}
+    items={[
+      { q: 'Combien coûte une couverture neuve ?', a: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. [Fourchette de prix à préciser]. Le devis gratuit détaille chaque poste.' },
+      { q: 'Quelles garanties sur les travaux ?', a: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. [Garanties à préciser — assurance décennale, etc.]" },
+      { q: 'Faut-il une autorisation pour refaire sa toiture ?', a: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. [Démarches administratives à préciser]." },
+      { q: 'Mon toit est terne mais étanche : faut-il des travaux ?', a: 'Duis aute irure dolor in reprehenderit — un <a href="/nettoyage-demoussage-toiture/">nettoyage et démoussage de toiture</a> suffit parfois. [Réponse à préciser].' },
+    ]}
+  />
+</Layout>

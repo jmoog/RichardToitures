@@ -1,0 +1,23 @@
+{
+  "name": "richard-toitures",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site Richard Toitures — artisan couvreur en Indre-et-Loire (37), sous Astro. Contenu de démarrage en lorem ipsum, à remplacer par le vrai contenu.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "start": "node ./dist/server/entry.mjs",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/node": "^8.3.4",
+    "astro": "^4.16.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "playwright": "^1.62.1",
+    "typescript": "^5.9.3"
+  }
+}

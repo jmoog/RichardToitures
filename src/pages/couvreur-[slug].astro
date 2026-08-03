@@ -1,0 +1,143 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import TrustBand from '../components/TrustBand.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import NearbyLinks from '../components/NearbyLinks.astro';
+import { site } from '../data/site.js';
+import { villes, getVilleBySlug } from '../data/villes.js';
+import { pageSchema } from '../data/schema.js';
+
+export function getStaticPaths() {
+  return villes.map((v) => ({ params: { slug: v.slug.replace('couvreur-', '') }, props: { ville: v } }));
+}
+
+const { ville } = Astro.props;
+const path = `/${ville.slug}/`;
+const breadcrumbLabel = `Couvreur à ${ville.name}`;
+const nearbyLinks = (ville.nearby || []).map((slug) => {
+  const v = getVilleBySlug(slug);
+  return v ? { href: `/${v.slug}/`, label: `Couvreur à ${v.name}` } : null;
+}).filter(Boolean);
+---
+<Layout title={ville.metaTitle} description={ville.metaDescription} path={path} jsonLd={pageSchema(path, breadcrumbLabel)}>
+  <Breadcrumb label={breadcrumbLabel} />
+
+  <section class="page-hero">
+    <div class="container">
+      <h1>Entreprise de couverture à {ville.name} : devis gratuit, artisan local</h1>
+      <p class="page-hero__artisan">{site.brand}</p>
+      <div class="page-hero__grid">
+        <div class="page-hero__text">
+          {ville.intro.map((p) => <p>{p}</p>)}
+          <div class="actions">
+            <a class="btn btn--rouge btn--tel" href={`tel:${site.phoneHref}`} aria-label={`Appeler le ${site.phone}`} title={`Appeler le ${site.phone}`}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.6" y="2" width="9.8" height="20" rx="2.9"></rect><line x1="8" y1="18.7" x2="11" y2="18.7"></line><path d="M17.9 8.9a4.6 4.6 0 0 1 0 6.2"></path><path d="M20.6 6.2a8.6 8.6 0 0 1 0 11.6"></path></svg>{site.phone}</a>
+            <a class="btn btn--ghost" href="/devis-gratuit/" style="color:#fff;border-color:#fff">Demander un devis<span class="btn-menu__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg></span></a>
+          </div>
+        </div>
+        <div class="page-hero__media">
+          <img src="/photo-hero-placeholder.svg" width="891" height="706" alt={`Photo placeholder — chantier à ${ville.name}`} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <TrustBand />
+
+  <section class="section promo-section">
+    <div class="section-head section-head--txt-left">
+      <h2>Un artisan couvreur à {ville.name}</h2>
+      <p><strong>[Argument certification / aides à préciser]</strong> — lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </div>
+    <div class="promo-grid">
+      <a class="promo-card promo-card--accent promo-card--feature" href="/travaux-de-couverture/">
+        <h3>Travaux de couverture à {ville.name}</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+        <img class="promo-card__photo" src="/photo-wide-placeholder.svg" width="1063" height="709" alt={`Photo placeholder — travaux de couverture à ${ville.name}`} />
+        <span class="promo-card__brand"><span class="promo-card__more" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h11.5M12 6.5l5.5 5.5-5.5 5.5"></path></svg></span></span>
+      </a>
+      <a class="promo-card" href="/renovation-toiture/">
+        <h3>Rénovation de toiture à {ville.name}</h3>
+        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+        <img class="promo-card__photo" src="/photo-wide-placeholder.svg" width="1063" height="709" alt={`Photo placeholder — rénovation de toiture à ${ville.name}`} />
+        <span class="promo-card__brand"><span class="promo-card__more" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h11.5M12 6.5l5.5 5.5-5.5 5.5"></path></svg></span></span>
+      </a>
+      <a class="promo-card" href="/isolation-des-combles/">
+        <h3>Isolation des combles à {ville.name}</h3>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        <img class="promo-card__photo" src="/photo-wide-placeholder.svg" width="1063" height="709" alt={`Photo placeholder — isolation des combles à ${ville.name}`} />
+        <span class="promo-card__brand"><span class="promo-card__more" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h11.5M12 6.5l5.5 5.5-5.5 5.5"></path></svg></span></span>
+      </a>
+      <a class="promo-card" href="/nettoyage-demoussage-toiture/">
+        <h3>Nettoyage &amp; démoussage à {ville.name}</h3>
+        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.</p>
+        <img class="promo-card__photo" src="/photo-wide-placeholder.svg" width="1063" height="709" alt={`Photo placeholder — nettoyage et démoussage à ${ville.name}`} />
+        <span class="promo-card__brand"><span class="promo-card__more" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h11.5M12 6.5l5.5 5.5-5.5 5.5"></path></svg></span></span>
+      </a>
+    </div>
+  </section>
+
+  <section class="split-feature">
+    <div class="split-feature__inner">
+      <div class="split-feature__left">
+        <h2>Le spécialiste de la rénovation de toiture à {ville.name}</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua — découvrez notre page <a href="/renovation-toiture/">rénovation de toiture</a>.</p>
+        <ul class="split-feature__list">
+          <li class="is-active">Devis gratuit</li>
+          <li>[Délai d'intervention à préciser]</li>
+          <li>[Garanties à préciser]</li>
+        </ul>
+      </div>
+      <div class="split-feature__right">
+        <img class="split-feature__photo" src="/photo-medium-placeholder.svg" width="900" height="675" alt={`Photo placeholder — rénovation de toiture à ${ville.name}`} />
+        <div class="split-feature__card">
+          <span class="split-feature__badge">[Badge à préciser]</span>
+          <p><strong>[Liste de matériaux à préciser]</strong> : tous les matériaux de couverture sont travaillés, dans le respect du style de votre maison.</p>
+          <p>Devis et déplacement gratuits à {ville.name} comme dans tout le département.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBanner
+    title={`Besoin d'un couvreur à ${ville.name} ?`}
+    text={`Lorem ipsum dolor sit amet, consectetur adipiscing elit. ${site.founder} se déplace gratuitement, examine votre couverture et vous remet un devis clair.`}
+    image="/photo-portrait-placeholder.svg"
+    imageAlt={`Photo placeholder — ${site.founder}`}
+  />
+
+  <section class="section">
+    <div class="container media-split">
+      <div class="media-split__text">
+        <h2>Nettoyage et démoussage de toiture à {ville.name}</h2>
+        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium. Un <a href="/nettoyage-demoussage-toiture/">nettoyage et démoussage de toiture</a> régulier prolonge la vie de votre couverture.</p>
+        <p>Totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+      </div>
+      <div class="media-split__media">
+        <img src="/photo-medium-placeholder.svg" width="900" height="675" alt={`Photo placeholder — toiture nettoyée à ${ville.name}`} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section media-section--dark">
+    <div class="container media-split media-split--reverse">
+      <div class="media-split__text">
+        <h2>Gouttières, noues et chéneaux à {ville.name}</h2>
+        <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+        <p>Pose et remplacement de gouttières, façonnage des noues, chéneaux et abergements : ces ouvrages font partie de nos <a href="/travaux-de-couverture/">travaux de couverture</a>.</p>
+      </div>
+      <div class="media-split__media">
+        <img src="/photo-square-placeholder.svg" width="400" height="400" alt={`Photo placeholder — gouttières et chéneaux à ${ville.name}`} />
+      </div>
+    </div>
+  </section>
+
+  {nearbyLinks.length > 0 && (
+    <NearbyLinks
+      title={`${site.brand} intervient aussi autour de ${ville.name}`}
+      text="Le déplacement reste gratuit dans les communes voisines — et dans tout le département."
+      links={nearbyLinks}
+      gris={true}
+    />
+  )}
+</Layout>
