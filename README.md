@@ -31,6 +31,7 @@ npm start       # lance le serveur de production sur le port 4321
 - `src/components/` — blocs réutilisés (bandeau de confiance, encart d'appel à l'action, liens vers les communes, FAQ, fil d'Ariane).
 - `src/pages/` — une page d'accueil, une page de prestation (`travaux-de-couverture.astro`, à dupliquer pour les autres prestations listées dans `site.js`), « devis gratuit », « mentions légales », « merci » (confirmation), « plan du site ».
 - `src/pages/api/devis.ts` — route serveur qui reçoit le formulaire, filtre le spam et envoie les e-mails via l'API Brevo.
+- `src/lib/antispam.ts` — logique de scoring anti-spam, partagée avec les autres sites. Les règles (mots-clés, seuil, indicatifs, mots anglais) viennent du dépôt central `antispam-rules` (variable `SPAM_RULES_URL`), avec un jeu de règles intégré en secours si l'URL est absente ou injoignable.
 - `public/` — images et fichiers statiques. Les logos et photos sont pour l'instant des **SVG placeholder** générés automatiquement (fond gris avec le texte « Photo placeholder ») : à remplacer par les vraies images (logo, photos de chantier, portrait de l'artisan, certifications).
 - `Dockerfile` — image de production (voir plus bas).
 
@@ -56,10 +57,12 @@ Modèle complet dans `.env.example`. Copiez-le en `.env` pour tester en local (j
 | `FROM_NAME` | Nom affiché de l'expéditeur |
 | `PUBLIC_TURNSTILE_SITE_KEY` | Clé publique anti-spam Cloudflare Turnstile (**variable de build**, facultative) |
 | `TURNSTILE_SECRET_KEY` | Clé secrète anti-spam (runtime, facultative) |
+| `SPAM_RULES_URL` | URL du JSON de règles anti-spam centralisées, partagé entre plusieurs sites (facultative — voir `src/lib/antispam.ts`) |
+| `SPAM_RULES_TTL` | Durée du cache des règles en secondes (facultative, défaut 3600 = 1h) |
 
 **Pourquoi l'API Brevo et pas SMTP.** Beaucoup d'hébergeurs bloquent les ports SMTP sortants (25, 465, 587). L'API HTTPS de Brevo passe par le port 443, qui n'est jamais bloqué.
 
-**Anti-spam intégré, même sans Turnstile.** La route `/api/devis` applique déjà un honeypot, un time-trap (rejet des envois trop rapides) et un scoring de contenu (mots-clés de démarchage SEO, liens, indicatifs étrangers, rafales d'emojis). Turnstile est une couche supplémentaire optionnelle.
+**Anti-spam intégré, même sans Turnstile.** La route `/api/devis` applique déjà un honeypot, un time-trap (rejet des envois trop rapides) et un scoring de contenu (mots-clés de démarchage SEO, liens, indicatifs étrangers, rafales d'emojis) via `src/lib/antispam.ts`. Turnstile est une couche supplémentaire optionnelle.
 
 ## Mise en ligne (déploiement conteneur)
 

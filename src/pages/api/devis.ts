@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { site } from '../../data/site.js';
+import { spamScore, type DevisData } from '../../lib/antispam';
 
 // Route rendue à la demande (pas de prérendu statique).
 export const prerender = false;
@@ -11,6 +12,9 @@ export const prerender = false;
 //   FROM_EMAIL           → expéditeur vérifié dans Brevo
 //   FROM_NAME            → nom de l'expéditeur (optionnel)
 //   TURNSTILE_SECRET_KEY → secret Cloudflare Turnstile (optionnel)
+//   SPAM_RULES_URL       → URL du JSON de règles anti-spam centralisées (optionnel,
+//                          voir src/lib/antispam.ts — fallback intégré si absent)
+//   SPAM_RULES_TTL       → durée du cache des règles en secondes (optionnel, défaut 3600)
 //
 // Pourquoi Brevo et pas SMTP direct : beaucoup d'hébergeurs bloquent les
 // ports SMTP sortants (25/465/587). L'API HTTPS de Brevo (port 443) contourne
@@ -66,15 +70,6 @@ function escapeHtml(s: unknown): string {
 
 function nl2br(s: unknown): string {
   return escapeHtml(s).replace(/\r?\n/g, '<br>');
-}
-
-interface DevisData {
-  nom: string;
-  tel: string;
-  email: string;
-  ville: string;
-  prestation: string;
-  message?: string;
 }
 
 // ────────────────────────────────────────────────────────────────────────
@@ -282,89 +277,13 @@ function ackTemplate(d: DevisData) {
 //
 // Ce spam-là remplit correctement les champs (le honeypot ne suffit pas). On
 // le reconnaît à son CONTENU : pitch SEO/marketing, liens, numéros étrangers,
-// rafales d'emojis. On additionne des points par signal ; au-delà du seuil on
-// rejette EN SILENCE (réponse 200 ok:true → le spammeur ne sait pas qu'il est
-// filtré et n'adapte pas son envoi). 5 = bon compromis de départ.
+// rafales d'emojis. La logique de scoring et les règles (mots-clés, seuil,
+// indicatifs, mots anglais) vivent dans src/lib/antispam.ts, chargées depuis
+// le dépôt central `antispam-rules` (variable SPAM_RULES_URL) avec fallback
+// intégré si l'URL est absente ou injoignable. Au-delà du seuil, rejet EN
+// SILENCE (réponse 200 ok:true → le spammeur ne sait pas qu'il est filtré et
+// n'adapte pas son envoi).
 // ────────────────────────────────────────────────────────────────────────
-
-const SPAM_THRESHOLD = 5;
-
-const SPAM_KEYWORDS: Array<{ re: RegExp; pts: number; label: string }> = [
-  { re: /\bavis\s+(google|positif|5\s*etoile)/i, pts: 4, label: 'avis google' },
-  { re: /\b(google\s+maps|trustpilot|tripadvisor|thumbtack|yelp)\b/i, pts: 3, label: 'plateformes avis' },
-  { re: /\b(seo|referencement)\s+(all\s+)?service/i, pts: 3, label: 'seo service' },
-  { re: /marketing\s+digital/i, pts: 3, label: 'marketing digital' },
-  { re: /\b(premiere|1ere)\s+page\s+(de\s+)?google/i, pts: 3, label: '1ère page google' },
-  { re: /\bfreelance\b/i, pts: 2, label: 'freelance' },
-  { re: /\b(rank|ranking|classement)\b.*\bgoogle\b/i, pts: 2, label: 'ranking google' },
-  { re: /\b(boost|propuls|promo(tion|uvoir))\b.*\b(entreprise|business|vente)/i, pts: 2, label: 'boost business' },
-  { re: /\b(backlink|backlinks|guest\s*post)\b/i, pts: 3, label: 'backlinks' },
-  { re: /\b(whatsapp|telegram|skype)\b/i, pts: 2, label: 'messagerie démarchage' },
-];
-
-// Indicatifs internationaux à surveiller en priorité — à ajuster selon la
-// clientèle réelle du couvreur.
-const SPAM_PHONE_PREFIXES = ['+880', '+234', '+92', '+91', '+233', '+212255'];
-
-function normalize(s: string): string {
-  return s
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase();
-}
-
-interface SpamVerdict {
-  score: number;
-  reasons: string[];
-}
-
-function spamScore(d: DevisData): SpamVerdict {
-  const reasons: string[] = [];
-  let score = 0;
-  const haystackRaw = `${d.message || ''} ${d.nom} ${d.ville}`;
-  const haystack = normalize(haystackRaw);
-
-  for (const { re, pts, label } of SPAM_KEYWORDS) {
-    if (re.test(haystack)) {
-      score += pts;
-      reasons.push(`kw:${label}(+${pts})`);
-    }
-  }
-
-  const urlMatches = haystackRaw.match(/https?:\/\/|wa\.me|t\.me|bit\.ly|\b\w+\.(ru|cn|top|xyz)\b/gi);
-  if (urlMatches) {
-    const pts = Math.min(urlMatches.length * 2, 6);
-    score += pts;
-    reasons.push(`liens×${urlMatches.length}(+${pts})`);
-  }
-
-  const telClean = (d.tel || '').replace(/[\s.\-()]/g, '');
-  for (const prefix of SPAM_PHONE_PREFIXES) {
-    if (telClean.startsWith(prefix)) {
-      score += 4;
-      reasons.push(`tel:${prefix}(+4)`);
-      break;
-    }
-  }
-
-  const emojiCount = (haystackRaw.match(
-    /[\u2600-\u27BF]|[\uD83C-\uDBFF\uDC00-\uDFFF]|[\u2705\u2B50\u260E\uFE0F]/g
-  ) || []).length;
-  if (emojiCount >= 4) {
-    const pts = Math.min(Math.floor(emojiCount / 2), 5);
-    score += pts;
-    reasons.push(`emojis×${emojiCount}(+${pts})`);
-  }
-
-  const msg = normalize(d.message || '');
-  const enHits = (msg.match(/\b(your|business|service|please|will|contact|provide|expert|verified|review)\b/g) || []).length;
-  if (enHits >= 4) {
-    score += 2;
-    reasons.push(`anglais×${enHits}(+2)`);
-  }
-
-  return { score, reasons };
-}
 
 // ────────────────────────────────────────────────────────────────────────
 // Handler POST /api/devis
@@ -447,10 +366,10 @@ export const POST: APIRoute = async ({ request }) => {
 
   // Anti-spam #3 : scoring de contenu (le vrai filtre contre le démarchage SEO
   // qui remplit correctement les champs). Au-delà du seuil, rejet EN SILENCE.
-  const verdict = spamScore(data);
-  if (verdict.score >= SPAM_THRESHOLD) {
+  const verdict = await spamScore(data);
+  if (verdict.score >= verdict.threshold) {
     console.warn(
-      `[devis] spam bloqué (score ${verdict.score}/${SPAM_THRESHOLD}) — ${verdict.reasons.join(', ')}`
+      `[devis] spam bloqué (score ${verdict.score}/${verdict.threshold}, règles ${verdict.version}) — ${verdict.reasons.join(', ')}`
     );
     return jsonResponse(200, { ok: true });
   }
