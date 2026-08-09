@@ -51,7 +51,7 @@ const prestationsOptions = [
           <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Pour une urgence, appelez directement le {site.phone}.</p>
         </div>
 
-        <img class="devis-photo" src="/photo-hero-placeholder.svg" width="891" height="706" alt="Photo placeholder — chantier de toiture" />
+        <img class="devis-photo" src="/photos-chantier/reutilisation-tuiles-anciennes-grange-richard-toitures-35.webp" width="1600" height="777" loading="lazy" decoding="async" alt={`Tuiles anciennes triées et reposées sur un liteaunage neuf — ${site.brand}, couvreur en ${site.address.region}`} />
       </div>
 
       <aside class="devis-form-card">
@@ -162,7 +162,7 @@ const prestationsOptions = [
       <div class="devis-map">
         <iframe
           src={mapSrc}
-          title={`Carte de la zone d'intervention (placeholder) d'${site.brand}`}
+          title={`Carte de la zone d'intervention de ${site.brand}`}
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
         ></iframe>
@@ -180,7 +180,7 @@ const prestationsOptions = [
         <a class="btn btn--rouge media-split__cta" href={`tel:${site.phoneHref}`}>Appeler le {site.phone}</a>
       </div>
       <div class="media-split__media">
-        <img src="/photo-portrait-placeholder.svg" width="450" height="337" alt={`Photo placeholder — ${site.founder}`} />
+        <img class="devis-appel__photo" src="/photos-chantier/couverture-ardoise-echafaudage-richard-toitures-30-1.webp" width="1200" height="1600" loading="lazy" decoding="async" alt={`Toiture en ardoise refaite avec pose de fenêtres de toit, échafaudage en place — ${site.brand}, couvreur en ${site.address.region}`} />
       </div>
     </div>
   </section>
@@ -188,6 +188,9 @@ const prestationsOptions = [
 
 <style>
   .devis-top { padding-block: 32px 56px; }
+  /* Photo du bloc « en parler de vive voix » : portrait (1200x1600) dans un
+     cadre 4/3. Le crop centré coupait le faîtage ; on remonte la fenêtre. */
+  .devis-appel__photo { object-position: center 40%; }
   @media (max-width: 900px) {
     .devis-top { padding-block: 20px 40px; }
   }
