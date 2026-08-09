@@ -15,6 +15,9 @@ export const site = {
     street: 'Lieu-dit Glatinet',
     postalCode: '37300',
     city: 'Joué-lès-Tours',
+    // « Indre-et-Loire » est FÉMININ et commence par une voyelle : on écrit
+    // « en Indre-et-Loire » et « dans toute l'Indre-et-Loire ».
+    // Jamais « dans le Indre-et-Loire ».
     region: 'Indre-et-Loire',
     department: '37',
     country: 'FR',

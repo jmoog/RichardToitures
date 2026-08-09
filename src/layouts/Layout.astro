@@ -44,7 +44,7 @@ const canonical = new URL(path, site.domain).toString();
   <div class="topbar">
     <div class="container">
       <span class="topbar__left">Devis &amp; déplacement gratuits</span>
-      <span class="topbar__right">Artisan couvreur dans le {site.address.region} ({site.address.department})</span>
+      <span class="topbar__right">Artisan couvreur en {site.address.region} ({site.address.department})</span>
     </div>
   </div>
 
@@ -107,7 +107,7 @@ const canonical = new URL(path, site.domain).toString();
         <div class="footer-brand">
           <span class="footer-logo-badge"><img src="/logo-richard-toitures.png" width="84" height="62" alt={`${site.brand}, artisan couvreur en ${site.address.region}`} /></span>
           <p class="footer-brand__name">{site.brand}</p>
-          <p>Artisan couvreur dans le {site.address.region} ({site.address.department})</p>
+          <p>Artisan couvreur en {site.address.region} ({site.address.department})</p>
           <p>{site.address.street}<br />{site.address.postalCode} {site.address.city}</p>
           <div class="footer-actions">
             <a class="btn-menu btn-menu--rouge footer-cta__btn" href={`tel:${site.phoneHref}`}>
@@ -143,7 +143,7 @@ const canonical = new URL(path, site.domain).toString();
           </ul>
         </div>
       </div>
-      <div class="footer-bottom">{site.brand} — Artisan couvreur dans le {site.address.region} ({site.address.department}). Devis gratuit et déplacement offert.</div>
+      <div class="footer-bottom">{site.brand} — Artisan couvreur en {site.address.region} ({site.address.department}). Devis gratuit et déplacement offert.</div>
     </div>
   </footer>
 

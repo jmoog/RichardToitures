@@ -21,7 +21,7 @@ export function localBusinessGraph() {
       '@id': `${site.domain}/#localbusiness`,
       name: site.brand,
       alternateName: `Couvreur ${site.address.department} — ${site.brand}`,
-      description: `Artisan couvreur dans le ${site.address.region} (${site.address.department}). Travaux de couverture, rénovation et réparation de toiture, isolation, ravalement de façade, ramonage. [Description à compléter]`,
+      description: `Artisan couvreur en ${site.address.region} (${site.address.department}). Travaux de couverture, rénovation et réparation de toiture, isolation, ravalement de façade, ramonage. [Description à compléter]`,
       url: `${site.domain}/`,
       image: `${site.domain}/logo-richard-toitures.png`,
       logo: `${site.domain}/logo-richard-toitures.png`,
@@ -56,7 +56,7 @@ export function localBusinessGraph() {
       ],
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
-        name: `Prestations de couverture dans le ${site.address.region}`,
+        name: `Prestations de couverture en ${site.address.region}`,
         itemListElement: services.map((s) => ({
           '@type': 'Offer',
           itemOffered: { '@type': 'Service', name: s.label, url: `${site.domain}${s.href}` },
