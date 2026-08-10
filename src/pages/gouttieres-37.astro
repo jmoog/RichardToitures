@@ -1,0 +1,263 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import TrustBand from '../components/TrustBand.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import Faq from '../components/Faq.astro';
+import { site } from '../data/site.js';
+import { pageSchema } from '../data/schema.js';
+
+const path = '/gouttieres-37/';
+// 46 caractères.
+const title = 'Gouttières 37 : Pose, Noues & Chéneaux en Zinc';
+// 155 caractères.
+const description = `Pose, remplacement et réparation de gouttières, noues et chéneaux (zinc, aluminium, PVC) par un couvreur zingueur en ${site.address.region}. Devis gratuit et tarifs.`;
+
+// FAQ : sert à la fois au composant <Faq> (a = HTML) et au balisage FAQPage
+// (texte brut, balises retirées ci-dessous).
+const faq = [
+  {
+    q: 'Zinc, aluminium ou PVC : que choisir pour ses gouttières ?',
+    a: "Le zinc se soude : les jonctions sont étanches dans la masse, l'ouvrage se répare et tient plusieurs décennies — c'est le choix que je recommande le plus souvent. L'aluminium laqué offre des teintes assorties à la façade et se pose en longueurs serties, sans soudure. Le PVC reste le plus économique, mais ses raccords collés fatiguent avec les écarts de température et se prêtent mal à la réparation.",
+  },
+  {
+    q: 'Quelle est la bonne pente pour une gouttière ?',
+    a: "0,5 cm par mètre en direction de la naissance : c'est la pente que je règle crochet par crochet au moment de la pose. En dessous, l'eau stagne et les dépôts s'accumulent ; au-delà, la gouttière se voit inclinée depuis la rue et déborde à la naissance lors des gros débits. Sur un ouvrage existant, une pente perdue se corrige en reprenant la ligne de crochets.",
+  },
+  {
+    q: 'À quelle fréquence faut-il entretenir ses gouttières ?',
+    a: 'Deux fois par an — au printemps et à l\'automne —, davantage sous les arbres. Feuilles et dépôts obstruent les naissances, l\'eau déborde et finit en coulures sur la façade. Je propose ce curage avec contrôle des pentes, des fixations et des joints dans le cadre du <a href="/nettoyage-toiture-37/">nettoyage de toiture</a>, avec pose de crapaudines aux naissances.',
+  },
+  {
+    q: 'Peut-on remplacer une seule longueur de gouttière ?',
+    a: "Oui, à condition de retrouver le même profil — demi-ronde ou carrée — et le même développé. Sur le zinc, la longueur neuve se soude à l'existant et la jonction reste invisible et étanche. Une règle à connaître : on ne mélange pas les métaux entre eux, une gouttière zinc raccordée à des éléments incompatibles se perce prématurément au contact.",
+  },
+  {
+    q: "Qu'est-ce qu'un chéneau, et en quoi diffère-t-il d'une gouttière ?",
+    a: "La gouttière est suspendue en rive de toit par des crochets. Le chéneau, lui, est porté par la construction : encaissé entre deux versants ou posé en pied de versant, façonné en zinc soudé sur son support. Il collecte de plus gros volumes d'eau, mais ses soudures et ses boîtes à eau demandent une surveillance plus attentive — une fuite de chéneau traverse directement le bâtiment.",
+  },
+  {
+    q: "Que faire si l'eau déborde ou coule le long de la façade ?",
+    a: 'Trois causes possibles, dans l\'ordre : une obstruction aux naissances, une pente perdue, ou un percement — soudure fendue, jonction ouverte. Je diagnostique sur place et je traite la cause, pas seulement le symptôme. N\'attendez pas : les coulures répétées imbibent les murs, et une <a href="/reparation-toiture-37/">réparation de toiture</a> simple aujourd\'hui évite une reprise de façade demain.',
+  },
+];
+
+const jsonLd = pageSchema(path, 'Gouttières, noues et chéneaux');
+jsonLd['@graph'].push({
+  '@type': 'FAQPage',
+  '@id': `${site.domain}${path}#faq`,
+  mainEntity: faq.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a.replace(/<[^>]+>/g, '') },
+  })),
+});
+---
+<Layout title={title} description={description} path={path} jsonLd={jsonLd}>
+  <Breadcrumb label="Gouttières, noues & chéneaux" />
+
+  <!-- Bloc 1 — Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <h1>Gouttières, noues et chéneaux en {site.address.region}</h1>
+      <p class="page-hero__artisan">{site.brand}</p>
+      <div class="page-hero__grid">
+        <div class="page-hero__text">
+          <p><strong>Pose, remplacement et réparation de gouttières, de noues et de chéneaux dans le {site.address.department}, par un couvreur zingueur.</strong> Installé à {site.address.city}, je façonne et je pose ces ouvrages en zinc, en aluminium et en PVC chez les particuliers et les professionnels, dans toute l'{site.address.region}.</p>
+          <p>Une évacuation bien dimensionnée et bien réglée, c'est une façade et des fondations qui restent au sec.</p>
+          <ul class="page-hero__list">
+            <li>Devis gratuit en 24 h</li>
+            <li>Garantie décennale</li>
+            <li>Zinc, aluminium, PVC</li>
+          </ul>
+          <!-- Preuve chiffrée (gabarit bloc 1) : à activer quand la fiche Google
+               existera avec de vrais avis — jamais d'avis fictifs. -->
+          <div class="actions">
+            <a class="btn btn--rouge btn--tel" href={`tel:${site.phoneHref}`} aria-label={`Appeler le ${site.phone}`} title={`Appeler le ${site.phone}`}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.6" y="2" width="9.8" height="20" rx="2.9"></rect><line x1="8" y1="18.7" x2="11" y2="18.7"></line><path d="M17.9 8.9a4.6 4.6 0 0 1 0 6.2"></path><path d="M20.6 6.2a8.6 8.6 0 0 1 0 11.6"></path></svg>{site.phone}</a>
+            <a class="btn btn--ghost" href="/devis-gratuit/" style="color:#fff;border-color:#fff">Demander un devis<span class="btn-menu__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg></span></a>
+          </div>
+        </div>
+        <div class="page-hero__media">
+          <img src="/photos-chantier/zinguerie-pose-gouttieres-richard-toitures-11-3.webp" width="1600" height="1200" fetchpriority="high" decoding="async" alt={`Gouttières en zinc posées le long d'une toiture — ${site.brand}, couvreur zingueur en ${site.address.region}`} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <TrustBand />
+
+  <!-- Bloc 2 — Introduction -->
+  <section class="section">
+    <div class="container media-split media-split--plain">
+      <div class="media-split__text">
+        <p>Toute l'eau qui ruisselle sur les versants d'un toit finit dans le même circuit : gouttières en rive, noues entre deux pans, chéneaux sur les ouvrages encaissés, puis descentes jusqu'à l'égout ou au regard. Quand un seul de ces maillons se déforme, se perce ou se bouche, l'eau choisit la façade — et les désordres descendent dans les murs bien plus vite qu'on ne l'imagine.</p>
+        <p>Couvreur zingueur à {site.address.city}, je conçois, je façonne et je pose ces ouvrages dans les règles : profil et développé adaptés à la surface de chaque versant, pente réglée à 0,5 cm par mètre, jonctions soudées sur le zinc. La <strong>pose de gouttières</strong> comme leur remplacement s'inscrivent dans l'ensemble de mes <a href="/travaux-de-couverture/">travaux de couverture</a>, de Tours à Loches et de Chinon à Amboise.</p>
+      </div>
+      <div class="media-split__media">
+        <img src="/photos-chantier/zinguerie-pose-gouttieres-richard-toitures-11-4.webp" width="1200" height="1600" loading="lazy" decoding="async" alt={`Gouttière et descente en zinc neuves avec dauphin — ${site.brand}, couvreur zingueur en ${site.address.region}`} />
+      </div>
+    </div>
+  </section>
+
+  <!-- Bloc 3 — Les ouvrages : H2 + 4 H3 -->
+  <section class="section section--gris">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Gouttières, noues, chéneaux : chaque ouvrage a son rôle</h2>
+        <p>Quatre familles d'ouvrages collectent et évacuent l'eau d'une toiture. Voici ce que je pose et répare dans le département, et ce que je surveille sur chacune.</p>
+      </div>
+      <div class="features">
+        <div class="feature">
+          <h3>Gouttières pendantes</h3>
+          <p>Demi-rondes ou carrées, suspendues en rive par des crochets, en zinc, en aluminium laqué ou en PVC. Le point décisif est le dimensionnement : le développé se calcule d'après la surface du versant desservi. Une gouttière trop juste déborde à la première grosse pluie, même neuve et parfaitement posée.</p>
+        </div>
+        <div class="feature">
+          <h3>Descentes et accessoires</h3>
+          <p>Naissances, boîtes à eau, coudes, descentes et dauphins en pied de mur conduisent l'eau collectée jusqu'à l'évacuation. J'équipe les naissances de crapaudines pour retenir les feuilles, et je soigne le raccord au regard — c'est là que les obstructions se forment en premier.</p>
+        </div>
+        <div class="feature">
+          <h3>Noues</h3>
+          <p>La <strong>noue</strong> raccorde deux versants qui se rejoignent : c'est l'ouvrage le plus sollicité du toit, car il concentre l'eau de deux pans. Je la façonne en zinc, posée sur volige avec des recouvrements généreux, et je reprends les pureaux qui la bordent — ardoises ou tuiles tranchées au bon angle.</p>
+        </div>
+        <div class="feature">
+          <h3>Chéneaux</h3>
+          <p>Encaissé entre deux versants ou posé en pied de pan, le <strong>chéneau</strong> est un ouvrage porté par la construction, façonné en zinc soudé. Boîtes à eau, trop-pleins et soudures demandent un contrôle régulier : une fuite de chéneau ne coule pas dehors, elle traverse le bâtiment.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bloc 4 — Pose et remplacement -->
+  <section class="section">
+    <div class="container media-split media-split--plain">
+      <div class="media-split__text">
+        <h2>Pose et remplacement de gouttières et de chéneaux dans le {site.address.department}</h2>
+        <p>Le <strong>remplacement de gouttières</strong> commence par la dépose de l'existant et l'examen de ce qu'il cache : bandeaux, abouts de chevrons, volige de rive. Je pose ensuite les crochets un à un, réglés au cordeau sur la pente de 0,5 cm par mètre, puis les longueurs — soudées entre elles sur le zinc, serties sur l'aluminium — avant les naissances, les descentes et leurs colliers.</p>
+        <p>Sur un chéneau, je façonne le zinc aux dimensions exactes de l'ouvrage, je soude les jonctions et les boîtes à eau, et je raccorde les rives de la couverture — ardoise ou tuile — avec les recouvrements qui conviennent. Le tout se termine par un essai en eau : je vérifie que tout file à la naissance, sans stagnation ni fuite.</p>
+      </div>
+      <div class="media-split__media">
+        <img src="/photos-chantier/zinguerie-pose-gouttieres-richard-toitures-11-1.webp" width="1200" height="1600" loading="lazy" decoding="async" alt={`Chéneau en zinc en cours de remplacement le long d'une couverture en ardoise — ${site.brand}, couvreur zingueur en ${site.address.region}`} />
+      </div>
+    </div>
+    <div class="container" style="margin-top:36px">
+      <div class="section-head section-head--left">
+        <h3>Réparation et entretien des ouvrages existants</h3>
+        <p>Une soudure fendue se ressoude, une longueur percée se remplace, une ligne de crochets arrachée se repose — le zinc se répare bien, et une intervention ciblée prolonge l'ouvrage de nombreuses années. Je répare aussi les noues qui suintent et les solins fatigués dans le cadre de la <a href="/reparation-toiture-37/">réparation de toiture</a>, et j'assure le curage bisannuel des gouttières avec le <a href="/nettoyage-toiture-37/">nettoyage de toiture</a> : deux passages par an suffisent à éviter la plupart des débordements.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bloc 5 — Pourquoi un couvreur zingueur -->
+  <section class="section section--gris">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Pourquoi confier vos gouttières à un couvreur zingueur ?</h2>
+      </div>
+      <div class="features">
+        <div class="feature">
+          <h3>Un ouvrage façonné, pas un catalogue</h3>
+          <p>{site.founder}, couvreur zingueur à {site.address.city}, un métier transmis de père en fils. Je façonne le zinc à la dimension exacte de chaque toit — développé, angles, boîtes à eau — au lieu d'adapter le toit à des longueurs standard. C'est ce qui fait la différence sur les noues et les chéneaux.</p>
+        </div>
+        <div class="feature">
+          <h3>La couverture et la zinguerie d'une seule main</h3>
+          <p>Une gouttière se raccorde toujours à une couverture : rives, égouts, pureaux du bas de versant. Couvreur avant d'être zingueur, je reprends les ardoises ou les tuiles qui bordent l'ouvrage dans la même intervention, sans second corps de métier à faire venir.</p>
+        </div>
+        <div class="feature">
+          <h3>Des tarifs transparents</h3>
+          <p>Un devis détaillé et gratuit avant toute intervention, remis en 24 heures, avec un prix par poste : dépose, fourniture, pose, raccords. Les travaux sont couverts par la garantie décennale.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bloc 6 — CTA intermédiaire -->
+  <CtaBanner
+    title="Devis gratuit en 24 h pour vos gouttières"
+    text={`Je me déplace, je mesure vos versants, j'examine l'existant — pentes, fixations, jonctions — et je vous remets un devis détaillé sous 24 heures, gratuit et sans engagement, partout en ${site.address.region}.`}
+    ctaLabel="Demander un devis de zinguerie"
+    image="/photos-chantier/zinguerie-pose-gouttieres-richard-toitures-11-2.webp"
+    imageAlt={`Pose d'une gouttière en zinc le long d'une toiture en ardoise — ${site.brand}, couvreur en ${site.address.region}`}
+  />
+
+  <!-- Bloc 7 — Quand remplacer -->
+  <section class="section section--gris">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Quand faut-il remplacer ses gouttières ?</h2>
+        <p>Un ouvrage d'évacuation vieillit en silence : les signes qui suivent indiquent qu'une réparation ponctuelle ne suffira plus longtemps.</p>
+      </div>
+      <ul class="prose-etapes">
+        <li><strong>Débordements répétés</strong> malgré un curage régulier : le développé n'est plus adapté ou la pente s'est perdue.</li>
+        <li><strong>Percements et soudures fendues</strong> qui se multiplient sur un zinc en fin de vie.</li>
+        <li><strong>Fixations qui lâchent</strong> : crochets descellés, gouttière qui ondule ou s'écarte du bandeau.</li>
+        <li><strong>Coulures vertes ou noires sur la façade</strong>, trace d'un débordement chronique — un <a href="/ravalement-de-facade/">ravalement de façade</a> n'a de sens qu'une fois la cause traitée.</li>
+        <li><strong>Raccords PVC qui fuient</strong> à répétition : le collage ne se répare pas indéfiniment.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Bloc 8 — Prix. ⚠️ Fourchettes marché indicatives : à faire valider par
+       M. Richard avant mise en ligne. -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Combien coûte une pose de gouttières dans le {site.address.department} ?</h2>
+        <p>À titre indicatif, voici les fourchettes pratiquées dans le département, fourniture et pose comprises.</p>
+      </div>
+      <table class="tableau">
+        <thead><tr><th>Ouvrage</th><th>Fourchette indicative</th></tr></thead>
+        <tbody>
+          <tr><td>Gouttière PVC</td><td>20 à 40 €/ml</td></tr>
+          <tr><td>Gouttière aluminium laqué</td><td>35 à 80 €/ml</td></tr>
+          <tr><td>Gouttière zinc</td><td>40 à 90 €/ml</td></tr>
+          <tr><td>Noue en zinc (façon et pose)</td><td>60 à 120 €/ml</td></tr>
+          <tr><td>Chéneau en zinc</td><td>90 à 180 €/ml</td></tr>
+        </tbody>
+      </table>
+      <p>Le prix final dépend de la hauteur et de l'accessibilité, de la dépose de l'existant et de la complexité des raccords — boîtes à eau, angles, jonctions avec la couverture. Le <a href="/devis-gratuit/">devis gratuit</a>, détaillé poste par poste et remis en 24 heures, fait foi : le déplacement est offert.</p>
+    </div>
+  </section>
+
+  <!-- Bloc 9 — FAQ (balisée FAQPage dans le JSON-LD du frontmatter) -->
+  <Faq title={`Vos questions sur les gouttières et chéneaux en ${site.address.region}`} items={faq} />
+
+  <!-- Fin de page — conclusion + CTA final + lien home en ancre « couvreur zingueur » -->
+  <section class="cta-band">
+    <div class="container">
+      <h2>Des eaux de pluie qui filent droit à l'égout</h2>
+      <p>Pose neuve, remplacement, réparation : confiez vos gouttières, noues et chéneaux à un artisan qui façonne le zinc au quotidien. Devis gratuit en 24 heures et déplacement offert dans tout le département — et pour le reste de votre toit, retrouvez mon activité complète de <a href="/">couvreur zingueur dans le {site.address.department}</a>.</p>
+      <ul class="cta-band__trust">
+        <li>Couvreur zingueur basé à {site.address.city}</li>
+        <li>Devis &amp; déplacement gratuits</li>
+      </ul>
+      <div class="cta-band__actions">
+        <a class="btn btn--rouge btn--lg" href={`tel:${site.phoneHref}`}>Appeler le {site.phone}</a>
+        <a class="btn btn--lg cta-band__ghost" href="/devis-gratuit/">Demander un devis de zinguerie<span class="btn-menu__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg></span></a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* H3 des blocs pose/réparation : même chevron orange que sur les autres
+     pages services. */
+  .media-split__text h3,
+  .section-head h3 {
+    margin-top: 0;
+    position: relative;
+    padding-left: 24px;
+    font-size: 1.3rem;
+  }
+  .media-split__text h3:before,
+  .section-head h3:before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: .62em;
+    width: 8px;
+    height: 8px;
+    border-top: 3px solid var(--rouge);
+    border-right: 3px solid var(--rouge);
+    transform: translateY(-50%) rotate(45deg);
+  }
+</style>

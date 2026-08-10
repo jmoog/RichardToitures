@@ -64,16 +64,23 @@ export const site = {
 export const mainNav = [
   { href: '/travaux-de-couverture/', label: 'Couverture' },
   { href: '/isolation-des-combles/', label: 'Isolation' },
-  { href: '/nettoyage-demoussage-toiture/', label: 'Démoussage' },
+  { href: '/nettoyage-toiture-37/', label: 'Démoussage' },
   { href: '/a-propos/', label: 'À propos' },
 ];
 
 // Toutes les prestations, pour le footer et les blocs "voir aussi"
 export const services = [
   { href: '/travaux-de-couverture/', label: 'Travaux de couverture' },
-  { href: '/renovation-toiture/', label: 'Rénovation de toiture' },
-  { href: '/reparation-toiture/', label: 'Réparation & recherche de fuite' },
-  { href: '/nettoyage-demoussage-toiture/', label: 'Nettoyage & démoussage' },
+  // Slug calé sur la requête principale « rénovation toiture 37 » (même
+  // logique que le pilier nettoyage).
+  { href: '/renovation-toiture-37/', label: 'Rénovation de toiture' },
+  // Slug recalé sur « réparation toiture 37 » (décision du 10 août 2026, qui
+  // remplace l'ancien choix /reparation-toiture/ — alignement sur les piliers).
+  { href: '/reparation-toiture-37/', label: 'Réparation & recherche de fuite' },
+  { href: '/gouttieres-37/', label: 'Gouttières, noues & chéneaux' },
+  // Slug calé sur la requête principale « nettoyage toiture 37 » (page pilier
+  // du cocon nettoyage — les satellites sont en /nettoyage-toiture-{ville}/).
+  { href: '/nettoyage-toiture-37/', label: 'Nettoyage & démoussage' },
   { href: '/isolation-des-combles/', label: 'Isolation des combles' },
   { href: '/ravalement-de-facade/', label: 'Ravalement de façade' },
   { href: '/ramonage/', label: 'Ramonage' },

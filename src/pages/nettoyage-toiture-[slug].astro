@@ -5,24 +5,26 @@ import TrustBand from '../components/TrustBand.astro';
 import CtaBanner from '../components/CtaBanner.astro';
 import NearbyLinks from '../components/NearbyLinks.astro';
 import { site } from '../data/site.js';
-import { villes, getVilleBySlug } from '../data/villes.js';
+import { villesNettoyage, getVilleNettoyageBySlug } from '../data/villesNettoyage.js';
 import { pageSchema } from '../data/schema.js';
 
+// Satellites du cocon nettoyage : /nettoyage-toiture-{ville}/, générés depuis
+// src/data/villesNettoyage.js. Toujours moins profonds que le pilier
+// /nettoyage-toiture-37/ (pas de tarifs détaillés, pas de FAQ).
 export function getStaticPaths() {
-  return villes.map((v) => ({ params: { slug: v.slug.replace('couvreur-', '') }, props: { ville: v } }));
+  return villesNettoyage.map((v) => ({ params: { slug: v.slug.replace('nettoyage-toiture-', '') }, props: { ville: v } }));
 }
 
 const { ville } = Astro.props;
 const path = `/${ville.slug}/`;
-const breadcrumbLabel = `Couvreur à ${ville.name}`;
+const breadcrumbLabel = `Nettoyage de toiture à ${ville.name}`;
 const nearbyLinks = (ville.nearby || []).map((slug) => {
-  const v = getVilleBySlug(slug);
-  return v ? { href: `/${v.slug}/`, label: `Couvreur à ${v.name}` } : null;
+  const v = getVilleNettoyageBySlug(slug);
+  return v ? { href: `/${v.slug}/`, label: `Nettoyage de toiture à ${v.name}` } : null;
 }).filter(Boolean);
 
-// H1 : « à » et le nom de la commune sont liés par une espace insécable pour
-// éviter un retour à la ligne qui isolerait le nom de la ville sur sa propre
-// ligne (brief Joseph : pas de retour à la ligne sur un, deux ou trois mots).
+// Même règle que les pages couvreur : espace insécable entre « à » et le nom
+// de la commune, pour ne jamais isoler la ville sur sa propre ligne.
 const h1Text = ville.h1.replace(' à ', ' à ');
 ---
 <Layout title={ville.metaTitle} description={ville.metaDescription} path={path} jsonLd={pageSchema(path, breadcrumbLabel)}>
@@ -52,19 +54,26 @@ const h1Text = ville.h1.replace(' à ', ' à ');
 
   <TrustBand />
 
-  <section class="section promo-section">
-    <div class="section-head section-head--txt-left">
-      <h2>{ville.servicesTitle}</h2>
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>{ville.sectionA.h2}</h2>
+      </div>
+      <div class="longue-texte">
+        {ville.sectionA.paragraphs.map((p) => <p set:html={p} />)}
+      </div>
     </div>
-    <div class="promo-grid promo-grid--trio">
-      {ville.cards.map((card) => (
-        <a class="promo-card" href={card.href}>
-          <h3>{card.title}</h3>
-          <p>{card.text}</p>
-          <img class="promo-card__icon" src={card.icon} width="512" height="512" loading="lazy" decoding="async" alt="" aria-hidden="true" />
-          <span class="promo-card__brand"><span class="promo-card__more" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h11.5M12 6.5l5.5 5.5-5.5 5.5"></path></svg></span></span>
-        </a>
-      ))}
+  </section>
+
+  <section class="section section--gris">
+    <div class="container media-split">
+      <div class="media-split__text">
+        <h2>{ville.sectionB.h2}</h2>
+        {ville.sectionB.paragraphs.map((p) => <p set:html={p} />)}
+      </div>
+      <div class="media-split__media">
+        <img src={ville.sectionB.photo.src} width={ville.sectionB.photo.width} height={ville.sectionB.photo.height} loading="lazy" decoding="async" alt={ville.sectionB.photo.alt} />
+      </div>
     </div>
   </section>
 
@@ -76,25 +85,36 @@ const h1Text = ville.h1.replace(' à ', ' à ');
     ctaLabel={ville.cta.ctaLabel}
   />
 
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>{ville.sectionC.h2}</h2>
+      </div>
+      <div class="longue-texte">
+        {ville.sectionC.paragraphs.map((p) => <p set:html={p} />)}
+      </div>
+    </div>
+  </section>
+
   <section class="section section--gris">
     <div class="container">
       <div class="section-head section-head--left">
-        <h2>{ville.longue.title}</h2>
+        <h2>Comment se déroule l'intervention ?</h2>
       </div>
-      <div class="longue-texte">
-        {ville.longue.paragraphs.map((p) => <p set:html={p} />)}
-        <aside class="encart-mairie">
-          <p><strong>Avant vos travaux, renseignez-vous auprès des services de la mairie :</strong> pour une déclaration préalable ou toute question d'urbanisme, le plus simple est de contacter directement le service concerné.</p>
-          <p class="encart-mairie__adresse">{ville.mairie.label} — {ville.mairie.address}</p>
-          <p><a href={ville.mairie.url} target="_blank" rel="noopener">Consulter le site de la mairie de {ville.name}</a></p>
-        </aside>
+      <div class="features">
+        {ville.etapes.map((e) => (
+          <div class="feature">
+            <h3>{e.h3}</h3>
+            <p>{e.text}</p>
+          </div>
+        ))}
       </div>
     </div>
   </section>
 
   {nearbyLinks.length > 0 && (
     <NearbyLinks
-      title={`${site.brand} intervient aussi autour de ${ville.name}`}
+      title={`Nettoyage de toiture autour de ${ville.name}`}
       text="Le déplacement reste gratuit dans les communes voisines — et dans tout le département."
       links={nearbyLinks}
       gris={false}

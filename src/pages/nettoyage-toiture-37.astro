@@ -1,0 +1,317 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import TrustBand from '../components/TrustBand.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import Faq from '../components/Faq.astro';
+import { site } from '../data/site.js';
+import { pageSchema } from '../data/schema.js';
+
+const path = '/nettoyage-toiture-37/';
+const title = 'Nettoyage de Toiture 37 | Démoussage Indre-et-Loire';
+// 158 caractères — « Tarifs » dans la meta = différenciant en SERP.
+const description = `Démoussage, traitement hydrofuge et lavage de toitures en ${site.address.region} (ardoise naturelle, tuile plate) par un couvreur du ${site.address.department}. Tarifs, devis gratuit en 24h.`;
+
+// FAQ : sert à la fois au composant <Faq> (a = HTML) et au balisage FAQPage
+// (texte brut, balises retirées ci-dessous).
+const faq = [
+  {
+    q: 'Pourquoi faire nettoyer ma toiture ?',
+    a: "Parce que les mousses ne restent pas en surface. Elles retiennent l'eau, qui migre dans la porosité des ardoises naturelles et des tuiles plates et finit par ouvrir des micro-fissures. À terme : des éléments gélifs qui cassent, des infiltrations, et un isolant de combles qui prend l'eau et perd son pouvoir isolant. Un nettoyage régulier coûte beaucoup moins cher qu'une réfection anticipée.",
+  },
+  {
+    q: 'À quelle fréquence faut-il démousser sa toiture dans le 37 ?',
+    a: "Tout dépend de l'environnement immédiat de la maison. Sous les arbres et en secteur boisé — à Ballan-Miré, Savonnières, Druye, Veigné ou Monts, où les toitures ombragées se recouvrent vite —, je conseille un démoussage tous les 2 à 3 ans. En secteur urbain dense, à Tours, La Riche ou Saint-Avertin, tous les 4 à 5 ans suffisent le plus souvent. Un contrôle visuel annuel permet d'ajuster.",
+  },
+  {
+    q: 'Le nettoyage haute pression abîme-t-il les tuiles et les ardoises ?',
+    a: "Oui. Un nettoyeur haute pression arrache le calcin des tuiles plates et attaque la surface des ardoises : le matériau devient plus poreux et se recouvre de mousses encore plus vite — quand les pureaux ne sont pas déplacés ou fissurés au passage. C'est pourquoi je travaille exclusivement à basse pression, entre 2 et 3 bars, complétée d'un brossage manuel.",
+  },
+  {
+    q: "Quel est le prix d'un démoussage de toiture ?",
+    a: 'Comptez de 15 à 25 €/m² pour un démoussage simple et de 25 à 45 €/m² avec traitement hydrofuge — les fourchettes détaillées figurent plus haut sur cette page. Le <a href="/devis-gratuit/">devis gratuit</a>, remis en 24 heures, donne le chiffrage exact pour votre toiture.',
+  },
+  {
+    q: 'Quelle est la meilleure période pour nettoyer sa toiture ?',
+    a: "Celle où les produits peuvent agir : l'antimousse comme l'hydrofuge doivent pénétrer un support sec, puis disposer de 48 à 72 heures sans pluie. Je programme donc la plupart des nettoyages du printemps au début de l'automne — une question de conditions d'application, rien de plus.",
+  },
+  {
+    q: 'Que faire en cas de lichens tenaces ?',
+    a: "Les lichens s'incrustent dans le calcin des tuiles plates et dans la surface de l'ardoise : un simple lavage n'en vient pas à bout. J'applique alors un protocole renforcé — biocide professionnel laissé agir plusieurs jours, brossage manuel adapté au matériau, puis hydrofuge haute performance pour retarder leur retour.",
+  },
+];
+
+const jsonLd = pageSchema(path, 'Nettoyage & démoussage de toiture');
+jsonLd['@graph'].push({
+  '@type': 'FAQPage',
+  '@id': `${site.domain}${path}#faq`,
+  mainEntity: faq.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a.replace(/<[^>]+>/g, '') },
+  })),
+});
+
+// Les 13 pages villes du cocon nettoyage (satellites de cette page pilier).
+// ⚠️ Pages à créer : tant qu'un satellite n'existe pas, son lien renvoie une 404.
+const villesEnrichies = [
+  { href: '/nettoyage-toiture-tours/', label: 'démoussage de toiture à Tours' },
+  { href: '/nettoyage-toiture-saint-avertin/', label: 'nettoyage de toiture à Saint-Avertin' },
+  { href: '/nettoyage-toiture-chambray-les-tours/', label: 'traitement antimousse à Chambray-lès-Tours' },
+  { href: '/nettoyage-toiture-saint-cyr-sur-loire/', label: 'nettoyage de toit à Saint-Cyr-sur-Loire' },
+  { href: '/nettoyage-toiture-fondettes/', label: 'démoussage à Fondettes' },
+  { href: '/nettoyage-toiture-la-riche/', label: 'traitement hydrofuge de toiture à La Riche' },
+  { href: '/nettoyage-toiture-ballan-mire/', label: 'lavage de toiture à Ballan-Miré' },
+];
+const villesToponymes = [
+  { href: '/nettoyage-toiture-savonnieres/', label: 'Savonnières' },
+  { href: '/nettoyage-toiture-druye/', label: 'Druye' },
+  { href: '/nettoyage-toiture-veigne/', label: 'Veigné' },
+  { href: '/nettoyage-toiture-montbazon/', label: 'Montbazon' },
+  { href: '/nettoyage-toiture-larcay/', label: 'Larçay' },
+  { href: '/nettoyage-toiture-monts/', label: 'Monts' },
+];
+---
+<Layout title={title} description={description} path={path} jsonLd={jsonLd}>
+  <Breadcrumb label="Nettoyage & démoussage" />
+
+  <!-- Bloc 1 — Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <h1>Nettoyage de toiture en {site.address.region}</h1>
+      <p class="page-hero__artisan">{site.brand}</p>
+      <div class="page-hero__grid">
+        <div class="page-hero__text">
+          <p><strong>Traitement antimousse, lavage et hydrofuge de toitures dans le {site.address.department}, par un couvreur professionnel.</strong> Installé à {site.address.city}, je démousse, nettoie et protège les couvertures des particuliers et des professionnels dans toute l'{site.address.region} : ardoise naturelle, tuile plate, tuile mécanique.</p>
+          <p>Je redonne à votre toit son aspect d'origine et je retarde la repousse des mousses pendant plusieurs années.</p>
+          <ul class="page-hero__list">
+            <li>Devis gratuit en 24 h</li>
+            <li>Nettoyage basse pression 2-3 bars</li>
+            <li>Hydrofuge efficace 5 à 7 ans</li>
+          </ul>
+          <!-- Preuve chiffrée (gabarit bloc 1) : à activer quand la fiche Google
+               existera avec de vrais avis, sous la forme « 4,9/5 — N avis Google »
+               (jamais « 5/5 » seul). Voir site.js (googleRating à créer). -->
+          <div class="actions">
+            <a class="btn btn--rouge btn--tel" href={`tel:${site.phoneHref}`} aria-label={`Appeler le ${site.phone}`} title={`Appeler le ${site.phone}`}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.6" y="2" width="9.8" height="20" rx="2.9"></rect><line x1="8" y1="18.7" x2="11" y2="18.7"></line><path d="M17.9 8.9a4.6 4.6 0 0 1 0 6.2"></path><path d="M20.6 6.2a8.6 8.6 0 0 1 0 11.6"></path></svg>{site.phone}</a>
+            <a class="btn btn--ghost" href="/devis-gratuit/" style="color:#fff;border-color:#fff">Demander un devis<span class="btn-menu__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg></span></a>
+          </div>
+        </div>
+        <div class="page-hero__media">
+          <img src="/photos-chantier/demoussage-traitement-toiture-richard-toitures-12-1.webp" width="1600" height="1200" fetchpriority="high" decoding="async" alt={`Démoussage et traitement de toiture — ${site.brand}, couvreur en ${site.address.region}`} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <TrustBand />
+
+  <!-- Bloc 2 — Services : H2 + 4 H3 -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Couvreur du {site.address.department} spécialisé dans le nettoyage des toits</h2>
+        <p>Une toiture verdie n'est pas qu'une question d'aspect : c'est une couverture qui retient l'eau. Voici les quatre prestations que je réalise pour nettoyer, assainir et protéger les toits du département.</p>
+      </div>
+    </div>
+
+    <div class="container media-split media-split--plain">
+      <div class="media-split__text">
+        <h3>Démoussage de toitures</h3>
+        <p>Les mousses, algues et lichens maintiennent l'eau au contact permanent de la couverture. Sur une <strong>ardoise naturelle</strong> comme sur une <strong>tuile plate</strong>, cette eau migre dans la structure poreuse du matériau, ouvre des micro-fissures, puis les élargit à la faveur des cycles de gel et de dégel. Les pureaux s'effritent, les crochets se déchaussent, et la couverture perd son étanchéité bien avant l'heure.</p>
+        <p>Avant d'intervenir, j'inspecte la toiture : éléments cassés ou gélifs, fixations, points singuliers. Je démousse ensuite à basse pression, entre 2 et 3 bars, puis j'applique un <strong>antimousse</strong> biocide certifié à pH neutre, associant agents fongicides et algicides. Jamais de Kärcher : la haute pression altère l'étanchéité superficielle des ardoises et des tuiles plates et malmène pureaux et crochets. Si l'inspection révèle des éléments à remplacer, je vous propose une <a href="/reparation-toiture-37/">réparation de toiture</a> dans la foulée.</p>
+      </div>
+      <div class="media-split__media">
+        <img src="/photos-chantier/demoussage-traitement-toiture-richard-toitures-12-3.webp" width="1200" height="1600" loading="lazy" decoding="async" alt={`Versant de toiture en cours de démoussage — ${site.brand}, couvreur en ${site.address.region}`} />
+      </div>
+    </div>
+
+    <div class="container media-split media-split--reverse">
+      <div class="media-split__text">
+        <h3>Traitement hydrofuge de toiture</h3>
+        <p>Une fois la couverture propre, je laisse le support sécher 48 à 72 heures : un produit appliqué sur un matériau gorgé d'eau ne pénètre pas. Je pulvérise ensuite à saturation un <strong>hydrofuge de toiture</strong> à base de résines silicones modifiées, qui s'infiltre sur 2 à 3 millimètres. L'eau perle et ruisselle au lieu de s'imprégner, tandis que la microporosité du matériau est préservée — un point déterminant pour l'ardoise naturelle et la tuile plate, qui doivent continuer à laisser respirer le toit.</p>
+        <p>La protection tient 5 à 7 ans et ralentit nettement la recolonisation par les mousses. J'adapte la formulation au support : un hydrofuge pour ardoise n'est pas celui d'une tuile plate. Et si le nettoyage révèle une couverture en fin de vie, je vous oriente vers une <a href="/renovation-toiture-37/">rénovation de toiture</a> plutôt que vers un traitement sans lendemain.</p>
+      </div>
+      <div class="media-split__media">
+        <img src="/photos-chantier/demoussage-traitement-toiture-richard-toitures-12-4.webp" width="1200" height="1600" loading="lazy" decoding="async" alt={`Application d'un traitement sur toiture après démoussage — ${site.brand}, couvreur en ${site.address.region}`} />
+      </div>
+    </div>
+
+    <div class="container media-split media-split--plain">
+      <div class="media-split__text">
+        <h3>Brossage manuel des tuiles plates et des ardoises</h3>
+        <p>C'est le geste que je réserve aux couvertures anciennes du département : ardoises naturelles posées aux crochets sur volige, tuiles plates sur liteaux, à pureau régulier ou brouillé. Sur ces toitures, même la basse pression peut être de trop. Je travaille alors à la brosse douce en chiendent, à très basse pression, avec des produits neutres sans javel.</p>
+        <p>Ce <strong>brossage manuel</strong> préserve le calcin des tuiles plates — la fine pellicule née de la cuisson, qui protège la terre cuite — et la surface feuilletée de l'ardoise. J'en profite pour contrôler les embarrures des faîtages et des arêtiers, et resserrer un crochet qui aurait glissé. Ces gestes d'entretien s'inscrivent dans l'ensemble de mes <a href="/travaux-de-couverture/">travaux de couverture</a>.</p>
+      </div>
+      <div class="media-split__media">
+        <img src="/photos-chantier/couverture-ardoise-maison-brique-richard-toitures-17-1.webp" width="1200" height="1600" loading="lazy" decoding="async" alt={`Couverture en ardoise naturelle d'une maison en brique — ${site.brand}, couvreur en ${site.address.region}`} />
+      </div>
+    </div>
+
+    <div class="container media-split media-split--reverse">
+      <div class="media-split__text">
+        <h3>Nettoyage de gouttières</h3>
+        <p>L'eau qui quitte les versants doit circuler librement : gouttières pendantes, chéneaux, noues, boîtes à eau, naissances, coudes et dauphins forment un circuit qui s'obstrue de feuilles et de dépôts. Je cure ces ouvrages à la main et mécaniquement, je pose ou remplace les crapaudines aux naissances, et je vérifie la pente réglementaire de 0,5 cm par mètre, les fixations et les joints.</p>
+        <p>Le contrôle s'étend aux ouvrages de raccord — bandes de rive, solins, noquets, bavettes — souvent à l'origine d'infiltrations discrètes, et je termine par un traitement préventif adapté au zinc et au PVC. Un <strong>nettoyage de gouttières</strong> bisannuel, au printemps et à l'automne, évite les débordements qui finissent en coulures sur les murs ; le cas échéant, un <a href="/ravalement-de-facade/">ravalement de façade</a> leur redonne un aspect net.</p>
+      </div>
+      <div class="media-split__media">
+        <img src="/photos-chantier/zinguerie-pose-gouttieres-richard-toitures-11-3.webp" width="1600" height="1200" loading="lazy" decoding="async" alt={`Gouttières en zinc posées le long d'une toiture — ${site.brand}, couvreur en ${site.address.region}`} />
+      </div>
+    </div>
+  </section>
+
+  <!-- Bloc 3 — Avis clients localisés (gabarit) : à activer quand la fiche
+       Google existera et que de VRAIS avis auront été publiés. Ne jamais
+       mettre en ligne d'avis fictifs. Structure prête :
+  <section class="section section--gris">
+    <div class="container">
+      <div class="section-head section-head--left"><h2>Ils m'ont confié leur toiture</h2></div>
+      <div class="faq">
+        <div class="faq__item"><p>« [Avis démoussage sur ardoise ou tuile plate] » — Prénom N. (Ville)</p></div>
+        <div class="faq__item"><p>« [Avis traitement hydrofuge] » — Prénom N. (Ville)</p></div>
+      </div>
+    </div>
+  </section>
+  -->
+
+  <!-- Bloc 4 — Pourquoi choisir -->
+  <section class="section section--gris">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Pourquoi me confier le nettoyage de votre toiture ?</h2>
+      </div>
+      <div class="features">
+        <div class="feature">
+          <h3>Un couvreur, pas une société de nettoyage</h3>
+          <p>{site.founder}, couvreur à {site.address.city}, 10 années d'expérience sur les toits de l'{site.address.region}, un métier transmis de père en fils. Avant de traiter, je sais reconnaître une ardoise gélive, un crochet déchaussé ou un liteau fatigué — et je répare ce qui doit l'être.</p>
+        </div>
+        <div class="feature">
+          <h3>Des techniques qui respectent vos matériaux</h3>
+          <p>Basse pression 2 à 3 bars, produits biodégradables certifiés, hydrofuge longue durée dont la formulation change selon qu'il protège une ardoise naturelle ou une tuile plate. Votre couverture ressort propre, pas décapée.</p>
+        </div>
+        <div class="feature">
+          <h3>Des tarifs transparents</h3>
+          <p>Un devis détaillé et gratuit avant toute intervention, remis en 24 heures, avec un prix par poste : démoussage, hydrofuge, gouttières. Vous savez ce que vous payez, et pourquoi.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bloc 5 — CTA intermédiaire -->
+  <CtaBanner
+    title="Devis gratuit en 24 h pour nettoyer votre toiture"
+    text={`Je me déplace, j'examine votre couverture — matériau, pente, niveau d'encrassement — et je vous remets un devis détaillé sous 24 heures, gratuit et sans engagement, partout en ${site.address.region}.`}
+    ctaLabel="Demander un devis de nettoyage"
+    image="/photos-chantier/demoussage-traitement-toiture-richard-toitures-12-5.webp"
+    imageAlt={`Toiture démoussée et traitée — ${site.brand}, couvreur en ${site.address.region}`}
+  />
+
+  <!-- Bloc 6 — Protocole en 4 étapes -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Le protocole d'un nettoyage professionnel de toiture</h2>
+        <p>Quatre étapes, toujours dans le même ordre, avec des produits de gamme professionnelle dont je connais le comportement sur les couvertures du {site.address.department}.</p>
+      </div>
+      <div class="features">
+        <div class="feature">
+          <h3>1. Traitement curatif</h3>
+          <p>J'applique un antimousse à base de sels d'ammoniums quaternaires, en gamme professionnelle (type Sika ou équivalent). Les mousses et les lichens se dessèchent en 48 à 72 heures, sur ardoise naturelle comme sur tuile plate.</p>
+        </div>
+        <div class="feature">
+          <h3>2. Phase de nettoyage</h3>
+          <p>Lavage basse pression entre 2 et 3 bars, brossage manuel des zones récalcitrantes — pureaux, arêtiers, noues — puis rinçage mené du faîtage vers l'égout, versant par versant.</p>
+        </div>
+        <div class="feature">
+          <h3>3. Traitement préventif rémanent</h3>
+          <p>Je pulvérise un traitement associant fongicide et algicide (formulation type Dalep ou Algimouss), qui résiste au lessivage et retarde la repousse pendant plusieurs saisons.</p>
+        </div>
+        <div class="feature">
+          <h3>4. Protection hydrofuge finale</h3>
+          <p>Je termine par un hydrofuge de surface (gamme type Zolpan ou ProtectGuard) : une barrière invisible qui fait perler l'eau tout en maintenant la respirabilité du matériau — indispensable pour l'ardoise naturelle et la tuile plate.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bloc 7 — Prix. ⚠️ Fourchettes marché indicatives : à faire valider par
+       M. Richard avant mise en ligne. -->
+  <section class="section section--gris">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Combien coûte un nettoyage de toiture dans le {site.address.department} ?</h2>
+        <p>À titre indicatif, voici les fourchettes pratiquées dans le département. Le chiffrage précis dépend de trois facteurs : la surface de la couverture, sa pente et son accessibilité, et son niveau d'encrassement — le matériau compte aussi, une ardoise ne se traitant pas comme une tuile plate.</p>
+      </div>
+      <table class="tableau">
+        <thead><tr><th>Prestation</th><th>Fourchette indicative</th></tr></thead>
+        <tbody>
+          <tr><td>Démoussage simple</td><td>15 à 25 €/m²</td></tr>
+          <tr><td>Démoussage + traitement hydrofuge</td><td>25 à 45 €/m²</td></tr>
+          <tr><td>Nettoyage de gouttières</td><td>5 à 12 €/ml</td></tr>
+        </tbody>
+      </table>
+      <p>Le devis est gratuit, détaillé poste par poste et remis en 24 heures : c'est lui qui fait foi, pas une grille de prix. <a href="/devis-gratuit/">Demandez le vôtre</a> — le déplacement est offert.</p>
+    </div>
+  </section>
+
+  <!-- Bloc 8 — Villes desservies : porte du cocon nettoyage.
+       ⚠️ Les 13 pages satellites /nettoyage-toiture-{ville}/ sont à créer :
+       tant qu'elles n'existent pas, ces liens renvoient une 404. -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Nettoyage de toiture partout en {site.address.region}</h2>
+        <p>
+          Basé à {site.address.city}, j'interviens chez vous dans tout le département. Je réalise notamment le <a href={villesEnrichies[0].href}>{villesEnrichies[0].label}</a>, le <a href={villesEnrichies[1].href}>{villesEnrichies[1].label}</a>, le <a href={villesEnrichies[2].href}>{villesEnrichies[2].label}</a>, le <a href={villesEnrichies[3].href}>{villesEnrichies[3].label}</a>, le <a href={villesEnrichies[4].href}>{villesEnrichies[4].label}</a>, le <a href={villesEnrichies[5].href}>{villesEnrichies[5].label}</a> ou encore le <a href={villesEnrichies[6].href}>{villesEnrichies[6].label}</a>.
+        </p>
+      </div>
+      <div class="liens-proches">
+        {villesToponymes.map((v) => <a href={v.href}>{v.label}</a>)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Bloc 9 — FAQ (balisée FAQPage dans le JSON-LD du frontmatter) -->
+  <Faq title={`Vos questions sur le démoussage de toiture en ${site.address.region}`} items={faq} />
+
+  <!-- Fin de page — conclusion + CTA final + lien home en ancre « couvreur 37 » -->
+  <section class="cta-band">
+    <div class="container">
+      <h2>Un toit propre et protégé pour des années</h2>
+      <p>Démoussage, hydrofuge, gouttières : confiez votre couverture à un artisan qui la connaît. Devis gratuit en 24 heures et déplacement offert dans toute l'{site.address.region} — et pour vos autres projets de toiture, retrouvez mon activité complète de <a href="/">couvreur 37</a>.</p>
+      <ul class="cta-band__trust">
+        <li>Couvreur basé à {site.address.city}</li>
+        <li>Devis &amp; déplacement gratuits</li>
+      </ul>
+      <div class="cta-band__actions">
+        <a class="btn btn--rouge btn--lg" href={`tel:${site.phoneHref}`}>Appeler le {site.phone}</a>
+        <a class="btn btn--lg cta-band__ghost" href="/devis-gratuit/">Demander un devis<span class="btn-menu__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg></span></a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Les 4 prestations du bloc services sont des H3 (sous le H2 de section) :
+     on leur donne le même chevron orange que les H2 des media-split. */
+  .media-split__text h3 {
+    margin-top: 0;
+    position: relative;
+    padding-left: 24px;
+    font-size: 1.3rem;
+  }
+  .media-split__text h3:before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: .62em;
+    width: 8px;
+    height: 8px;
+    border-top: 3px solid var(--rouge);
+    border-right: 3px solid var(--rouge);
+    transform: translateY(-50%) rotate(45deg);
+  }
+  .media-split + .media-split {
+    margin-top: 48px;
+  }
+</style>

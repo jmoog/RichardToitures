@@ -1,5 +1,6 @@
 import { site } from '../data/site.js';
 import { villes } from '../data/villes.js';
+import { villesNettoyage } from '../data/villesNettoyage.js';
 
 export const prerender = true;
 
@@ -8,13 +9,17 @@ export const prerender = true;
 const staticPaths = [
   '/',
   '/travaux-de-couverture/',
+  '/renovation-toiture-37/',
+  '/reparation-toiture-37/',
+  '/gouttieres-37/',
+  '/nettoyage-toiture-37/',
   '/devis-gratuit/',
   '/mentions-legales/',
   '/plan-du-site/',
 ];
 
 export async function GET() {
-  const paths = [...staticPaths, ...villes.map((v) => `/${v.slug}/`)];
+  const paths = [...staticPaths, ...villes.map((v) => `/${v.slug}/`), ...villesNettoyage.map((v) => `/${v.slug}/`)];
   const urls = paths
     .map((p) => `  <url><loc>${site.domain}${p}</loc></url>`)
     .join('\n');

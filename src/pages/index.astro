@@ -5,8 +5,8 @@ import CtaBanner from '../components/CtaBanner.astro';
 import { site } from '../data/site.js';
 import { pageSchema } from '../data/schema.js';
 
-const title = `Couvreur ${site.address.department} : ${site.brand}`;
-const description = `Couvreur ${site.address.department} : Lorem ipsum dolor sit amet, ${site.brand} est à votre service pour vos travaux de couverture, d'isolation et de ravalement en ${site.address.region}. [Description à remplacer]`;
+const title = `Artisan Couvreur-Zingueur ${site.address.department} - ${site.founder}`;
+const description = `Entreprise de couverture : entretien, réparation, rénovation de toiture. Devis gratuit, interventions partout en ${site.address.region}. Appelez le ${site.phone}.`;
 ---
 <Layout title={title} description={description} path="/" jsonLd={pageSchema('/', 'Accueil')}>
   <section class="page-hero">
@@ -42,19 +42,19 @@ const description = `Couvreur ${site.address.department} : Lorem ipsum dolor sit
       <p>Grâce à mon savoir-faire de couvreur zingueur, je prends en charge la totalité des travaux de couverture, zinguerie et charpente. J'en assure l'entretien, les travaux de rénovation et les réparations.</p>
     </div>
     <div class="promo-grid promo-grid--trio">
-      <a class="promo-card" href="/renovation-toiture/">
+      <a class="promo-card" href="/renovation-toiture-37/">
         <h3>Rénovation de toiture</h3>
         <p>Remplacement partiel ou complet de votre couverture en tuiles, ardoises ou zinc. Un chantier mené dans les règles de l'art, couvert par la garantie décennale.</p>
         <img class="promo-card__icon" src="/iconesprestations/renovation-toiture.png" width="512" height="512" loading="lazy" decoding="async" alt="" aria-hidden="true" />
         <span class="promo-card__brand"><span class="promo-card__more" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h11.5M12 6.5l5.5 5.5-5.5 5.5"></path></svg></span></span>
       </a>
-      <a class="promo-card" href="/reparation-toiture/">
+      <a class="promo-card" href="/reparation-toiture-37/">
         <h3>Réparation de toiture</h3>
         <p>Tuiles cassées, fuite, infiltration : je recherche l'origine du problème et je réalise une réparation qui tient dans le temps. Déplacement rapide, en urgence si nécessaire.</p>
         <img class="promo-card__icon" src="/iconesprestations/reparation-toiture.png" width="512" height="512" loading="lazy" decoding="async" alt="" aria-hidden="true" />
         <span class="promo-card__brand"><span class="promo-card__more" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h11.5M12 6.5l5.5 5.5-5.5 5.5"></path></svg></span></span>
       </a>
-      <a class="promo-card" href="/nettoyage-demoussage-toiture/">
+      <a class="promo-card" href="/nettoyage-toiture-37/">
         <h3>Nettoyage &amp; démoussage</h3>
         <p>Démoussage, nettoyage et traitement hydrofuge appliqués sur tous les types de couverture, pour redonner à votre toiture son aspect d'origine et prolonger sa durée de vie.</p>
         <img class="promo-card__icon" src="/iconesprestations/nettoyage-toiture.png" width="512" height="512" loading="lazy" decoding="async" alt="" aria-hidden="true" />
@@ -106,7 +106,7 @@ const description = `Couvreur ${site.address.department} : Lorem ipsum dolor sit
     <div class="container media-split">
       <div class="media-split__text">
         <h2>Nettoyage et démoussage de toiture en {site.address.region}</h2>
-        <p>Les mousses et les lichens s'incrustent sur les tuiles et les ardoises, retiennent l'eau et finissent par rendre les matériaux poreux. Un <a href="/nettoyage-demoussage-toiture/">nettoyage et démoussage de toiture</a> régulier prolonge la vie de votre couverture et lui redonne son aspect d'origine.</p>
+        <p>Les mousses et les lichens s'incrustent sur les tuiles et les ardoises, retiennent l'eau et finissent par rendre les matériaux poreux. Un <a href="/nettoyage-toiture-37/">nettoyage et démoussage de toiture</a> régulier prolonge la vie de votre couverture et lui redonne son aspect d'origine.</p>
         <p>J'interviens sur tous les types de toits : nettoyage manuel ou à basse pression selon l'état de la couverture, traitement anti-mousse, puis application d'un hydrofuge qui retarde la repousse. J'en profite pour contrôler les tuiles, les faîtages et les points singuliers, et je vous signale ce qui mérite une réparation.</p>
       </div>
       <div class="media-split__media">
@@ -120,7 +120,7 @@ const description = `Couvreur ${site.address.department} : Lorem ipsum dolor sit
       <div class="media-split__text">
         <h2>Gouttières, noues et chéneaux en {site.address.region}</h2>
         <p>Les gouttières, les noues et les chéneaux collectent l'eau qui ruisselle sur les versants et l'évacuent loin des murs et des fondations. Un ouvrage de zinguerie déformé, percé ou obstrué provoque des débordements, des coulures sur la façade et, à terme, des infiltrations.</p>
-        <p>Couvreur zingueur, je façonne, pose et répare ces ouvrages en zinc, en aluminium ou en PVC : ils font partie de mes <a href="/travaux-de-couverture/">travaux de couverture</a>. Dépose de l'existant, pose des crochets, réglage des pentes, soudure des jonctions — je vous conseille aussi sur l'entretien courant, comme le dégagement régulier des feuilles et des débris.</p>
+        <p>Couvreur zingueur, je façonne, pose et répare ces ouvrages en zinc, en aluminium ou en PVC : découvrez ma page <a href="/gouttieres-37/">pose de gouttières, noues et chéneaux</a>. Dépose de l'existant, pose des crochets, réglage des pentes, soudure des jonctions — je vous conseille aussi sur l'entretien courant, comme le dégagement régulier des feuilles et des débris.</p>
         <a class="btn btn--rouge media-split__cta" href="/devis-gratuit/">Demander un devis<span class="btn-menu__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg></span></a>
       </div>
       <div class="media-split__media">

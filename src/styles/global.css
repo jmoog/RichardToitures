@@ -77,3 +77,14 @@
 /* Coches du bandeau CTA final : en orange (--rouge) comme celles du hero,
    au lieu du vert #5ad18a défini dans la ligne minifiée. */
 .cta-band__trust li:before{color:var(--rouge)}
+
+/* Pages villes : texte long en bas de page + encart mairie. L'adresse de la
+   mairie doit rester bien visible (brief Joseph) : encart blanc sur la section
+   grise, filet orange, adresse en gras et en bleu. */
+.longue-texte{max-width:860px}
+.longue-texte p{margin:0 0 18px}
+.encart-mairie{margin-top:28px;background:var(--blanc);border:1px solid var(--bordure);border-left:4px solid var(--rouge);border-radius:var(--radius);padding:20px 24px}
+.encart-mairie p{margin:0 0 10px}
+.encart-mairie p:last-child{margin-bottom:0}
+.encart-mairie__adresse{font-weight:700;font-size:1.08rem;color:var(--bleu)}
+.encart-mairie a{color:var(--rouge-fonce);font-weight:600}

@@ -1,0 +1,285 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import TrustBand from '../components/TrustBand.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import Faq from '../components/Faq.astro';
+import { site } from '../data/site.js';
+import { pageSchema } from '../data/schema.js';
+
+const path = '/reparation-toiture-37/';
+// 56 caractères — le title long du brief (74 c.) était tronqué en SERP.
+const title = 'Réparation de Toiture 37 : Intervention Rapide & Urgence';
+// 156 caractères — la meta du brief (161 c.) dépassait, « sous 24h » resserré en « 24h ».
+const description = `Réparation rapide de toiture, pose de bâche et intervention d'urgence (ardoise, tuile plate, zinc) par un couvreur en ${site.address.region}. Devis et dépannage 24h.`;
+
+// FAQ : sert à la fois au composant <Faq> (a = HTML) et au balisage FAQPage
+// (texte brut, balises retirées ci-dessous).
+const faq = [
+  {
+    q: 'Que faire en cas de fuite de toiture ?',
+    a: "Protégez d'abord l'intérieur — récipient sous la fuite, meubles écartés — et ne montez pas sur le toit. Appelez-moi ensuite : j'interviens 24 h/24 pour mettre la couverture hors d'eau. Gardez en tête que l'eau chemine le long des liteaux et de la volige avant de ressortir : le point d'entrée se trouve rarement à l'aplomb de la tache au plafond, et c'est ce cheminement que je remonte sur place.",
+  },
+  {
+    q: 'La pose de bâche est-elle obligatoire avant une réparation ?',
+    a: "Non. Elle ne s'impose que si la couverture est ouverte : ardoises ou tuiles manquantes, zinguerie arrachée, ou attente de pièces au bon format. Dans ce cas, elle protège la volige et la charpente en attendant la réparation. C'est une protection provisoire de quelques semaines, jamais une solution qui dispense de réparer.",
+  },
+  {
+    q: 'Peut-on réparer une toiture en ardoise ou en tuile plate soi-même ?',
+    a: "C'est déconseillé. Remplacer une ardoise demande de démonter le crochet, de glisser un élément au bon format et de respecter le pureau ; sur une tuile plate, il faut soulever le rang supérieur sans casser les tuiles voisines, souvent fragiles. Marcher sur une couverture âgée brise des éléments à chaque pas — la réparation improvisée finit par agrandir la fuite au lieu de la fermer.",
+  },
+  {
+    q: "Combien de temps faut-il pour une intervention d'urgence ?",
+    a: "Pour une mise hors d'eau — pose de bâche, colmatage —, j'interviens le jour même ou sous 24 heures selon l'heure de l'appel, partout dans le département. La réparation définitive suit dès que les pièces au bon format sont disponibles : ardoise au bon module, tuile du bon moule, zinc façonné à la dimension de l'ouvrage.",
+  },
+  {
+    q: 'Une réparation locale suffit-elle ou faut-il envisager une réfection ?',
+    a: 'Tant que les désordres restent localisés — quelques ardoises glissées, une tuile cassée, un solin décollé —, la réparation suffit et prolonge la couverture de plusieurs années. Quand les pureaux s\'usent sur des versants entiers, que les crochets rouillent en nombre ou que les fuites se répètent, une <a href="/renovation-toiture-37/">rénovation de toiture</a> devient plus économique que des reprises en série.',
+  },
+  {
+    q: 'Quels sont les signes qui nécessitent une intervention rapide ?',
+    a: 'Une auréole au plafond ou sur un mur, des ardoises au sol ou glissées hors de leur pureau, une tuile cassée visible depuis la rue, des débris dans les gouttières, du jour aperçu depuis les combles, un solin qui bâille le long d\'une souche. Des mousses épaisses qui soulèvent les éléments sont aussi un signal : un <a href="/nettoyage-toiture-37/">nettoyage de toiture</a> les traite avant qu\'elles ne cassent les pureaux.',
+  },
+];
+
+const jsonLd = pageSchema(path, 'Réparation de toiture');
+jsonLd['@graph'].push({
+  '@type': 'FAQPage',
+  '@id': `${site.domain}${path}#faq`,
+  mainEntity: faq.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a.replace(/<[^>]+>/g, '') },
+  })),
+});
+---
+<Layout title={title} description={description} path={path} jsonLd={jsonLd}>
+  <Breadcrumb label="Réparation de toiture" />
+
+  <!-- Bloc 1 — Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <h1>Réparation de toiture en {site.address.region}</h1>
+      <p class="page-hero__artisan">{site.brand}</p>
+      <div class="page-hero__grid">
+        <div class="page-hero__text">
+          <p><strong>Intervention rapide et pose de bâche pour toute fuite ou dégât de toiture dans le {site.address.department}.</strong> Couvreur installé à {site.address.city}, je me déplace en urgence, 24 h/24, partout en {site.address.region} pour bâcher, colmater et réparer votre couverture : ardoise naturelle, tuile plate, tuile mécanique, zinc.</p>
+          <p>Une fois le toit hors d'eau, je répare dans les règles — et ça tient.</p>
+          <ul class="page-hero__list">
+            <li>Dépannage 24 h/24</li>
+            <li>Devis gratuit en 24 h</li>
+            <li>Déplacement et conseil gratuits</li>
+          </ul>
+          <!-- Note Google avec volume d'avis (demandée par le brief) : OMISE tant
+               que la fiche Google n'existe pas — jamais d'avis fictifs. À activer
+               plus tard sous la forme « 4,9/5 — N avis Google ». -->
+          <div class="actions">
+            <a class="btn btn--rouge btn--tel" href={`tel:${site.phoneHref}`} aria-label={`Appeler le ${site.phone}`} title={`Appeler le ${site.phone}`}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.6" y="2" width="9.8" height="20" rx="2.9"></rect><line x1="8" y1="18.7" x2="11" y2="18.7"></line><path d="M17.9 8.9a4.6 4.6 0 0 1 0 6.2"></path><path d="M20.6 6.2a8.6 8.6 0 0 1 0 11.6"></path></svg>{site.phone}</a>
+            <a class="btn btn--ghost" href="/devis-gratuit/" style="color:#fff;border-color:#fff">Demander une intervention urgente<span class="btn-menu__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg></span></a>
+          </div>
+        </div>
+        <div class="page-hero__media">
+          <img src="/photos-chantier/renovation-souche-de-cheminee-richard-toitures-09-1.webp" width="1600" height="1200" fetchpriority="high" decoding="async" alt={`Réparation en cours d'une toiture en ardoise le long d'une souche de cheminée — ${site.brand}, couvreur en ${site.address.region}`} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <TrustBand />
+
+  <!-- Bloc 2 — Introduction -->
+  <section class="section">
+    <div class="container media-split media-split--plain">
+      <div class="media-split__text">
+        <p>Une fuite ne se referme jamais seule. La <strong>réparation de toiture</strong> est souvent une affaire d'heures plus que de jours : tant que l'eau entre, elle imbibe la volige, les liteaux et l'isolant, et la remise en état s'alourdit. Mon travail se joue donc en deux temps — mettre le toit hors d'eau immédiatement, puis réparer proprement, avec les bonnes pièces.</p>
+        <p>Sur les couvertures du {site.address.department} — ardoise naturelle, tuile plate, zinc —, les points sensibles sont toujours les mêmes : des pureaux qui s'usent, des crochets qui s'oxydent, une volige ou des liteaux qui travaillent, des noues et des solins qui se décollent. J'interviens sur tous ces désordres, de Tours à Loches et de Chinon à Amboise, dans le cadre de mes <a href="/travaux-de-couverture/">travaux de couverture</a>.</p>
+      </div>
+      <div class="media-split__media">
+        <img src="/photos-chantier/couverture-ardoise-maison-brique-richard-toitures-17-2.webp" width="1200" height="1600" loading="lazy" decoding="async" alt={`Couverture en ardoise naturelle d'une maison en brique — ${site.brand}, couvreur en ${site.address.region}`} />
+      </div>
+    </div>
+  </section>
+
+  <!-- Bloc 3 — Pourquoi réparer vite -->
+  <section class="section section--gris">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Pourquoi intervenir rapidement sur une toiture endommagée</h2>
+        <p>Un élément cassé ou déplacé ouvre un passage à l'eau, et les désordres s'enchaînent toujours dans le même ordre. Une <strong>réparation rapide</strong> interrompt cette mécanique pendant qu'elle ne concerne encore que quelques éléments.</p>
+      </div>
+      <ul class="prose-etapes">
+        <li><strong>Propagation des infiltrations</strong> : l'eau chemine le long des liteaux et de la volige et ressort loin de son point d'entrée, en touchant une surface de plus en plus large.</li>
+        <li><strong>Dégradation de la volige et des liteaux</strong> : les bois gorgés d'eau gonflent, se déforment et ne retiennent plus correctement les fixations.</li>
+        <li><strong>Oxydation accélérée des crochets</strong> : au contact permanent de l'eau, la corrosion gagne des zones entières de fixations — et les ardoises glissent en série.</li>
+        <li><strong>Atteinte progressive de la charpente</strong> : chevrons et pannes absorbent l'eau à leur tour, et la reprise devient un chantier de charpentier.</li>
+        <li><strong>Aggravation des pureaux abîmés</strong> : un élément fissuré devient gélif, casse, et expose ses voisins au même sort.</li>
+      </ul>
+      <p>Réparer tôt, c'est remplacer quelques éléments. Attendre, c'est laisser le désordre choisir l'ampleur du chantier.</p>
+    </div>
+  </section>
+
+  <!-- Bloc 4 — Urgence et pose de bâche : H2 + 2 H3 -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Intervention d'urgence et pose de bâche</h2>
+        <p>Le dépannage commence presque toujours par la même question : le toit peut-il attendre la réparation définitive ? Si la réponse est non, je bâche. Ensuite seulement, je répare.</p>
+      </div>
+    </div>
+
+    <div class="container media-split media-split--plain">
+      <div class="media-split__text">
+        <h3>Pose de bâche de protection</h3>
+        <p>La <strong>pose de bâche</strong> s'impose quand la fuite est active, quand des ardoises ou des tuiles manquent, ou après une tempête qui a ouvert la couverture. J'utilise une bâche armée, déployée du faîtage vers l'égout pour que l'eau ruisselle sans jamais passer dessous, avec un large débord au-delà de la zone touchée.</p>
+        <p>La fixation se fait par tasseaux vissés dans les liteaux, hors de la zone fragilisée — pas de parpaings posés en vrac qui glissent et cassent d'autres pureaux. Ainsi tendue, la bâche protège plusieurs semaines, le temps de recevoir les pièces au bon format. C'est une protection provisoire indispensable, pas une réparation : elle a vocation à disparaître vite.</p>
+      </div>
+      <div class="media-split__media">
+        <img src="/photos-chantier/refection-faitage-toiture-richard-toitures-29-1.webp" width="1600" height="1600" loading="lazy" decoding="async" alt={`Bâche de protection et écran de sous-toiture posés en attendant la réparation du toit — ${site.brand}, couvreur en ${site.address.region}`} />
+      </div>
+    </div>
+
+    <div class="container media-split media-split--reverse">
+      <div class="media-split__text">
+        <h3>Réparations d'urgence courantes</h3>
+        <p>Une fois le toit protégé, je traite le désordre à sa source. Les interventions qui reviennent le plus souvent dans le département :</p>
+        <ul>
+          <li>remplacement d'ardoises ou de tuiles plates cassées, au bon format et au bon pureau ;</li>
+          <li>reprise de pureaux endommagés — éléments fissurés, feuilletés ou glissés ;</li>
+          <li>remplacement de crochets oxydés par des crochets inox ;</li>
+          <li>réparation de noues, solins, abergements et rives qui laissent passer l'eau ;</li>
+          <li>colmatage provisoire d'un point d'entrée en attendant une réfection programmée.</li>
+        </ul>
+        <p>Ce <strong>dépannage de toiture dans le 37</strong> se fait au domicile des particuliers comme chez les professionnels, syndics et entreprises.</p>
+      </div>
+      <div class="media-split__media">
+        <img src="/photos-chantier/couverture-ardoise-immeuble-richard-toitures-10-2.webp" width="1200" height="1600" loading="lazy" decoding="async" alt={`Reprise des abergements d'une souche de cheminée sur un toit en ardoise — ${site.brand}, couvreur en ${site.address.region}`} />
+      </div>
+    </div>
+  </section>
+
+  <!-- Bloc 5 — Réparations par matériau : H2 + 4 H3 -->
+  <section class="section section--gris">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Réparations adaptées aux matériaux du {site.address.department}</h2>
+        <p>On ne répare pas une ardoise comme une tuile à emboîtement : le geste change avec le matériau, et les pièges aussi.</p>
+      </div>
+      <div class="features">
+        <div class="feature">
+          <h3>Ardoise naturelle</h3>
+          <p>Je dégage l'ardoise cassée, remplace le crochet oxydé par un crochet inox et glisse un élément au même format — 32 × 22 ou 30 × 20 cm — en respectant le pureau. Une ardoise qui glisse signale souvent des fixations fatiguées : je contrôle toute la zone, et l'état de la volige au passage.</p>
+        </div>
+        <div class="feature">
+          <h3>Tuile plate</h3>
+          <p>Je soulève le rang supérieur, retire la tuile cassée et cale la neuve au pureau du versant. Les points de vigilance : des tuiles voisines gélives qui cassent à la manipulation, un liteau fendu à remplacer, et les embarrures de faîtage ou d'arêtier fissurées, à reprendre au mortier.</p>
+        </div>
+        <div class="feature">
+          <h3>Tuile mécanique</h3>
+          <p>La tuile à emboîtement se déboîte et se remboîte, à condition de retrouver le même moule — deux profils proches ne s'emboîtent pas. Je vérifie les cannelures ébréchées, invisibles depuis le sol, et je refais le scellement des tuiles de rive et de faîtage quand il s'effrite.</p>
+        </div>
+        <div class="feature">
+          <h3>Zinc et zinguerie</h3>
+          <p>Je ressoude les chéneaux et les noues percés, refixe les solins qui bâillent et refais les abergements de souche et les bandes de rive. Un point de méfiance : le mastic. Il dépanne quelques semaines, mais seule une soudure ou une pièce de zinc neuve répare vraiment.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bloc 6 — CTA intermédiaire -->
+  <CtaBanner
+    title="Une fuite ? J'interviens 24 h/24 dans tout le département"
+    text={`Appelez-moi, décrivez les dégâts : je me déplace rapidement, je mets votre toit hors d'eau et je vous remets un devis de réparation gratuit sous 24 heures, partout en ${site.address.region}.`}
+    ctaLabel="Demander une intervention urgente"
+    image="/photos-chantier/zinguerie-pose-gouttieres-richard-toitures-11-1.webp"
+    imageAlt={`Ouvrages de zinguerie et gouttières posés sur une toiture — ${site.brand}, couvreur en ${site.address.region}`}
+  />
+
+  <!-- Bloc 7 — Déroulement -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Comment se déroule une réparation de toiture</h2>
+        <p>Quatre temps, du diagnostic au contrôle final — le devis est validé avant toute réparation.</p>
+      </div>
+      <ol class="prose-etapes">
+        <li><strong>Diagnostic rapide</strong> : j'examine l'accès, le type de couverture et l'étendue réelle des dégâts, puis je remonte le cheminement de l'eau jusqu'au point d'entrée — rarement à l'aplomb de la tache visible au plafond.</li>
+        <li><strong>Mise hors d'eau</strong> : si la couverture est ouverte, je pose une bâche armée fixée sur tasseaux ou je colmate le point d'entrée, pour stopper les infiltrations sans attendre les pièces.</li>
+        <li><strong>Réparation</strong> : remplacement des ardoises, tuiles ou crochets défaillants, reprise des liteaux ou de la volige touchés, et remise en état de la zinguerie — noues, solins, abergements.</li>
+        <li><strong>Contrôle d'étanchéité et conseils de suivi</strong> : je vérifie les points singuliers voisins de la zone réparée et je vous indique ce qui mérite une surveillance ou un entretien dans les années qui viennent.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Bloc 8 — Prix. ⚠️ Fourchettes marché indicatives : à faire valider par
+       M. Richard avant mise en ligne. -->
+  <section class="section section--gris">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Combien coûte une réparation de toiture dans le {site.address.department} ?</h2>
+        <p>À titre indicatif, voici les fourchettes pratiquées dans le département pour les interventions les plus courantes.</p>
+      </div>
+      <table class="tableau">
+        <thead><tr><th>Intervention</th><th>Fourchette indicative</th></tr></thead>
+        <tbody>
+          <tr><td>Pose de bâche de protection</td><td>200 à 500 €</td></tr>
+          <tr><td>Remplacement de quelques ardoises ou tuiles</td><td>150 à 450 €</td></tr>
+          <tr><td>Reprise de noue, solin ou abergement</td><td>300 à 900 €</td></tr>
+          <tr><td>Majoration déplacement d'urgence</td><td>100 à 250 €</td></tr>
+        </tbody>
+      </table>
+      <p>Le prix final dépend de l'accessibilité du toit, de la hauteur, du matériau et du caractère urgent ou programmé de l'intervention. Le <a href="/devis-gratuit/">devis gratuit</a>, remis en 24 heures, détaille chaque poste — le déplacement et le conseil sont offerts.</p>
+    </div>
+  </section>
+
+  <!-- Bloc 9 — FAQ (balisée FAQPage dans le JSON-LD du frontmatter) -->
+  <Faq gris={false} title={`Vos questions sur la réparation de toiture en ${site.address.region}`} items={faq} />
+
+  <!-- Fin de page — conclusion + CTA final + lien home en ancre « couvreur » -->
+  <section class="cta-band">
+    <div class="container">
+      <h2>Votre toiture réparée vite, et réparée bien</h2>
+      <p>Fuite, ardoises glissées, solin décollé : plus vous appelez tôt, plus la réparation reste simple. Je me déplace en urgence 24 h/24, je bâche si nécessaire et je répare avec les bonnes pièces — et pour vos autres projets de toiture, retrouvez mon activité complète de <a href="/">couvreur dans le {site.address.department}</a>.</p>
+      <ul class="cta-band__trust">
+        <li>Dépannage 24 h/24 depuis {site.address.city}</li>
+        <li>Devis &amp; déplacement gratuits</li>
+      </ul>
+      <div class="cta-band__actions">
+        <a class="btn btn--rouge btn--lg" href={`tel:${site.phoneHref}`}>Appeler le {site.phone}</a>
+        <a class="btn btn--lg cta-band__ghost" href="/devis-gratuit/">Demander une intervention urgente<span class="btn-menu__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg></span></a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Les H3 des media-splits (bâche, réparations courantes) : même chevron
+     orange que sur les pages nettoyage et rénovation. */
+  .media-split__text h3 {
+    margin-top: 0;
+    position: relative;
+    padding-left: 24px;
+    font-size: 1.3rem;
+  }
+  .media-split__text h3:before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: .62em;
+    width: 8px;
+    height: 8px;
+    border-top: 3px solid var(--rouge);
+    border-right: 3px solid var(--rouge);
+    transform: translateY(-50%) rotate(45deg);
+  }
+  .media-split + .media-split {
+    margin-top: 48px;
+  }
+  /* Liste simple des réparations courantes (pas de pastilles numérotées). */
+  .media-split__text ul {
+    margin: 0 0 14px;
+    padding-left: 20px;
+  }
+  .media-split__text ul li {
+    margin-bottom: 6px;
+  }
+</style>

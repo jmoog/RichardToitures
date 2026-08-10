@@ -1,0 +1,275 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import TrustBand from '../components/TrustBand.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import Faq from '../components/Faq.astro';
+import { site } from '../data/site.js';
+import { pageSchema } from '../data/schema.js';
+
+const path = '/renovation-toiture-37/';
+// 51 caractères — le title long du brief (69 c.) était tronqué en SERP.
+const title = 'Rénovation de Toiture 37 : Réfection & Remplacement';
+// 146 caractères — « tarifs » en fin de meta = différenciant en SERP.
+const description = `Réfection, remplacement et rénovation de toiture (ardoise naturelle, tuile plate, zinc) par un couvreur en ${site.address.region}. Devis gratuit et tarifs.`;
+
+// FAQ : sert à la fois au composant <Faq> (a = HTML) et au balisage FAQPage
+// (texte brut, balises retirées ci-dessous).
+const faq = [
+  {
+    q: 'Quelle est la différence entre rénovation, réfection et remplacement de toiture ?',
+    a: "La rénovation est le terme générique : elle va de la remise à neuf d'un versant à la reprise complète du toit. La réfection de toiture consiste à refaire la couverture — pureaux, liteaux ou volige, zinguerie — en conservant la charpente. Le remplacement de toiture va plus loin : l'ancienne couverture est intégralement déposée et remplacée par une neuve, dans le même matériau ou dans un autre. C'est le diagnostic qui détermine la bonne formule, pas l'inverse.",
+  },
+  {
+    q: 'Peut-on conserver la charpente existante ?',
+    a: "Dans la plupart des réfections, oui. J'examine les bois avant de chiffrer : sections, assemblages, flèche éventuelle, état des chevrons. Un chevron fatigué ou un liteau vrillé se remplacent ponctuellement, sans toucher au reste. Le renforcement ne s'impose vraiment que si la nouvelle couverture est nettement plus lourde que l'ancienne — passer d'une couverture légère à la tuile plate, par exemple, se prépare au niveau de la charpente.",
+  },
+  {
+    q: "Ardoise ou tuile plate : que choisir en rénovation en Indre-et-Loire ?",
+    a: "Le premier critère est la couverture d'origine : conserver le matériau en place simplifie le chantier et les démarches. L'ardoise naturelle domine les vallées et le nord du département, la tuile plate le sud-est et les Gâtines : rester dans cette logique donne un toit cohérent avec son secteur. Comptez aussi avec la pente — la tuile plate exige un versant bien incliné — et avec le budget, l'ardoise étant en général un peu plus coûteuse à poser. Un changement d'aspect se déclare en mairie avant travaux.",
+  },
+  {
+    q: 'Combien de temps dure une réfection de toiture ?',
+    a: "Pour une maison courante de 100 à 120 m² de couverture, comptez une à trois semaines de chantier : dépose, préparation du support, pose et zinguerie. La durée dépend du matériau — l'ardoise aux crochets sur volige demande plus de temps qu'une tuile à emboîtement —, du tri des tuiles réemployées, et d'une éventuelle reprise de charpente. Le devis précise le délai avant l'ouverture du chantier.",
+  },
+  {
+    q: 'Faut-il isoler en même temps que la réfection ?',
+    a: 'C\'est le meilleur moment : la couverture déposée donne un accès direct aux rampants, et l\'échafaudage ne se paie qu\'une fois. Isolation par l\'extérieur sous la nouvelle couverture ou <a href="/isolation-des-combles/">isolation des combles</a> par l\'intérieur : les deux se planifient avec la réfection, et l\'écran de sous-toiture HPV posé à cette occasion complète le dispositif en laissant respirer les bois.',
+  },
+  {
+    q: 'Quels sont les signes qui indiquent qu\'il faut remplacer la couverture ?',
+    a: 'Des pureaux usés qui feuillettent ou s\'effritent, des débris d\'ardoise ou de granulats dans les gouttières, des crochets rouillés en nombre, des tuiles gélives qui cassent à chaque saison, du jour visible depuis les combles, des fuites qui reviennent malgré les réparations. Quand un simple <a href="/nettoyage-toiture-37/">nettoyage de toiture</a> ou une reprise ponctuelle ne suffisent plus, la réfection devient le choix le plus économique sur la durée.',
+  },
+];
+
+const jsonLd = pageSchema(path, 'Rénovation de toiture');
+jsonLd['@graph'].push({
+  '@type': 'FAQPage',
+  '@id': `${site.domain}${path}#faq`,
+  mainEntity: faq.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a.replace(/<[^>]+>/g, '') },
+  })),
+});
+---
+<Layout title={title} description={description} path={path} jsonLd={jsonLd}>
+  <Breadcrumb label="Rénovation de toiture" />
+
+  <!-- Bloc 1 — Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <h1>Rénovation de toiture en {site.address.region}</h1>
+      <p class="page-hero__artisan">{site.brand}</p>
+      <div class="page-hero__grid">
+        <div class="page-hero__text">
+          <p><strong>Réfection, remplacement et rénovation complète de toitures dans le {site.address.department}, par un couvreur professionnel.</strong> Installé à {site.address.city}, je remets à neuf les couvertures des particuliers et des professionnels dans toute l'{site.address.region} : ardoise naturelle, tuile plate, tuile mécanique et zinc.</p>
+          <p>De la dépose de l'ancienne couverture à la pose du faîtage, je mène le chantier de bout en bout.</p>
+          <ul class="page-hero__list">
+            <li>Devis gratuit en 24 h</li>
+            <li>Garantie décennale</li>
+            <li>10 années d'expérience</li>
+          </ul>
+          <!-- Preuve chiffrée (gabarit bloc 1) : à activer quand la fiche Google
+               existera avec de vrais avis — jamais d'avis fictifs. -->
+          <div class="actions">
+            <a class="btn btn--rouge btn--tel" href={`tel:${site.phoneHref}`} aria-label={`Appeler le ${site.phone}`} title={`Appeler le ${site.phone}`}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.6" y="2" width="9.8" height="20" rx="2.9"></rect><line x1="8" y1="18.7" x2="11" y2="18.7"></line><path d="M17.9 8.9a4.6 4.6 0 0 1 0 6.2"></path><path d="M20.6 6.2a8.6 8.6 0 0 1 0 11.6"></path></svg>{site.phone}</a>
+            <a class="btn btn--ghost" href="/devis-gratuit/" style="color:#fff;border-color:#fff">Demander un devis<span class="btn-menu__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg></span></a>
+          </div>
+        </div>
+        <div class="page-hero__media">
+          <img src="/photos-chantier/renovation-toiture-longere-richard-toitures-16-1.webp" width="1600" height="1200" fetchpriority="high" decoding="async" alt={`Chantier de rénovation de toiture d'une longère — ${site.brand}, couvreur en ${site.address.region}`} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <TrustBand />
+
+  <!-- Bloc 2 — Introduction -->
+  <section class="section">
+    <div class="container media-split media-split--plain">
+      <div class="media-split__text">
+        <p>Une <strong>rénovation de toiture</strong> recouvre trois réalités distinctes. La <strong>réfection de toiture</strong> refait la couverture — pureaux, support, zinguerie — sur une charpente conservée. Le <strong>remplacement de toiture</strong> dépose l'ancienne couverture pour en poser une neuve, dans le même matériau ou dans un autre. Entre les deux, la remise à neuf partielle traite un versant ou des ouvrages précis : faîtage, noue, arêtier, rives.</p>
+        <p>En {site.address.region}, deux matériaux dominent les toits. L'<strong>ardoise naturelle</strong> règne sur les vallées et la moitié nord du département — à Tours, Amboise ou Chinon —, tandis que la <strong>tuile plate</strong> couvre le sud-est et les Gâtines, autour de Loches. Le zinc et la tuile mécanique complètent la palette. Refaire un toit ici, c'est raisonner en pureau, crochet, volige et liteau : le vocabulaire quotidien de mes <a href="/travaux-de-couverture/">travaux de couverture</a>.</p>
+      </div>
+      <div class="media-split__media">
+        <img src="/photos-chantier/couverture-tuile-refection-faitage-richard-toitures-03-1.webp" width="836" height="627" loading="lazy" decoding="async" alt={`Toiture en tuiles après réfection du faîtage — ${site.brand}, couvreur en ${site.address.region}`} />
+      </div>
+    </div>
+  </section>
+
+  <!-- Bloc 3 — Matériaux : H2 + 4 H3 -->
+  <section class="section section--gris">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Les matériaux de couverture utilisés en {site.address.region}</h2>
+        <p>On ne rénove pas une ardoise comme une tuile : formats, pose, fixations et points faibles diffèrent d'un matériau à l'autre. Voici les quatre couvertures que je travaille dans le département, et ce que j'y surveille en réfection.</p>
+      </div>
+    </div>
+
+    <div class="container media-split media-split--plain">
+      <div class="media-split__text">
+        <h3>Ardoise naturelle</h3>
+        <p>Posée aux formats courants de 32 × 22 cm et 30 × 20 cm, l'ardoise se fixe aux crochets ou aux clous sur volige jointive. Le pureau — la partie visible de l'ardoise — se règle constant, variable ou brouillé ; les toitures les plus travaillées adoptent un pureau décroissant, resserré vers le faîtage.</p>
+        <p>En réfection, je surveille trois points : l'oxydation des crochets, qui finit par lâcher et laisser glisser les ardoises ; le décollement des éléments cloués quand la volige fatigue ; et l'usure des pureaux, qui feuillettent en surface. Je repose aux crochets inox teintés et je reprends la volige partout où elle a travaillé — c'est ce qui fait tenir un <strong>remplacement de toiture en ardoise</strong> dans le temps.</p>
+      </div>
+      <div class="media-split__media">
+        <img src="/photos-chantier/couverture-ardoise-echafaudage-richard-toitures-30-1.webp" width="1200" height="1600" loading="lazy" decoding="async" alt={`Couverture en ardoise naturelle refaite à neuf, échafaudage en place — ${site.brand}, couvreur en ${site.address.region}`} />
+      </div>
+    </div>
+
+    <div class="container media-split media-split--reverse">
+      <div class="media-split__text">
+        <h3>Tuile plate</h3>
+        <p>La tuile plate petit moule, posée sur liteaux à raison de 60 à 75 tuiles au m², est la couverture traditionnelle du sud-est du département et des Gâtines. Son pureau variable s'ajuste à la pente du versant, et ses faîtages comme ses arêtiers se montent en embarrure, avec des crêtes maçonnées au mortier.</p>
+        <p>Lors d'une <strong>réfection de toiture en tuile plate</strong>, je trie systématiquement les tuiles déposées : les éléments sains repartent sur les versants les plus visibles, panachés avec des tuiles neuves pour préserver le nuancé du toit. Les tuiles gélives partent au rebut, les liteaux se remplacent au calepin du pureau, et les embarrures fissurées se refont au mortier.</p>
+      </div>
+      <div class="media-split__media">
+        <img src="/photos-chantier/reutilisation-tuiles-anciennes-grange-richard-toitures-35.webp" width="1600" height="777" loading="lazy" decoding="async" alt={`Tuiles plates anciennes triées sur liteaux neufs pour réemploi — ${site.brand}, couvreur en ${site.address.region}`} />
+      </div>
+    </div>
+
+    <div class="container media-split media-split--plain">
+      <div class="media-split__text">
+        <h3>Tuile mécanique, ou tuile à emboîtement</h3>
+        <p>Fabriquée avec des cannelures qui s'emboîtent, la tuile mécanique couvre vite et bien : 10 à 22 tuiles au m² selon le moule, une pose réglée sur liteaux, un budget contenu. Elle accepte des pentes plus faibles que la tuile plate et s'impose souvent en remplacement d'une couverture mécanique fatiguée, en rénovation comme en construction neuve.</p>
+        <p>Ses limites sont connues : un rendu moins fin que le petit moule, un calepinage imposé par l'emboîtement, et un passage de la tuile plate à la tuile mécanique qui change l'aspect du toit — la modification se déclare alors en mairie avant l'ouverture du chantier.</p>
+      </div>
+      <div class="media-split__media">
+        <img src="/photos-chantier/couverture-tuile-brune-richard-toitures-15-1.webp" width="1200" height="1600" loading="lazy" decoding="async" alt={`Faîtage et arêtiers refaits sur une couverture en tuiles mécaniques — ${site.brand}, couvreur en ${site.address.region}`} />
+      </div>
+    </div>
+
+    <div class="container media-split media-split--reverse">
+      <div class="media-split__text">
+        <h3>Zinc et zinguerie</h3>
+        <p>Le zinc à joint debout, naturel ou quartz prépatiné, couvre les versants à faible pente, les extensions et les ouvrages que la tuile ne peut pas suivre. Ses bacs façonnés se sertissent sur toute la longueur du versant, sans percement traversant.</p>
+        <p>Sur tous les toits, y compris en ardoise ou en tuile, la zinguerie assure l'étanchéité des points singuliers : solins et abergements autour des souches de cheminée, noues entre deux versants, chéneaux, bandes de rive et gouttières. Une réfection menée dans les règles refait ces ouvrages en même temps que la couverture — c'est par eux que les infiltrations commencent.</p>
+      </div>
+      <div class="media-split__media">
+        <img src="/photos-chantier/zinguerie-pose-gouttieres-richard-toitures-11-2.webp" width="1200" height="1600" loading="lazy" decoding="async" alt={`Ouvrages de zinguerie posés le long d'une toiture — ${site.brand}, couvreur en ${site.address.region}`} />
+      </div>
+    </div>
+  </section>
+
+  <!-- Bloc 4 — Déroulement en 4 étapes -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Le déroulement d'une rénovation de toiture</h2>
+        <p>Quatre étapes, toujours dans le même ordre — du diagnostic à la pose de la nouvelle couverture. Le devis détaille chacune d'elles, poste par poste.</p>
+      </div>
+      <div class="features">
+        <div class="feature">
+          <h3>1. Diagnostic et inspection</h3>
+          <p>Je monte sur le toit et j'examine tout ce qui compte : la charpente et ses sections, l'état des pureaux, la tenue des crochets, la volige ou les liteaux, et l'ensemble de la zinguerie — noues, solins, chéneaux. Ce relevé détermine s'il faut réparer, refaire ou remplacer, et donne un chiffrage précis.</p>
+        </div>
+        <div class="feature">
+          <h3>2. Dépose de l'ancienne couverture</h3>
+          <p>Ardoises ou tuiles sont déposées versant par versant, triées — les tuiles plates saines sont mises de côté pour réemploi —, et les gravats évacués. La toiture ouverte est bâchée en fin de journée pour rester hors d'eau jusqu'à la pose.</p>
+        </div>
+        <div class="feature">
+          <h3>3. Préparation du support</h3>
+          <p>Reprise de charpente si le diagnostic l'a révélé, puis reconstruction du support : voligeage jointif pour l'ardoise, lattage calé au pureau pour la tuile. Je pose un écran de sous-toiture HPV, contre-latté pour ventiler la sous-face de la couverture.</p>
+        </div>
+        <div class="feature">
+          <h3>4. Pose de la couverture et zinguerie</h3>
+          <p>Pose aux crochets, aux clous ou à l'emboîtement selon le matériau, puis façonnage des points singuliers : faîtage scellé ou à sec, arêtiers, noues en zinc, bandes de rive, abergements de cheminée et gouttières neuves. Je termine par un contrôle complet du toit.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bloc 5 — CTA intermédiaire -->
+  <CtaBanner
+    title="Devis gratuit en 24 h pour votre rénovation de toiture"
+    text={`Je me déplace, j'examine la couverture, la charpente et la zinguerie, et je vous remets un devis détaillé sous 24 heures, gratuit et sans engagement, partout en ${site.address.region}.`}
+    ctaLabel="Demander un devis de rénovation"
+    image="/photos-chantier/renovation-toiture-ferme-nacelle-richard-toitures-39-1.webp"
+    imageAlt={`Dépose des tuiles d'une ferme lors d'une rénovation de toiture — ${site.brand}, couvreur en ${site.address.region}`}
+  />
+
+  <!-- Bloc 6 — Rénover plutôt que réparer -->
+  <section class="section section--gris">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Quand opter pour une réfection complète</h2>
+        <p>Une couverture se répare tant que les désordres restent localisés : quelques ardoises glissées, une tuile cassée, un solin décollé relèvent d'une <a href="/reparation-toiture-37/">réparation de toiture</a>. La réfection s'impose quand les désordres se généralisent — réparer point par point revient alors plus cher, pour un toit qui continue de vieillir.</p>
+      </div>
+      <ul class="prose-etapes">
+        <li><strong>Usure généralisée des pureaux</strong> : ardoises qui feuillettent, tuiles qui s'effritent sur la majorité des versants.</li>
+        <li><strong>Crochets corrodés en nombre</strong> : quand la rouille gagne toute une zone de fixations, le remplacement ponctuel ne suit plus.</li>
+        <li><strong>Volige ou liteaux dégradés</strong> : un support qui a travaillé ne retient plus correctement la couverture.</li>
+        <li><strong>Fuites récurrentes</strong> : des infiltrations qui reviennent à chaque saison malgré les reprises successives.</li>
+        <li><strong>Perte d'étanchéité globale</strong> : absence d'écran de sous-toiture, noues et solins en fin de vie.</li>
+        <li><strong>Mise aux normes</strong> : profiter du chantier pour reprendre l'isolation et la ventilation de la toiture.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Bloc 7 — Prix. ⚠️ Fourchettes marché indicatives : à faire valider par
+       M. Richard avant mise en ligne. -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Combien coûte une rénovation de toiture dans le {site.address.department} ?</h2>
+        <p>À titre indicatif, voici les fourchettes pratiquées dans le département pour une réfection complète, dépose et pose comprises, hors reprise de charpente.</p>
+      </div>
+      <table class="tableau">
+        <thead><tr><th>Matériau</th><th>Fourchette indicative</th></tr></thead>
+        <tbody>
+          <tr><td>Tuile mécanique</td><td>100 à 180 €/m²</td></tr>
+          <tr><td>Tuile plate</td><td>150 à 250 €/m²</td></tr>
+          <tr><td>Ardoise naturelle</td><td>180 à 300 €/m²</td></tr>
+          <tr><td>Zinc à joint debout</td><td>250 à 400 €/m²</td></tr>
+        </tbody>
+      </table>
+      <p>Le prix final dépend de l'accessibilité du chantier, de la pente des versants, de l'état de la charpente, du pureau retenu et du type de pose — aux crochets sur volige ou sur liteaux. Le <a href="/devis-gratuit/">devis gratuit</a>, détaillé poste par poste et remis en 24 heures, fait foi : le déplacement est offert.</p>
+    </div>
+  </section>
+
+  <!-- Bloc 8 — FAQ (balisée FAQPage dans le JSON-LD du frontmatter) -->
+  <Faq title={`Vos questions sur la rénovation de toiture en ${site.address.region}`} items={faq} />
+
+  <!-- Fin de page — conclusion + CTA final + lien home en ancre « couvreur » -->
+  <section class="cta-band">
+    <div class="container">
+      <h2>Un toit refait pour plusieurs décennies</h2>
+      <p>Réfection, remplacement, remise à neuf partielle : confiez votre couverture à un couvreur qui pratique l'ardoise, la tuile et le zinc au quotidien. Devis gratuit en 24 heures et déplacement offert dans tout le département — et pour vos autres projets, retrouvez mon activité complète de <a href="/">couvreur en {site.address.region}</a>.</p>
+      <ul class="cta-band__trust">
+        <li>Couvreur basé à {site.address.city}</li>
+        <li>Devis &amp; déplacement gratuits</li>
+      </ul>
+      <div class="cta-band__actions">
+        <a class="btn btn--rouge btn--lg" href={`tel:${site.phoneHref}`}>Appeler le {site.phone}</a>
+        <a class="btn btn--lg cta-band__ghost" href="/devis-gratuit/">Demander un devis de rénovation de toiture<span class="btn-menu__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg></span></a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Les 4 matériaux du bloc technique sont des H3 (sous le H2 de section) :
+     même chevron orange que sur la page nettoyage. */
+  .media-split__text h3 {
+    margin-top: 0;
+    position: relative;
+    padding-left: 24px;
+    font-size: 1.3rem;
+  }
+  .media-split__text h3:before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: .62em;
+    width: 8px;
+    height: 8px;
+    border-top: 3px solid var(--rouge);
+    border-right: 3px solid var(--rouge);
+    transform: translateY(-50%) rotate(45deg);
+  }
+  .media-split + .media-split {
+    margin-top: 48px;
+  }
+</style>
