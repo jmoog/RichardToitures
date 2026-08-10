@@ -65,3 +65,15 @@
    l'image remplit la colonne quel que soit son format. */
 .cta-banner__media{position:relative;overflow:hidden}
 .cta-banner__media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 65%}
+
+/* Listes-badges sur fond sombre : arguments du hero de la home et de la
+   bannière CTA devis. Même style de badges que .cta-band__trust, alignés à
+   gauche, coche orange (--rouge). */
+.page-hero__list,.cta-banner__list{list-style:none;padding:0;margin:4px 0 0;display:flex;flex-wrap:wrap;gap:10px 12px}
+.page-hero__list li,.cta-banner__list li{display:inline-flex;align-items:center;gap:8px;background:#ffffff14;border:1px solid rgba(255,255,255,.16);padding:9px 16px;border-radius:var(--radius);color:#e9ecef;font-size:.9rem;font-weight:600}
+.page-hero__list li:before,.cta-banner__list li:before{content:"✔︎";color:var(--rouge);font-weight:900}
+.cta-banner__list{margin:0 0 26px}
+
+/* Coches du bandeau CTA final : en orange (--rouge) comme celles du hero,
+   au lieu du vert #5ad18a défini dans la ligne minifiée. */
+.cta-band__trust li:before{color:var(--rouge)}

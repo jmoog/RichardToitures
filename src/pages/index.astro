@@ -11,12 +11,17 @@ const description = `Couvreur ${site.address.department} : Lorem ipsum dolor sit
 <Layout title={title} description={description} path="/" jsonLd={pageSchema('/', 'Accueil')}>
   <section class="page-hero">
     <div class="container">
-      <h1>Couvreur {site.address.department} : artisan couvreur en {site.address.region}</h1>
+      <h1>Couvreur en {site.address.region} ({site.address.department})</h1>
       <p class="page-hero__artisan">{site.brand}</p>
       <div class="page-hero__grid">
         <div class="page-hero__text">
-          <p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</strong> Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
-          <p>Devis et déplacement gratuits dans tout le département — lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+          <p><strong>Artisan couvreur installé à {site.address.city}, je suis au service des particuliers et des professionnels pour tous vos travaux de couverture</strong> : entretien, réparation et rénovation de toiture, zinguerie et charpente.</p>
+          <p>J'interviens rapidement au domicile de mes clients, partout dans le département.</p>
+          <ul class="page-hero__list">
+            <li>Devis gratuit et sans engagement</li>
+            <li>10 années d'expérience</li>
+            <li>Garantie décennale</li>
+          </ul>
           <div class="actions">
             <a class="btn btn--rouge btn--tel" href={`tel:${site.phoneHref}`} aria-label={`Appeler le ${site.phone}`} title={`Appeler le ${site.phone}`}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.6" y="2" width="9.8" height="20" rx="2.9"></rect><line x1="8" y1="18.7" x2="11" y2="18.7"></line><path d="M17.9 8.9a4.6 4.6 0 0 1 0 6.2"></path><path d="M20.6 6.2a8.6 8.6 0 0 1 0 11.6"></path></svg>{site.phone}</a>
             <a class="btn btn--ghost" href="/devis-gratuit/" style="color:#fff;border-color:#fff">Demander un devis<span class="btn-menu__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg></span></a>
@@ -33,25 +38,25 @@ const description = `Couvreur ${site.address.department} : Lorem ipsum dolor sit
 
   <section class="section promo-section">
     <div class="section-head section-head--txt-left">
-      <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit</h2>
-      <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, ut enim ad minim veniam, quis nostrud exercitation.</p>
+      <h2>Mes services de couvreur zingueur du {site.address.department}</h2>
+      <p>Grâce à mon savoir-faire de couvreur zingueur, je prends en charge la totalité des travaux de couverture, zinguerie et charpente. J'en assure l'entretien, les travaux de rénovation et les réparations.</p>
     </div>
     <div class="promo-grid promo-grid--trio">
       <a class="promo-card" href="/renovation-toiture/">
         <h3>Rénovation de toiture</h3>
-        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+        <p>Remplacement partiel ou complet de votre couverture en tuiles, ardoises ou zinc. Un chantier mené dans les règles de l'art, couvert par la garantie décennale.</p>
         <img class="promo-card__icon" src="/iconesprestations/renovation-toiture.png" width="512" height="512" loading="lazy" decoding="async" alt="" aria-hidden="true" />
         <span class="promo-card__brand"><span class="promo-card__more" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h11.5M12 6.5l5.5 5.5-5.5 5.5"></path></svg></span></span>
       </a>
       <a class="promo-card" href="/reparation-toiture/">
         <h3>Réparation de toiture</h3>
-        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        <p>Tuiles cassées, fuite, infiltration : je recherche l'origine du problème et je réalise une réparation qui tient dans le temps. Déplacement rapide, en urgence si nécessaire.</p>
         <img class="promo-card__icon" src="/iconesprestations/reparation-toiture.png" width="512" height="512" loading="lazy" decoding="async" alt="" aria-hidden="true" />
         <span class="promo-card__brand"><span class="promo-card__more" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h11.5M12 6.5l5.5 5.5-5.5 5.5"></path></svg></span></span>
       </a>
       <a class="promo-card" href="/nettoyage-demoussage-toiture/">
         <h3>Nettoyage &amp; démoussage</h3>
-        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est.</p>
+        <p>Démoussage, nettoyage et traitement hydrofuge appliqués sur tous les types de couverture, pour redonner à votre toiture son aspect d'origine et prolonger sa durée de vie.</p>
         <img class="promo-card__icon" src="/iconesprestations/nettoyage-toiture.png" width="512" height="512" loading="lazy" decoding="async" alt="" aria-hidden="true" />
         <span class="promo-card__brand"><span class="promo-card__more" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h11.5M12 6.5l5.5 5.5-5.5 5.5"></path></svg></span></span>
       </a>
@@ -61,19 +66,19 @@ const description = `Couvreur ${site.address.department} : Lorem ipsum dolor sit
   <section class="split-feature">
     <div class="split-feature__inner">
       <div class="split-feature__left">
-        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit</h2>
-        <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip. Confiez votre <a href="/renovation-toiture/">rénovation de toiture</a> à {site.founder}.</p>
+        <h2>{site.founder}, couvreur de père en fils</h2>
+        <p>Artisan couvreur à {site.address.city}, j'exerce un métier transmis de père en fils : deux générations d'artisans couvreurs, et 10 années d'expérience sur les toitures de l'{site.address.region}. Je travaille tous les matériaux de couverture — tuile, ardoise, zinc — et je me suis spécialisé dans les toitures traditionnelles.</p>
         <ul class="split-feature__list">
-          <li class="is-active">Devis gratuit</li>
-          <li>[Délai d'intervention à préciser]</li>
-          <li>[Garanties à préciser]</li>
+          <li class="is-active">Devis gratuit sous 24 heures</li>
+          <li>Du lundi au samedi, 8 h – 20 h</li>
+          <li>Déplacements en urgence 24 h/24</li>
         </ul>
       </div>
       <div class="split-feature__right">
         <img class="split-feature__photo" src="/photos-chantier/renovation-toiture-longere-pierre-richard-toitures-31-3.webp" width="1600" height="1600" loading="lazy" decoding="async" alt={`L'équipe de ${site.brand} sur un échafaudage lors de la rénovation d'une toiture de longère`} />
         <div class="split-feature__card">
-          <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur, excepteur sint occaecat cupidatat.</p>
-          <p><strong>[Liste de matériaux à préciser]</strong> : non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <p>Mon travail repose sur des principes simples : l'amour du travail bien fait, des matériaux de qualité et des clients satisfaits. J'interviens quotidiennement dans tout le département, chez les particuliers comme chez les professionnels, syndics de copropriété et entreprises.</p>
+          <p><strong>Une fuite ou des dégâts sur votre toiture ?</strong> J'interviens en urgence, 24 h/24, pour bâcher, colmater et mettre votre couverture hors d'eau. Le devis est gratuit et sans engagement.</p>
         </div>
       </div>
     </div>
@@ -85,9 +90,14 @@ const description = `Couvreur ${site.address.department} : Lorem ipsum dolor sit
         <img src="/photos-chantier/couverture-ardoise-immeuble-richard-toitures-10-3.webp" width="1200" height="1600" loading="lazy" decoding="async" alt={`Couvreur au travail sur une souche de cheminée en ardoise — ${site.brand}, couvreur en ${site.address.region}`} />
       </div>
       <div class="cta-banner__panel">
-        <h2>Votre devis toiture gratuit dans le {site.address.department}</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. {site.founder} se déplace, constate et chiffre. Devis sans engagement, déplacement gratuit dans toute l'{site.address.region}.</p>
-        <a class="btn cta-banner__btn" href="/devis-gratuit/">Demander un devis gratuit</a>
+        <h2>Faites intervenir votre spécialiste de la toiture</h2>
+        <p>Un toit qui fuit, des tuiles à remplacer ou un projet de rénovation ? Je suis là pour vous. J'interviens à {site.address.city}, en {site.address.region}, rapidement et même en urgence. Déplacement, conseil et devis détaillé gratuits, sans engagement.</p>
+        <ul class="cta-banner__list">
+          <li>Expérience</li>
+          <li>Savoir-faire</li>
+          <li>Entreprise familiale et artisanale</li>
+        </ul>
+        <a class="btn cta-banner__btn" href="/devis-gratuit/">Demandez une intervention<span class="btn-menu__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg></span></a>
       </div>
     </div>
   </section>
@@ -96,8 +106,8 @@ const description = `Couvreur ${site.address.department} : Lorem ipsum dolor sit
     <div class="container media-split">
       <div class="media-split__text">
         <h2>Nettoyage et démoussage de toiture en {site.address.region}</h2>
-        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Un <a href="/nettoyage-demoussage-toiture/">nettoyage et démoussage de toiture</a> régulier prolonge la vie de votre couverture.</p>
-        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur, excepteur sint occaecat cupidatat non proident.</p>
+        <p>Les mousses et les lichens s'incrustent sur les tuiles et les ardoises, retiennent l'eau et finissent par rendre les matériaux poreux. Un <a href="/nettoyage-demoussage-toiture/">nettoyage et démoussage de toiture</a> régulier prolonge la vie de votre couverture et lui redonne son aspect d'origine.</p>
+        <p>J'interviens sur tous les types de toits : nettoyage manuel ou à basse pression selon l'état de la couverture, traitement anti-mousse, puis application d'un hydrofuge qui retarde la repousse. J'en profite pour contrôler les tuiles, les faîtages et les points singuliers, et je vous signale ce qui mérite une réparation.</p>
       </div>
       <div class="media-split__media">
         <img src="/photos-chantier/demoussage-traitement-toiture-richard-toitures-12-2.webp" width="1600" height="1200" loading="lazy" decoding="async" alt={`Toiture en cours de démoussage, mousse retirée sur la moitié du versant — ${site.brand}, couvreur en ${site.address.region}`} />
@@ -109,8 +119,8 @@ const description = `Couvreur ${site.address.department} : Lorem ipsum dolor sit
     <div class="container media-split media-split--reverse">
       <div class="media-split__text">
         <h2>Gouttières, noues et chéneaux en {site.address.region}</h2>
-        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore.</p>
-        <p>Veritatis et quasi architecto beatae vitae dicta sunt explicabo, nemo enim ipsam voluptatem : ces ouvrages font partie de nos <a href="/travaux-de-couverture/">travaux de couverture</a>.</p>
+        <p>Les gouttières, les noues et les chéneaux collectent l'eau qui ruisselle sur les versants et l'évacuent loin des murs et des fondations. Un ouvrage de zinguerie déformé, percé ou obstrué provoque des débordements, des coulures sur la façade et, à terme, des infiltrations.</p>
+        <p>Couvreur zingueur, je façonne, pose et répare ces ouvrages en zinc, en aluminium ou en PVC : ils font partie de mes <a href="/travaux-de-couverture/">travaux de couverture</a>. Dépose de l'existant, pose des crochets, réglage des pentes, soudure des jonctions — je vous conseille aussi sur l'entretien courant, comme le dégagement régulier des feuilles et des débris.</p>
         <a class="btn btn--rouge media-split__cta" href="/devis-gratuit/">Demander un devis<span class="btn-menu__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg></span></a>
       </div>
       <div class="media-split__media">

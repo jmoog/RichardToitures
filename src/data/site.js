@@ -1,10 +1,14 @@
 // Données centrales de l'entreprise. Coordonnées et informations légales
-// réelles (Richard Seatle, EI, Indre-et-Loire) ; ce qui reste inconnu reste
-// en placeholder entre crochets (hébergeur, avis Google...) — à compléter
-// avant mise en ligne. Pas de certification RGE : M. Seatle n'est pas RGE.
+// réelles (M. Richard, prénoms Seatle Michel, EI, Indre-et-Loire) ; ce qui
+// reste inconnu reste en placeholder entre crochets (hébergeur, avis
+// Google...) — à compléter
+// avant mise en ligne. Pas de certification RGE : M. Richard n'est pas RGE.
 export const site = {
   brand: 'Richard Toitures',
-  founder: 'Richard Seatle',
+  // Nom public : « Michel Richard » — Michel est le deuxième prénom de
+  // l'artisan, plus courant que son premier prénom (Seatle). Le nom complet
+  // avec les deux prénoms reste dans legalName pour les mentions légales.
+  founder: 'Michel Richard',
   domain: 'https://richard-toitures.fr',
   phone: '06 06 41 49 02',
   phoneHref: '0606414902',
@@ -39,7 +43,7 @@ export const site = {
   // qu'il corresponde avant la mise en ligne définitive.
   ape: '43.91B — Travaux de couverture par éléments',
   legalForm: 'Entrepreneur individuel (EI)',
-  legalName: 'Richard Seatle',
+  legalName: 'Seatle Michel Richard',
   registeredOffice: 'Lieu-dit Glatinet, 37300 Joué-lès-Tours',
   // Pas encore de fiche Google / avis clients à ce stade : ne rien afficher
   // tant qu'il n'y a ni note ni avis réels. À ajouter ici (googleProfileLink,
@@ -68,7 +72,7 @@ export const mainNav = [
 export const services = [
   { href: '/travaux-de-couverture/', label: 'Travaux de couverture' },
   { href: '/renovation-toiture/', label: 'Rénovation de toiture' },
-  { href: '/reparation-toiture-fuite/', label: 'Réparation & recherche de fuite' },
+  { href: '/reparation-toiture/', label: 'Réparation & recherche de fuite' },
   { href: '/nettoyage-demoussage-toiture/', label: 'Nettoyage & démoussage' },
   { href: '/isolation-des-combles/', label: 'Isolation des combles' },
   { href: '/ravalement-de-facade/', label: 'Ravalement de façade' },
