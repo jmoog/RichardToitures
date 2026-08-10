@@ -1,8 +1,9 @@
 // Données centrales de l'entreprise. Coordonnées et informations légales
 // réelles (M. Richard, prénoms Seatle Michel, EI, Indre-et-Loire) ; ce qui
-// reste inconnu reste en placeholder entre crochets (hébergeur, avis
-// Google...) — à compléter
-// avant mise en ligne. Pas de certification RGE : M. Richard n'est pas RGE.
+// reste inconnu reste en placeholder entre crochets (avis Google...) — à
+// compléter avant mise en ligne. Pas de certification RGE : M. Richard n'est
+// pas RGE. Hébergeur : Hetzner Online GmbH — coordonnées vérifiées sur
+// hetzner.com/legal/legal-notice/ (août 2026).
 export const site = {
   brand: 'Richard Toitures',
   // Nom public : « Michel Richard » — Michel est le deuxième prénom de
@@ -51,11 +52,11 @@ export const site = {
   // avis obtenus — et à réutiliser dans TrustBand.astro / Layout.astro /
   // index.astro / devis-gratuit.astro à ce moment-là.
   hosting: {
-    name: '[Nom de l’hébergeur]',
-    address: '[Adresse de l’hébergeur]',
-    phone: '[Téléphone de l’hébergeur]',
-    email: '[E-mail de l’hébergeur]',
-    site: '[Site web de l’hébergeur]',
+    name: 'Hetzner Online GmbH',
+    address: 'Industriestr. 25, 91710 Gunzenhausen, Allemagne',
+    phone: '+49 (0)9831 505-0',
+    email: 'info@hetzner.com',
+    site: 'https://www.hetzner.com',
   },
 };
 
