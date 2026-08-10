@@ -8,7 +8,7 @@ const path = '/mentions-legales/';
 const title = `Mentions légales — ${site.brand}, artisan couvreur en ${site.address.region}`;
 const description = `Mentions légales du site ${site.domain.replace('https://', '')} : éditeur, hébergeur, propriété intellectuelle, données personnelles et cookies.`;
 ---
-<Layout title={title} description={description} path={path} jsonLd={pageSchema(path, 'Mentions légales')}>
+<Layout title={title} description={description} path={path} jsonLd={pageSchema(path, 'Mentions légales', { description })}>
   <Breadcrumb label="Mentions légales" />
 
   <section class="section legal-page">

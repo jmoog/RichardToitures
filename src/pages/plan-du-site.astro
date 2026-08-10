@@ -4,12 +4,13 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 import { site, services } from '../data/site.js';
 import { villes } from '../data/villes.js';
 import { villesNettoyage } from '../data/villesNettoyage.js';
+import { pageSchema } from '../data/schema.js';
 
 const path = '/plan-du-site/';
 const title = `Plan du site — ${site.brand}`;
 const description = `Retrouvez toutes les pages du site ${site.domain.replace('https://', '')}.`;
 ---
-<Layout title={title} description={description} path={path}>
+<Layout title={title} description={description} path={path} jsonLd={pageSchema(path, 'Plan du site', { description })}>
   <Breadcrumb label="Plan du site" />
   <section class="section legal-page">
     <div class="container legal-page__container">

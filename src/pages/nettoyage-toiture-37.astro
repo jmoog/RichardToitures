@@ -41,15 +41,19 @@ const faq = [
   },
 ];
 
-const jsonLd = pageSchema(path, 'Nettoyage & démoussage de toiture');
-jsonLd['@graph'].push({
-  '@type': 'FAQPage',
-  '@id': `${site.domain}${path}#faq`,
-  mainEntity: faq.map((item) => ({
-    '@type': 'Question',
-    name: item.q,
-    acceptedAnswer: { '@type': 'Answer', text: item.a.replace(/<[^>]+>/g, '') },
-  })),
+// La FAQ affichée est passée à pageSchema : le nœud WebPage porte alors
+// aussi le type FAQPage (une seule entité par URL, au lieu d'un nœud
+// FAQPage concurrent), et les balises HTML des réponses sont retirées.
+const jsonLd = pageSchema(path, 'Nettoyage & démoussage de toiture', {
+  pageName: 'Nettoyage de toiture en Indre-et-Loire',
+  description,
+  image: '/photos-chantier/demoussage-traitement-toiture-richard-toitures-12-1.webp',
+  faq,
+  service: {
+    name: 'Nettoyage, démoussage et traitement hydrofuge de toiture',
+    type: 'Nettoyage, démoussage et traitement hydrofuge de toiture',
+    description: 'Démoussage, lavage basse pression (2 à 3 bars) et traitement hydrofuge des toitures en ardoise et en tuile, partout en Indre-et-Loire.',
+  },
 });
 
 // Les 13 pages villes du cocon nettoyage (satellites de cette page pilier).

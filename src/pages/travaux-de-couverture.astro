@@ -12,7 +12,14 @@ const path = '/travaux-de-couverture/';
 const title = `Travaux de couverture en ${site.address.region} — ${site.brand} (${site.address.department})`;
 const description = `${site.founder}, artisan couvreur en ${site.address.region} : pose et réfection de toiture, tuiles, ardoises, zinguerie et gouttières. [Description à remplacer]`;
 ---
-<Layout title={title} description={description} path={path} jsonLd={pageSchema(path, 'Travaux de couverture')}>
+<Layout title={title} description={description} path={path} jsonLd={pageSchema(path, 'Travaux de couverture', {
+  pageName: `Travaux de couverture en ${site.address.region}`,
+  service: {
+    name: 'Travaux de couverture',
+    type: 'Pose, réfection et entretien de couverture',
+    description: `Pose et réfection de toiture, tuiles, ardoises, zinguerie et gouttières en ${site.address.region} par ${site.founder}, artisan couvreur.`,
+  },
+})}>
   <Breadcrumb label="Travaux de couverture" />
 
   <section class="page-hero">

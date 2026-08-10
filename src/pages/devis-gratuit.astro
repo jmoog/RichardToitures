@@ -11,12 +11,14 @@ import { site } from '../data/site.js';
 import { pageSchema } from '../data/schema.js';
 
 const path = '/devis-gratuit/';
-const title = `Devis gratuit — ${site.brand}, artisan couvreur en ${site.address.region}`;
-const description = `Demandez votre devis gratuit à ${site.brand}, artisan couvreur en ${site.address.region} (${site.address.department}). [Description à remplacer]`;
+// 58 caractères — requête « devis toiture / devis couvreur + Indre-et-Loire ».
+const title = 'Devis Gratuit Toiture en Indre-et-Loire — Réponse sous 24 h';
+// 151 caractères.
+const description = `Devis gratuit et sans engagement pour vos travaux de toiture en ${site.address.region} : ${site.founder} se déplace, chiffre et répond sous 24 h ✓ ${site.phone}.`;
 
-// Carte OpenStreetMap (sans cookie). Coordonnées de démonstration
-// (centre de Tours) : à remplacer par les coordonnées réelles de
-// l'entreprise dans src/data/site.js.
+// Carte OpenStreetMap (sans cookie), centrée sur site.geo (Joué-lès-Tours).
+// Affiner les coordonnées dans src/data/site.js si le marqueur doit tomber
+// exactement sur l'adresse d'intervention.
 const { lat, lng } = site.geo;
 const d = 0.03;
 const mapSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${lng - d}%2C${lat - d}%2C${lng + d}%2C${lat + d}&layer=mapnik&marker=${lat}%2C${lng}`;
@@ -37,21 +39,22 @@ const prestationsOptions = [
   { v: 'autre', l: 'Autre / à préciser' },
 ];
 ---
-<Layout title={title} description={description} path={path} jsonLd={pageSchema(path, 'Devis gratuit')}>
+<Layout title={title} description={description} path={path} jsonLd={pageSchema(path, 'Devis gratuit', { pageName: `Demander un devis gratuit — ${site.brand}`, description })}>
   <Breadcrumb label="Devis gratuit" />
 
   <section class="section devis-top">
     <div class="container devis-grid">
       <div class="devis-intro">
         <h1>Devis gratuit pour vos travaux de toiture en {site.address.region}</h1>
-        <p class="devis-lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Décrivez votre projet en deux minutes : {site.founder} vous rappelle rapidement avec un premier retour, sans engagement.</p>
+        <p class="devis-lead">Un toit qui prend l'eau, une couverture fatiguée, des gouttières qui débordent : décrivez votre projet en deux minutes. Je vous rappelle, je viens voir le toit, et vous recevez un devis écrit sous 24 heures — gratuit et sans engagement.</p>
 
         <div class="devis-texte">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vous décrivez vos travaux, {site.founder} se déplace chez vous, constate et chiffre. Le déplacement est gratuit dans tout le département, et le devis aussi.</p>
-          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Pour une urgence, appelez directement le {site.phone}.</p>
+          <p>Un devis de toiture ne se rédige pas au téléphone. Vu du sol, un pan « juste à nettoyer » cache parfois des liteaux morts sous les tuiles ; à l'inverse, une infiltration inquiétante se règle souvent par une <a href="/reparation-toiture-37/">réparation de toiture</a> ciblée d'une demi-journée. Je me déplace donc systématiquement : je monte voir la couverture — au besoin depuis le panier de mon camion-nacelle, sans marcher sur les tuiles —, je passe dans les combles quand il y a une trace d'eau, et je chiffre sur ce que j'ai constaté, pas sur une estimation à distance.</p>
+          <p>Vous recevez ensuite un devis détaillé poste par poste : les surfaces concernées, les matériaux et leur provenance, la dépose et l'évacuation des gravats, l'échafaudage ou la nacelle lorsqu'il en faut. Rien de forfaitaire ni de flou, pour que vous puissiez le comparer sereinement à un autre. Le déplacement et le conseil sont gratuits, le devis vous parvient sous 24 heures, et il ne vous engage à rien.</p>
+          <p>Le formulaire accueille toutes les demandes, du remplacement de quelques tuiles à la <a href="/renovation-toiture-37/">rénovation d'une toiture</a> complète. Plus vous m'en direz — âge du toit, matériau, ce que vous avez constaté, une photo si vous en avez une —, plus mon premier retour sera précis. Et si l'eau entre déjà chez vous, ne passez pas par le formulaire : appelez le {site.phone}, j'interviens 24 h/24 pour mettre votre toit hors d'eau avant de chiffrer quoi que ce soit.</p>
         </div>
 
-        <img class="devis-photo" src="/photos-chantier/reutilisation-tuiles-anciennes-grange-richard-toitures-35.webp" width="1600" height="777" loading="lazy" decoding="async" alt={`Tuiles anciennes triées et reposées sur un liteaunage neuf — ${site.brand}, couvreur en ${site.address.region}`} />
+        <img class="devis-photo" src="/photos-chantier/renovation-toiture-ferme-nacelle-richard-toitures-39-1.webp" width="1600" height="777" loading="lazy" decoding="async" alt={`Camion-nacelle déployé au pied d'une ferme en pierre pour une réfection de toiture — ${site.brand}, couvreur en ${site.address.region}`} />
       </div>
 
       <aside class="devis-form-card">
@@ -157,7 +160,7 @@ const prestationsOptions = [
     <div class="container">
       <div class="section-head">
         <h2>Notre zone d'intervention en {site.address.region}</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Installé à {site.address.city}, {site.founder} se déplace gratuitement dans tout le département. [Zone d'intervention à préciser]</p>
+        <p>Installé à {site.address.city}, je me déplace chaque jour dans tout le département : Tours et sa première couronne — Saint-Avertin, Chambray-lès-Tours, La Riche, Saint-Cyr-sur-Loire —, la vallée du Cher et de l'Indre jusqu'à Ballan-Miré, Savonnières, Druye, Veigné, Montbazon et Larçay, ou plus au nord vers Fondettes. Que vous cherchiez un <a href="/couvreur-tours/">couvreur à Tours</a> ou dans un bourg de campagne, la démarche est la même : visite sur place, chiffrage écrit, réponse sous 24 heures.</p>
       </div>
       <div class="devis-map">
         <iframe
@@ -175,8 +178,8 @@ const prestationsOptions = [
     <div class="container media-split media-split--reverse media-split--plain">
       <div class="media-split__text">
         <h2>Vous préférez en parler de vive voix ?</h2>
-        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium. Appelez {site.founder} directement : vous parlez à l'artisan qui viendra sur votre toit.</p>
-        <p>[Horaires de disponibilité à préciser]</p>
+        <p>Certaines questions se règlent en trois minutes de téléphone : savoir si un démoussage suffit encore, si une gouttière se répare ou se remplace, combien de temps immobilise un chantier. Appelez-moi directement — pas de standard, pas de commercial : vous parlez à l'artisan qui montera sur votre toit, et qui rédigera votre devis.</p>
+        <p>Je réponds du lundi au samedi, de 8 h à 20 h. En dehors de ces horaires, seules les urgences sont traitées — fuite active, tuiles arrachées par le vent, bâche à poser en attendant la réparation : dans ces cas-là, j'interviens 24 h/24.</p>
         <a class="btn btn--rouge media-split__cta" href={`tel:${site.phoneHref}`}>Appeler le {site.phone}</a>
       </div>
       <div class="media-split__media">

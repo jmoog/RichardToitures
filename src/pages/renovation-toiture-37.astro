@@ -42,15 +42,19 @@ const faq = [
   },
 ];
 
-const jsonLd = pageSchema(path, 'Rénovation de toiture');
-jsonLd['@graph'].push({
-  '@type': 'FAQPage',
-  '@id': `${site.domain}${path}#faq`,
-  mainEntity: faq.map((item) => ({
-    '@type': 'Question',
-    name: item.q,
-    acceptedAnswer: { '@type': 'Answer', text: item.a.replace(/<[^>]+>/g, '') },
-  })),
+// La FAQ affichée est passée à pageSchema : le nœud WebPage porte alors
+// aussi le type FAQPage (une seule entité par URL, au lieu d'un nœud
+// FAQPage concurrent), et les balises HTML des réponses sont retirées.
+const jsonLd = pageSchema(path, 'Rénovation de toiture', {
+  pageName: 'Rénovation de toiture en Indre-et-Loire',
+  description,
+  image: '/photos-chantier/renovation-toiture-longere-richard-toitures-16-1.webp',
+  faq,
+  service: {
+    name: 'Rénovation, réfection et remplacement de toiture',
+    type: 'Rénovation, réfection et remplacement de toiture',
+    description: 'Réfection et remplacement complet de couverture (ardoise naturelle, tuile plate, tuile mécanique, zinc), reprise de charpente et écran de sous-toiture, en Indre-et-Loire.',
+  },
 });
 ---
 <Layout title={title} description={description} path={path} jsonLd={jsonLd}>

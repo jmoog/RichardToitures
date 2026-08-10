@@ -8,7 +8,7 @@ import { pageSchema } from '../data/schema.js';
 const title = `Artisan Couvreur-Zingueur ${site.address.department} - ${site.founder}`;
 const description = `Entreprise de couverture : entretien, réparation, rénovation de toiture. Devis gratuit, interventions partout en ${site.address.region}. Appelez le ${site.phone}.`;
 ---
-<Layout title={title} description={description} path="/" jsonLd={pageSchema('/', 'Accueil')}>
+<Layout title={title} description={description} path="/" jsonLd={pageSchema('/', 'Accueil', { pageName: `${site.brand} — couvreur en ${site.address.region}`, description, image: '/photos-chantier/couverture-ardoise-toiture-urbaine-richard-toitures-40.webp' })}>
   <section class="page-hero">
     <div class="container">
       <h1>Couvreur en {site.address.region} ({site.address.department})</h1>

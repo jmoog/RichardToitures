@@ -25,9 +25,24 @@ const nearbyLinks = [
   { href: '/reparation-faitage-fondettes/', label: 'Réparation de faîtage à Fondettes' },
   { href: '/reparation-toiture-37/', label: 'Réparation de toiture en Indre-et-Loire' },
 ];
+
+// Satellite : fil d'Ariane rattaché au pilier, zone desservie limitée à
+// Saint-Cyr-sur-Loire (le contenu ne parle que de cette commune).
+const trail = [{ label: 'Réparation de toiture', href: '/reparation-toiture-37/' }];
+const jsonLd = pageSchema(path, breadcrumbLabel, {
+  description,
+  image: '/photos-chantier/renovation-toiture-maison-bourgeoise-richard-toitures-26-1.webp',
+  commune: 'Saint-Cyr-sur-Loire',
+  trail: trail.map((t) => ({ name: t.label, path: t.href })),
+  service: {
+    name: 'Recherche de fuite de toiture à Saint-Cyr-sur-Loire',
+    type: 'Recherche de fuite et réparation de toiture',
+    description: `Localisation de l'origine d'une infiltration, reprise des solins et des pieds de cheminée à Saint-Cyr-sur-Loire par ${site.founder}, artisan couvreur.`,
+  },
+});
 ---
-<Layout title={title} description={description} path={path} jsonLd={pageSchema(path, breadcrumbLabel)}>
-  <Breadcrumb label={breadcrumbLabel} />
+<Layout title={title} description={description} path={path} jsonLd={jsonLd}>
+  <Breadcrumb label={breadcrumbLabel} trail={trail} />
 
   <section class="page-hero">
     <div class="container">

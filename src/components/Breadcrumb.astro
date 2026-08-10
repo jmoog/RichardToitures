@@ -1,10 +1,15 @@
 ---
-const { label } = Astro.props;
+// `trail` = niveaux intermédiaires affichés entre « Accueil » et la page
+// courante, ex. [{ label: 'Nettoyage & démoussage', href: '/nettoyage-toiture-37/' }].
+// Le même tableau doit être passé à pageSchema() (option `trail`) pour que le
+// fil d'Ariane balisé corresponde exactement au fil d'Ariane affiché.
+const { label, trail = [] } = Astro.props;
 ---
 <nav class="breadcrumb" aria-label="Fil d'Ariane">
   <div class="container">
     <ol>
       <li><a href="/">Accueil</a></li>
+      {trail.map((t) => <li><a href={t.href}>{t.label}</a></li>)}
       <li aria-current="page">{label}</li>
     </ol>
   </div>

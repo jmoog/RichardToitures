@@ -42,15 +42,19 @@ const faq = [
   },
 ];
 
-const jsonLd = pageSchema(path, 'Gouttières, noues et chéneaux');
-jsonLd['@graph'].push({
-  '@type': 'FAQPage',
-  '@id': `${site.domain}${path}#faq`,
-  mainEntity: faq.map((item) => ({
-    '@type': 'Question',
-    name: item.q,
-    acceptedAnswer: { '@type': 'Answer', text: item.a.replace(/<[^>]+>/g, '') },
-  })),
+// La FAQ affichée est passée à pageSchema : le nœud WebPage porte alors
+// aussi le type FAQPage (une seule entité par URL, au lieu d'un nœud
+// FAQPage concurrent), et les balises HTML des réponses sont retirées.
+const jsonLd = pageSchema(path, 'Gouttières, noues et chéneaux', {
+  pageName: 'Gouttières, noues et chéneaux en Indre-et-Loire',
+  description,
+  image: '/photos-chantier/zinguerie-pose-gouttieres-richard-toitures-11-3.webp',
+  faq,
+  service: {
+    name: 'Pose, remplacement et réparation de gouttières, noues et chéneaux',
+    type: 'Pose, remplacement et réparation de gouttières, noues et chéneaux',
+    description: 'Zinguerie : pose, remplacement et réparation de gouttières, de noues et de chéneaux en zinc, aluminium et PVC, partout en Indre-et-Loire.',
+  },
 });
 ---
 <Layout title={title} description={description} path={path} jsonLd={jsonLd}>

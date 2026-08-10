@@ -21,9 +21,24 @@ const nearbyLinks = [
   { href: '/recherche-de-fuite-toiture-saint-cyr-sur-loire/', label: 'Recherche de fuite de toiture à Saint-Cyr-sur-Loire' },
   { href: '/reparation-toiture-37/', label: 'Réparation de toiture en Indre-et-Loire' },
 ];
+
+// Satellite : fil d'Ariane rattaché au pilier, zone desservie limitée à
+// Fondettes (le contenu ne parle que de cette commune).
+const trail = [{ label: 'Réparation de toiture', href: '/reparation-toiture-37/' }];
+const jsonLd = pageSchema(path, breadcrumbLabel, {
+  description,
+  image: '/photos-chantier/couverture-tuile-refection-faitage-richard-toitures-03-1.webp',
+  commune: 'Fondettes',
+  trail: trail.map((t) => ({ name: t.label, path: t.href })),
+  service: {
+    name: 'Réparation de faîtage à Fondettes',
+    type: 'Réparation de faîtage et de couverture',
+    description: `Rescellement des faîtières, reprise des embarrures et des closoirs à Fondettes par ${site.founder}, artisan couvreur en ${site.address.region}.`,
+  },
+});
 ---
-<Layout title={title} description={description} path={path} jsonLd={pageSchema(path, breadcrumbLabel)}>
-  <Breadcrumb label={breadcrumbLabel} />
+<Layout title={title} description={description} path={path} jsonLd={jsonLd}>
+  <Breadcrumb label={breadcrumbLabel} trail={trail} />
 
   <section class="page-hero">
     <div class="container">

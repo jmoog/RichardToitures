@@ -42,15 +42,19 @@ const faq = [
   },
 ];
 
-const jsonLd = pageSchema(path, 'Réparation de toiture');
-jsonLd['@graph'].push({
-  '@type': 'FAQPage',
-  '@id': `${site.domain}${path}#faq`,
-  mainEntity: faq.map((item) => ({
-    '@type': 'Question',
-    name: item.q,
-    acceptedAnswer: { '@type': 'Answer', text: item.a.replace(/<[^>]+>/g, '') },
-  })),
+// La FAQ affichée est passée à pageSchema : le nœud WebPage porte alors
+// aussi le type FAQPage (une seule entité par URL, au lieu d'un nœud
+// FAQPage concurrent), et les balises HTML des réponses sont retirées.
+const jsonLd = pageSchema(path, 'Réparation de toiture', {
+  pageName: 'Réparation de toiture en Indre-et-Loire',
+  description,
+  image: '/photos-chantier/renovation-souche-de-cheminee-richard-toitures-09-1.webp',
+  faq,
+  service: {
+    name: 'Réparation de toiture, pose de bâche et intervention d\'urgence',
+    type: 'Réparation de toiture, pose de bâche et intervention d\'urgence',
+    description: 'Mise hors d\'eau, recherche de fuite et réparation de couverture (ardoise, tuile plate, tuile mécanique, zinc) partout en Indre-et-Loire. Dépannage 24 h/24.',
+  },
 });
 ---
 <Layout title={title} description={description} path={path} jsonLd={jsonLd}>

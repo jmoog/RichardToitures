@@ -26,9 +26,26 @@ const nearbyLinks = (ville.nearby || []).map((slug) => {
 // Même règle que les pages couvreur : espace insécable entre « à » et le nom
 // de la commune, pour ne jamais isoler la ville sur sa propre ligne.
 const h1Text = ville.h1.replace(' à ', ' à ');
+
+// Fil d'Ariane à 3 niveaux : le satellite est rattaché à son pilier. Le même
+// `trail` alimente le fil affiché et le fil balisé, pour qu'ils coïncident.
+const trail = [{ label: 'Nettoyage & démoussage', href: '/nettoyage-toiture-37/' }];
+
+const jsonLd = pageSchema(path, breadcrumbLabel, {
+  pageName: ville.h1,
+  description: ville.metaDescription,
+  image: ville.heroPhoto?.src,
+  commune: ville.name,
+  trail: trail.map((t) => ({ name: t.label, path: t.href })),
+  service: {
+    name: `Nettoyage de toiture à ${ville.name}`,
+    type: 'Nettoyage, démoussage et traitement hydrofuge de toiture',
+    description: `Démoussage, lavage basse pression et traitement hydrofuge des toitures à ${ville.name} par ${site.founder}, artisan couvreur en ${site.address.region}.`,
+  },
+});
 ---
-<Layout title={ville.metaTitle} description={ville.metaDescription} path={path} jsonLd={pageSchema(path, breadcrumbLabel)}>
-  <Breadcrumb label={breadcrumbLabel} />
+<Layout title={ville.metaTitle} description={ville.metaDescription} path={path} jsonLd={jsonLd}>
+  <Breadcrumb label={breadcrumbLabel} trail={trail} />
 
   <section class="page-hero">
     <div class="container">

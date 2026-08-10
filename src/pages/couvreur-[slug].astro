@@ -24,8 +24,23 @@ const nearbyLinks = (ville.nearby || []).map((slug) => {
 // éviter un retour à la ligne qui isolerait le nom de la ville sur sa propre
 // ligne (brief Joseph : pas de retour à la ligne sur un, deux ou trois mots).
 const h1Text = ville.h1.replace(' à ', ' à ');
+
+// Balisage : la zone desservie déclarée est la commune de la page, et elle
+// seule (option `commune`) — une page ville qui revendiquerait les 13
+// communes contredirait son propre contenu et diluerait le signal local.
+const jsonLd = pageSchema(path, breadcrumbLabel, {
+  pageName: ville.h1,
+  description: ville.metaDescription,
+  image: ville.heroPhoto?.src,
+  commune: ville.name,
+  service: {
+    name: `Travaux de couverture à ${ville.name}`,
+    type: 'Couverture, rénovation, réparation et entretien de toiture',
+    description: `Entretien, réparation et rénovation de toiture à ${ville.name} (${ville.postalCode}) par ${site.founder}, artisan couvreur zingueur. Devis gratuit sous 24 h.`,
+  },
+});
 ---
-<Layout title={ville.metaTitle} description={ville.metaDescription} path={path} jsonLd={pageSchema(path, breadcrumbLabel)}>
+<Layout title={ville.metaTitle} description={ville.metaDescription} path={path} jsonLd={jsonLd}>
   <Breadcrumb label={breadcrumbLabel} />
 
   <section class="page-hero">
