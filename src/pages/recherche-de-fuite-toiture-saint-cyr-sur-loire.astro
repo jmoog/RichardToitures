@@ -1,0 +1,181 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import TrustBand from '../components/TrustBand.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import NearbyLinks from '../components/NearbyLinks.astro';
+import { site } from '../data/site.js';
+import { pageSchema } from '../data/schema.js';
+
+// Satellite du pilier /reparation-toiture-37/ — récit d'un chantier de
+// recherche de fuite + réparation de pied de cheminée à Saint-Cyr-sur-Loire
+// (juin 2026), illustré par la série photo 09 (couverture ouverte au pied de
+// la souche → liteaux neufs). Toujours moins profond que le pilier : pas de
+// tarifs détaillés, pas de FAQ.
+// NB : le slug départemental /recherche-de-fuite-toiture/ reste réservé pour
+// une éventuelle page « urgence fuite » dédiée — pas de cannibalisation.
+const path = '/recherche-de-fuite-toiture-saint-cyr-sur-loire/';
+// 58 caractères — title ≠ H1, requête « fuite toiture Saint-Cyr-sur-Loire ».
+const title = 'Fuite de Toiture à Saint-Cyr-sur-Loire ? Réparation Rapide';
+// 145 caractères.
+const description = 'Auréole au plafond à Saint-Cyr-sur-Loire ? Michel Richard localise la fuite et répare solins et pied de cheminée. Devis gratuit ✓ 06 06 41 49 02.';
+const breadcrumbLabel = 'Recherche de fuite à Saint-Cyr-sur-Loire';
+
+const nearbyLinks = [
+  { href: '/reparation-faitage-fondettes/', label: 'Réparation de faîtage à Fondettes' },
+  { href: '/reparation-toiture-37/', label: 'Réparation de toiture en Indre-et-Loire' },
+];
+---
+<Layout title={title} description={description} path={path} jsonLd={pageSchema(path, breadcrumbLabel)}>
+  <Breadcrumb label={breadcrumbLabel} />
+
+  <section class="page-hero">
+    <div class="container">
+      <h1>Recherche de fuite de toiture à&nbsp;Saint-Cyr-sur-Loire</h1>
+      <p class="page-hero__artisan">{site.brand}</p>
+      <div class="page-hero__grid">
+        <div class="page-hero__text">
+          <p><strong>Une auréole au plafond, une trace qui s'élargit le long d'un mur à Saint-Cyr-sur-Loire ?</strong> Le point d'entrée de l'eau se trouve rarement à l'aplomb des dégâts : elle chemine le long des liteaux et de la volige avant de ressortir. Toute la <strong>recherche de fuite</strong> consiste à remonter ce cheminement jusqu'à son origine.</p>
+          <p>Couvreur zingueur, j'interviens à Saint-Cyr-sur-Loire pour localiser la fuite, mettre votre toit hors d'eau — 24 h/24 en urgence — puis réparer. Sur cette page, je vous raconte un chantier mené en juin 2026 dans la commune : une fuite au pied d'une cheminée, du diagnostic à la reprise complète.</p>
+          <ul class="page-hero__list">
+            <li>Urgences 24 h/24</li>
+            <li>Devis gratuit en 24 h</li>
+            <li>Déplacement et conseil gratuits</li>
+          </ul>
+          <div class="actions">
+            <a class="btn btn--rouge btn--tel" href={`tel:${site.phoneHref}`} aria-label={`Appeler le ${site.phone}`} title={`Appeler le ${site.phone}`}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.6" y="2" width="9.8" height="20" rx="2.9"></rect><line x1="8" y1="18.7" x2="11" y2="18.7"></line><path d="M17.9 8.9a4.6 4.6 0 0 1 0 6.2"></path><path d="M20.6 6.2a8.6 8.6 0 0 1 0 11.6"></path></svg>{site.phone}</a>
+            <a class="btn btn--ghost" href="/devis-gratuit/" style="color:#fff;border-color:#fff">Demander une intervention<span class="btn-menu__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg></span></a>
+          </div>
+        </div>
+        <div class="page-hero__media">
+          <img src="/photos-chantier/renovation-toiture-maison-bourgeoise-richard-toitures-26-1.webp" width="720" height="540" fetchpriority="high" decoding="async" alt={`Inspection de toiture en camion-nacelle sur une maison bourgeoise — ${site.brand}, couvreur à Saint-Cyr-sur-Loire`} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <TrustBand />
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Juin 2026 : une fuite au pied d'une cheminée à Saint-Cyr-sur-Loire</h2>
+      </div>
+      <div class="longue-texte">
+        <p>Le propriétaire d'une maison de Saint-Cyr-sur-Loire m'a appelé pour une auréole apparue au plafond d'une chambre, juste sous le conduit de cheminée. Un passage dans les combles a confirmé la direction : volige tachée, isolant gorgé d'eau autour de la souche, liteaux noircis sur près d'un mètre. L'eau entrait bien quelque part au pied de la cheminée — restait à trouver où exactement.</p>
+        <p>Depuis le panier de mon camion-nacelle, sans marcher sur les ardoises, j'ai inspecté la souche sous toutes ses faces : le mortier du couronnement s'effritait, le solin côté versant bâillait de plusieurs millimètres et une embarrure était fendue. Trois points d'entrée possibles — l'arrosage ciblé, zone par zone, a désigné le solin. L'eau s'y glissait, suivait la brique et ressortait sur la volige, à près d'un mètre de la tache visible au plafond.</p>
+        <p>C'est le scénario classique d'une recherche de fuite : le point d'entrée ne se trouve presque jamais à l'aplomb des dégâts, parce que l'eau voyage le long des bois avant de ressortir. Le localiser précisément permet d'ouvrir la couverture au bon endroit, et seulement là — plutôt que de refaire un pan entier « pour être sûr ».</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Le chantier en images : série photo 09 (même chantier, avant/pendant). -->
+  <section class="section section--gris">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Le chantier en images : de la couverture ouverte à la reprise complète</h2>
+        <p>Une fois le point d'entrée localisé, j'ai ouvert la couverture sur la zone touchée — pas un rang de plus. Voici ce que le toit cachait, et ce que j'y ai refait.</p>
+      </div>
+    </div>
+
+    <div class="container media-split">
+      <div class="media-split__text">
+        <h3>Ce que la couverture cachait</h3>
+        <p>Ardoises déposées au pied de la souche, le diagnostic des combles s'est confirmé en pleine lumière : liteaux marqués par l'eau, isolant gorgé et affaissé, coulures le long de la brique. Les infiltrations s'étaient installées depuis des mois, silencieusement — le plafond de la chambre n'a montré une auréole qu'une fois les bois saturés.</p>
+        <p>C'est le piège des fuites au pied de cheminée : tant que le solin ne bâille que de quelques millimètres, rien n'est visible depuis le sol, et l'eau fait son chemin à l'abri sous les ardoises.</p>
+      </div>
+      <div class="media-split__media">
+        <img src="/photos-chantier/renovation-souche-de-cheminee-richard-toitures-09-1.webp" width="1600" height="1200" loading="lazy" decoding="async" alt={`Couverture en ardoise ouverte au pied d'une souche de cheminée, liteaux marqués par l'eau — ${site.brand}, couvreur à Saint-Cyr-sur-Loire`} />
+      </div>
+    </div>
+
+    <div class="container media-split media-split--reverse">
+      <div class="media-split__text">
+        <h3>Liteaux neufs, zinguerie refaçonnée</h3>
+        <p>J'ai remplacé les liteaux et l'isolant touchés, refaçonné les abergements de zinc à la dimension exacte de la souche, repris l'engravure du solin dans le joint de maçonnerie et rejointoyé le pied de cheminée. Les ardoises cassées ont été remplacées au bon format — 32 × 22 sur ce versant — et l'ensemble reposé au même pureau.</p>
+        <p>Le contrôle réalisé quelques semaines plus tard a confirmé que tout était sec, des combles au plafond de la chambre. Une reprise localisée, menée au bon endroit, qui a évité au propriétaire une réfection bien plus lourde.</p>
+      </div>
+      <div class="media-split__media">
+        <img src="/photos-chantier/renovation-souche-de-cheminee-richard-toitures-09-2.webp" width="1200" height="1600" loading="lazy" decoding="async" alt={`Liteaux neufs posés au pied de la souche de cheminée avant la repose des ardoises — ${site.brand}, couvreur à Saint-Cyr-sur-Loire`} />
+      </div>
+    </div>
+  </section>
+
+  <CtaBanner
+    title="Une fuite active ? Je me déplace en urgence"
+    text="Appelez-moi, décrivez les dégâts : j'interviens 24 h/24 à Saint-Cyr-sur-Loire, je mets votre toit hors d'eau et je vous remets un devis de réparation gratuit sous 24 heures."
+    ctaLabel="Demander une intervention urgente"
+    image="/photos-chantier/intervention-nacelle-toiture-richard-toitures-32.webp"
+    imageAlt={`Intervention en nacelle au niveau d'une toiture — ${site.brand}, couvreur à Saint-Cyr-sur-Loire`}
+  />
+
+  <section class="section">
+    <div class="container media-split media-split--plain">
+      <div class="media-split__text">
+        <h2>Une auréole au plafond chez vous ? La même démarche, sans attendre</h2>
+        <p>Ce chantier résume ma façon de travailler : examen des combles, inspection depuis la nacelle en commençant par les points singuliers — solins, abergements, noues, faîtage, pourtours de fenêtres de toit —, arrosage ciblé en cas de doute, puis une <a href="/reparation-toiture-37/">réparation de toiture</a> engagée au bon endroit, avec les bonnes pièces. Si la couverture est ouverte, une bâche armée fixée sur tasseaux protège la maison en attendant.</p>
+        <p>Et comme je traite la couverture et la zinguerie ensemble — remplacement d'une ardoise, reprise d'un abergement ou couronnement de souche recoulé au mortier, comme sur la photo ci-contre —, vous n'avez qu'un seul interlocuteur : c'est l'avantage de confier votre toit à un <a href="/couvreur-saint-cyr-sur-loire/">couvreur à Saint-Cyr-sur-Loire</a> qui suit votre dossier du diagnostic au contrôle final. Le devis est gratuit, remis en 24 heures — et quand le toit prend l'eau, j'interviens 24 h/24.</p>
+      </div>
+      <div class="media-split__media">
+        <img src="/photos-chantier/couverture-ardoise-immeuble-richard-toitures-10-2.webp" width="1200" height="1600" loading="lazy" decoding="async" alt={`Tête de cheminée reprise au mortier frais autour des poteries, vue depuis le toit en ardoise — ${site.brand}, couvreur à Saint-Cyr-sur-Loire`} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--gris">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Comment se déroule l'intervention ?</h2>
+      </div>
+      <div class="features">
+        <div class="feature">
+          <h3>Premier échange</h3>
+          <p>Au téléphone, vous me décrivez les dégâts — photos bienvenues. J'évalue l'urgence et je vous donne un créneau immédiat si le toit prend l'eau.</p>
+        </div>
+        <div class="feature">
+          <h3>Recherche de fuite</h3>
+          <p>Examen des combles puis inspection de la couverture depuis la nacelle, points singuliers en premier, jusqu'à localiser le point d'entrée.</p>
+        </div>
+        <div class="feature">
+          <h3>Mise hors d'eau</h3>
+          <p>Bâche armée fixée sur tasseaux ou colmatage du point d'entrée si la couverture est ouverte, pour protéger la maison sans attendre les pièces.</p>
+        </div>
+        <div class="feature">
+          <h3>Réparation et contrôle</h3>
+          <p>Remplacement des éléments en cause, reprise des solins et abergements, puis vérification des points singuliers voisins avant de replier le chantier.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <NearbyLinks
+    title="La réparation de toiture autour de Saint-Cyr-sur-Loire"
+    text="Le déplacement reste gratuit dans les communes voisines — et dans tout le département."
+    links={nearbyLinks}
+    gris={false}
+  />
+</Layout>
+
+<style>
+  /* Même chevron orange sur les H3 des media-splits que sur les pages piliers. */
+  .media-split__text h3 {
+    margin-top: 0;
+    position: relative;
+    padding-left: 24px;
+    font-size: 1.3rem;
+  }
+  .media-split__text h3:before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: .62em;
+    width: 8px;
+    height: 8px;
+    border-top: 3px solid var(--rouge);
+    border-right: 3px solid var(--rouge);
+    transform: translateY(-50%) rotate(45deg);
+  }
+  .media-split + .media-split {
+    margin-top: 48px;
+  }
+</style>

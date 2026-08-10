@@ -1,0 +1,135 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import TrustBand from '../components/TrustBand.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import NearbyLinks from '../components/NearbyLinks.astro';
+import { site } from '../data/site.js';
+import { pageSchema } from '../data/schema.js';
+
+// Satellite du pilier /reparation-toiture-37/ — réparation de faîtage à
+// Fondettes. Toujours moins profond que le pilier : pas de tarifs détaillés,
+// pas de FAQ (ils restent sur /reparation-toiture-37/).
+const path = '/reparation-faitage-fondettes/';
+// 57 caractères — title ≠ H1, requête « réparation faîtage Fondettes ».
+const title = 'Réparation de Faîtage à Fondettes - Devis Gratuit en 24 h';
+// 148 caractères.
+const description = "Faîtières descellées, embarrures fissurées, mortier qui s'effrite ? Michel Richard répare votre faîtage à Fondettes. Devis gratuit ✓ 06 06 41 49 02.";
+const breadcrumbLabel = 'Réparation de faîtage à Fondettes';
+
+const nearbyLinks = [
+  { href: '/recherche-de-fuite-toiture-saint-cyr-sur-loire/', label: 'Recherche de fuite de toiture à Saint-Cyr-sur-Loire' },
+  { href: '/reparation-toiture-37/', label: 'Réparation de toiture en Indre-et-Loire' },
+];
+---
+<Layout title={title} description={description} path={path} jsonLd={pageSchema(path, breadcrumbLabel)}>
+  <Breadcrumb label={breadcrumbLabel} />
+
+  <section class="page-hero">
+    <div class="container">
+      <h1>Réparation de faîtage à&nbsp;Fondettes</h1>
+      <p class="page-hero__artisan">{site.brand}</p>
+      <div class="page-hero__grid">
+        <div class="page-hero__text">
+          <p><strong>Des faîtières qui bougent, du mortier qui s'effrite au sommet de votre toit à Fondettes ?</strong> Le faîtage est la ligne qui ferme la couverture : quand son scellement se fissure, l'eau entre au point le plus haut du toit — avec tout le versant à parcourir ensuite.</p>
+          <p>Couvreur zingueur installé à {site.address.city}, je répare les faîtages à Fondettes : remise en place et scellement des faîtières, reprise des embarrures, remplacement des éléments cassés.</p>
+          <ul class="page-hero__list">
+            <li>Intervention en camion-nacelle</li>
+            <li>Devis gratuit en 24 h</li>
+            <li>Garantie décennale</li>
+          </ul>
+          <div class="actions">
+            <a class="btn btn--rouge btn--tel" href={`tel:${site.phoneHref}`} aria-label={`Appeler le ${site.phone}`} title={`Appeler le ${site.phone}`}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.6" y="2" width="9.8" height="20" rx="2.9"></rect><line x1="8" y1="18.7" x2="11" y2="18.7"></line><path d="M17.9 8.9a4.6 4.6 0 0 1 0 6.2"></path><path d="M20.6 6.2a8.6 8.6 0 0 1 0 11.6"></path></svg>{site.phone}</a>
+            <a class="btn btn--ghost" href="/devis-gratuit/" style="color:#fff;border-color:#fff">Demander un devis<span class="btn-menu__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 5.6c2.6 1.4 4.6 3.6 5.8 6.4-1.2 2.8-3.2 5-5.8 6.4"></path></svg></span></a>
+          </div>
+        </div>
+        <div class="page-hero__media">
+          <img src="/photos-chantier/couverture-tuile-refection-faitage-richard-toitures-03-1.webp" width="836" height="627" fetchpriority="high" decoding="async" alt={`Toiture en tuiles avec faîtage refait — ${site.brand}, couvreur à Fondettes`} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <TrustBand />
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Le faîtage, la ligne qui ferme votre toiture</h2>
+      </div>
+      <div class="longue-texte">
+        <p>Au sommet du toit, les faîtières ferment la jonction des deux versants. Sur les couvertures en tuiles de Fondettes, elles sont le plus souvent scellées au mortier : les embarrures — ces bourrelets de mortier qui maintiennent les faîtières et bouchent l'espace sous leurs bords — assurent à la fois la fixation et l'étanchéité de la ligne de faîte.</p>
+        <p>Avec les années, ce scellement travaille. Le mortier se fissure, les embarrures s'effritent, une faîtière se descelle puis se décale. L'eau profite de la moindre ouverture : elle entre sous le faîte et descend le long des liteaux en marquant la volige sur son passage. Un faîtage abîmé finit ainsi en auréoles au plafond des chambres — alors que la reprise, prise à temps, reste une intervention courte. C'est l'un des désordres que je traite le plus souvent en <a href="/reparation-toiture-37/">réparation de toiture</a> dans le département.</p>
+        <p>Les signes qui doivent alerter : des morceaux de mortier dans les gouttières, une faîtière visiblement décalée depuis la rue, du jour entre deux éléments, une crête qui ondule. Depuis le sol, on ne voit pourtant qu'une partie du problème — l'état réel des scellements ne se lit qu'au niveau du faîte.</p>
+        <p>Le faîtage ne vit pas seul, d'ailleurs : il rejoint les arêtiers aux extrémités des versants et, sur beaucoup de maisons de Fondettes, il croise une souche de cheminée dont les solins s'appuient sur les mêmes scellements. Une reprise sérieuse examine donc toute la ligne haute du toit, pas seulement la faîtière qui a bougé.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--gris">
+    <div class="container media-split">
+      <div class="media-split__text">
+        <h2>Reprendre un faîtage : scellement au mortier ou pose à sec</h2>
+        <p>Quand les dégâts restent localisés, je dépose les faîtières descellées, je pique l'ancien mortier, puis je rescelle au mortier bâtard en refaisant les embarrures sur toute la zone reprise. Les éléments fissurés ou cassés sont remplacés à l'identique — même moule, même teinte — pour que la réparation se fonde dans la couverture. Je contrôle au passage la crête, les arêtiers et les solins des souches voisines, qui vieillissent au même rythme.</p>
+        <p>Quand le scellement est fatigué sur toute la longueur, la pose d'un faîtage à sec est souvent plus pertinente : les faîtières se fixent mécaniquement sur une lisse de rehausse, avec un closoir ventilé qui assure l'étanchéité tout en laissant respirer la sous-toiture. Plus de mortier qui se fissure — et une ligne de faîte qui reste en place. Je vous indique franchement laquelle des deux solutions correspond à l'état de votre toit.</p>
+        <p>Dans les deux cas, je travaille avec des pièces adaptées à votre couverture : mortier bâtard dosé pour rester légèrement souple, faîtières du même moule que l'existant, closoirs dimensionnés au profil des tuiles. Un faîtage repris avec des éléments approximatifs se voit depuis la rue — et vieillit mal.</p>
+      </div>
+      <div class="media-split__media">
+        <img src="/photos-chantier/couverture-tuile-refection-faitage-richard-toitures-03-2.webp" width="627" height="836" loading="lazy" decoding="async" alt={`Faîtières scellées au mortier, vues depuis la ligne de faîte — ${site.brand}, couvreur à Fondettes`} />
+      </div>
+    </div>
+  </section>
+
+  <CtaBanner
+    title="Votre faîtage repris rapidement à Fondettes"
+    text="Décrivez-moi ce que vous voyez — mortier au sol, faîtière déplacée, auréole au plafond. Je viens examiner votre faîtage, j'établis un devis gratuit sous 24 heures et j'interviens avec mon camion-nacelle, sans échafaudage à monter."
+    ctaLabel="Demander un devis de réparation"
+    image="/photos-chantier/renovation-toiture-ferme-nacelle-richard-toitures-39-4.webp"
+    imageAlt={`Camion-nacelle déployé pour la réparation d'une toiture — ${site.brand}, couvreur à Fondettes`}
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Le camion-nacelle, l'atout d'une réparation de faîtage</h2>
+      </div>
+      <div class="longue-texte">
+        <p>Le faîtage est l'endroit le plus haut et le moins accessible d'une toiture. Avec le camion-nacelle, plus besoin d'échafaudage : le panier me place directement au niveau du faîte, et je travaille sans marcher sur les pureaux — sur une tuile plate âgée, souvent gélive, c'est l'assurance de ne pas créer de casse en réparant. La plupart des reprises localisées se font dans la journée, et le chantier ne laisse ni gravats ni traces : les déchets de mortier repartent avec moi.</p>
+        <p>Le déplacement est gratuit à Fondettes comme dans les communes voisines, de Luynes à Saint-Cyr-sur-Loire. Et si l'examen révèle d'autres désordres — solin ouvert, ardoises glissées, gouttière percée —, vous avez l'avantage d'avoir affaire à un <a href="/couvreur-fondettes/">couvreur à Fondettes</a> qui traite la couverture et la zinguerie dans un même devis.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--gris">
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2>Comment se déroule la réparation ?</h2>
+      </div>
+      <div class="features">
+        <div class="feature">
+          <h3>Examen du faîtage</h3>
+          <p>Depuis le panier de la nacelle, je contrôle les scellements, les embarrures et l'alignement des faîtières, photos à l'appui.</p>
+        </div>
+        <div class="feature">
+          <h3>Devis sous 24 heures</h3>
+          <p>Vous recevez un devis détaillé et gratuit : reprise localisée ou faîtage à sec, tout est chiffré poste par poste, sans engagement.</p>
+        </div>
+        <div class="feature">
+          <h3>Réparation</h3>
+          <p>Dépose des éléments descellés, nouveau scellement au mortier bâtard ou pose sur closoirs ventilés, remplacement des faîtières cassées à l'identique.</p>
+        </div>
+        <div class="feature">
+          <h3>Contrôle final</h3>
+          <p>Je vérifie la crête, les arêtiers et les solins voisins, puis je vous remets des photos de la ligne de faîte réparée.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <NearbyLinks
+    title="La réparation de toiture autour de Fondettes"
+    text="Le déplacement reste gratuit dans les communes voisines — et dans tout le département."
+    links={nearbyLinks}
+    gris={false}
+  />
+</Layout>

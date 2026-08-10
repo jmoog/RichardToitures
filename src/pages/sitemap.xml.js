@@ -11,6 +11,8 @@ const staticPaths = [
   '/travaux-de-couverture/',
   '/renovation-toiture-37/',
   '/reparation-toiture-37/',
+  '/reparation-faitage-fondettes/',
+  '/recherche-de-fuite-toiture-saint-cyr-sur-loire/',
   '/gouttieres-37/',
   '/nettoyage-toiture-37/',
   '/devis-gratuit/',
