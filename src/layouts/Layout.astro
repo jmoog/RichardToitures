@@ -29,7 +29,16 @@ const canonical = new URL(path, site.domain).toString();
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
   <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'} />
+  <!-- Favicons. Google (Googlebot-Image) ne récupère de façon fiable qu'un
+       fichier matriciel : l'ICO est déclaré en premier et reste servi sur
+       /favicon.ico, l'URL que les crawlers demandent par défaut. -->
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" href="/favicon-48x48.png" type="image/png" sizes="48x48" />
+  <link rel="icon" href="/favicon-96x96.png" type="image/png" sizes="96x96" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#FF6B35" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:site_name" content={`${site.brand} — Couvreur ${site.address.department}`} />
@@ -124,7 +133,9 @@ const canonical = new URL(path, site.domain).toString();
         <div>
           <h4>Nos prestations</h4>
           <ul>
-            {services.map((s) => <li><a href={s.href}>{s.label}</a></li>)}
+            {/* Prestation sans `href` (page pas encore écrite) : rendue en
+                texte simple plutôt qu'en lien mort — voir data/site.js. */}
+            {services.map((s) => <li>{s.href ? <a href={s.href}>{s.label}</a> : <span>{s.label}</span>}</li>)}
           </ul>
         </div>
         <div>
@@ -136,7 +147,6 @@ const canonical = new URL(path, site.domain).toString();
         <div>
           <h4>Informations</h4>
           <ul>
-            <li><a href="/a-propos/">À propos</a></li>
             <li><a href="/devis-gratuit/">Devis gratuit</a></li>
             <li><a href="/mentions-legales/">Mentions légales</a></li>
             <li><a href="/plan-du-site/">Plan du site</a></li>
